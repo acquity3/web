@@ -31,3 +31,12 @@
 // @import 'bulma/sass/components/navbar.sass';
 // @import 'bulma/sass/layout/hero.sass';
 // @import 'bulma/sass/layout/section.sass';
+
+.is-container {
+  @include from($desktop) {
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 20px 0 #e1e0e9;
+    padding: 1.5rem !important;
+  }
+}
