@@ -1,7 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom';
 
-import Main from 'routes/main';
 import Login from 'routes/auth/login';
 import Signup from 'routes/auth/signup';
 import ForgotPassword from 'routes/auth/forgot-password';
@@ -9,28 +13,26 @@ import ForgotPassword from 'routes/auth/forgot-password';
 import 'routes/auth/styles.scss';
 import Navbar from 'components/navbar';
 
-const App = () => {
+const UnauthenticatedApp = () => {
   return (
     <Router>
       <div className="app">
-        <Navbar />
+        <Navbar isAuthenticated={false} />
         <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
           <Route path="/signup">
             <Signup />
           </Route>
           <Route path="/forgot-password">
             <ForgotPassword />
           </Route>
-          <Route path="/">
-            <Main />
+          <Route path="/login">
+            <Login />
           </Route>
+          <Route exact path="/" render={() => <Redirect to="/login" />} />
         </Switch>
       </div>
     </Router>
   );
 };
 
-export default App;
+export default UnauthenticatedApp;
