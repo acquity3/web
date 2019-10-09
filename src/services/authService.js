@@ -1,48 +1,39 @@
-import ApiClientService from './apiClientService';
-import { TOKEN_KEY } from './consts';
-
-const getToken = () => {
-  return localStorage.getItem(TOKEN_KEY);
-};
-
-const handleUserResponse = ({ user: { token, ...user } }) => {
-  localStorage.setItem(TOKEN_KEY, token);
-  return user;
-};
+import TokenUtils from 'utils/tokenUtils';
+import ApiService from './apiService';
 
 const logout = () => {
-  localStorage.removeItem(TOKEN_KEY);
+  TokenUtils.removeToken();
   return Promise.resolve();
 };
 
-const login = async ({ username, password }) => {
-  const result = await ApiClientService('login', {
-    body: { username, password }
-  });
-  return handleUserResponse(result);
+const login = async ({ email, password }) => {
+  const response = await ApiService.post('auth/seller', { email, password });
+  return TokenUtils.storeToken(response);
 };
 
-const register = async ({ username, password }) => {
-  const result = await ApiClientService('register', {
-    body: { username, password }
+const register = async ({ email, password, fullName }) => {
+  const response = await ApiService.post('register', {
+    email,
+    password,
+    fullName
   });
-  return handleUserResponse(result);
+  return TokenUtils.storeToken(response);
 };
 
 const getUser = async () => {
-  const token = getToken();
+  const token = TokenUtils.getToken();
   // No user yet.
   if (!token) {
     return Promise.resolve(null);
   }
   // Check with backend to see if key is still valid
-  // TODO: Use correct endpoint instead of this dummy endpoint.
-  try {
-    return ApiClientService('me');
-  } catch (error) {
-    logout();
-    return Promise.reject(error);
+  const response = await ApiService.get('auth/seller/me');
+  if (response.status === 200) {
+    const { me: userData } = response.data;
+    return userData;
   }
+  logout();
+  return Promise.reject(response.statusText);
 };
 
-export default { login, register, logout, getToken, getUser };
+export default { login, register, logout, getUser };
