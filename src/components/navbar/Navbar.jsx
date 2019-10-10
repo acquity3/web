@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import BrandLogo from 'components/svgr/BrandLogo';
 import UnauthedNavbar from './UnauthedNavbar';
 import AuthedNavbar from './AuthedNavbar';
 
@@ -19,34 +20,32 @@ const Navbar = ({ isAuthenticated }) => {
       role="navigation"
       aria-label="main navigation"
     >
-      <div className="container">
-        <div className="navbar-brand">
-          <Link className="navbar-item" to="/">
-            LOGO
-          </Link>
+      <div className="navbar-brand">
+        <Link className="navbar-item" to="/">
+          <BrandLogo width="8rem" />
+        </Link>
 
-          <button
-            type="button"
-            onClick={handleNavbarBurgerClick}
-            className={`navbar-burger burger ${
-              isNavbarExpanded ? 'is-active' : ''
-            }`}
-            aria-label="menu"
-            aria-expanded={isNavbarExpanded}
-            data-target="navbar"
-          >
-            {/* Hamburger logo */}
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-            <span aria-hidden="true" />
-          </button>
-        </div>
-        {isAuthenticated ? (
-          <AuthedNavbar isNavbarExpanded={isNavbarExpanded} />
-        ) : (
-          <UnauthedNavbar isNavbarExpanded={isNavbarExpanded} />
-        )}
+        <button
+          type="button"
+          onClick={handleNavbarBurgerClick}
+          className={`navbar-burger burger ${
+            isNavbarExpanded ? 'is-active' : ''
+          }`}
+          aria-label="menu"
+          aria-expanded={isNavbarExpanded}
+          data-target="navbar"
+        >
+          {/* Hamburger logo */}
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </button>
       </div>
+      {isAuthenticated ? (
+        <AuthedNavbar isNavbarExpanded={isNavbarExpanded} />
+      ) : (
+        <UnauthedNavbar isNavbarExpanded={isNavbarExpanded} />
+      )}
     </nav>
   );
 };
