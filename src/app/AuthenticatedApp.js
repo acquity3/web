@@ -22,9 +22,13 @@ const AuthenticatedApp = () => {
                 path={['/login', '/signup']}
                 render={() => <Redirect to="/" />}
               />
-              <Route path="/">
-                <Main />
-              </Route>
+              <Route path="/home/:page" component={Main} />
+
+              <Route
+                exact
+                path="/"
+                render={() => <Redirect to="/home/bids" />}
+              />
             </Switch>
           </div>
         </div>
