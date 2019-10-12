@@ -4,6 +4,7 @@
   </a>
   &nbsp;acquity&nbsp;
 </h1>
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5226f9ce-01c6-4617-80b2-6ca0b796ccbd/deploy-status)](https://app.netlify.com/sites/acquity/deploys)
 
 A marketplace to buy and sell stocks from private companies or startups. Acquity equity.
 <br>
