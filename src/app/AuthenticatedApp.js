@@ -12,26 +12,18 @@ import Navbar from 'components/navbar';
 const AuthenticatedApp = () => {
   return (
     <Router>
-      <div className="app">
+      <div className="app section">
         <Navbar isAuthenticated />
-        <div className="columns is-marginless is-mobile is-centered">
-          <div className="is-container column is-two-thirds-tablet is-four-fifths-mobile">
-            <Switch>
-              <Route
-                exact
-                path={['/login', '/signup']}
-                render={() => <Redirect to="/" />}
-              />
-              <Route path="/home/:page" component={Main} />
+        <Switch>
+          <Route
+            exact
+            path={['/login', '/signup']}
+            render={() => <Redirect to="/" />}
+          />
+          <Route path="/home/:page" component={Main} />
 
-              <Route
-                exact
-                path="/"
-                render={() => <Redirect to="/home/bids" />}
-              />
-            </Switch>
-          </div>
-        </div>
+          <Route exact path="/" render={() => <Redirect to="/home/bids" />} />
+        </Switch>
       </div>
     </Router>
   );

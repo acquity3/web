@@ -25,6 +25,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#root,
+.app {
+  // display: flow-root;
+}
+
 button,
 input {
   font-family: inherit !important;

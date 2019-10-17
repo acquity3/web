@@ -7,7 +7,6 @@
 body {
   position: relative;
   z-index: -2;
-  background: $light;
 }
 
 .tabs {
@@ -74,4 +73,10 @@ body {
       height: calc(100% - 3rem);
     }
   }
+}
+
+.is-vertically-centered {
+  height: 100%;
+  display: flex;
+  align-items: center;
 }

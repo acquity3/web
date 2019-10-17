@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import BrandLogo from 'components/svgr/BrandLogo';
-import UnauthedNavbar from './UnauthedNavbar';
 import AuthedNavbar from './AuthedNavbar';
 
 import './Navbar.scss';
@@ -25,27 +24,25 @@ const Navbar = ({ isAuthenticated }) => {
           <BrandLogo width="8rem" />
         </Link>
 
-        <button
-          type="button"
-          onClick={handleNavbarBurgerClick}
-          className={`navbar-burger burger ${
-            isNavbarExpanded ? 'is-active' : ''
-          }`}
-          aria-label="menu"
-          aria-expanded={isNavbarExpanded}
-          data-target="navbar"
-        >
-          {/* Hamburger logo */}
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </button>
+        {isAuthenticated && (
+          <button
+            type="button"
+            onClick={handleNavbarBurgerClick}
+            className={`navbar-burger burger ${
+              isNavbarExpanded ? 'is-active' : ''
+            }`}
+            aria-label="menu"
+            aria-expanded={isNavbarExpanded}
+            data-target="navbar"
+          >
+            {/* Hamburger logo */}
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </button>
+        )}
       </div>
-      {isAuthenticated ? (
-        <AuthedNavbar isNavbarExpanded={isNavbarExpanded} />
-      ) : (
-        <UnauthedNavbar isNavbarExpanded={isNavbarExpanded} />
-      )}
+      {isAuthenticated && <AuthedNavbar isNavbarExpanded={isNavbarExpanded} />}
     </nav>
   );
 };
