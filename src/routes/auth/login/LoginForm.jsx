@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import useForm from 'react-hook-form';
 
 import 'assets/scss/checkmark.scss';
+import './LoginForm.scss';
 
 const LoginForm = ({ onSubmit }) => {
   const { register, handleSubmit: validateInputs, errors } = useForm();
@@ -99,10 +100,10 @@ const LoginForm = ({ onSubmit }) => {
           )}
         </div>
       </div>
-      <div className="login">
+      <div className="auth-actions">
         <button
           type="submit"
-          className={`login__button button hvr-grow ${
+          className={`auth-actions__button button hvr-grow ${
             state.isLoading ? 'is-loading' : ''
           }`}
         >

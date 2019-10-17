@@ -25,7 +25,7 @@ const Signup = () => {
               </div>
 
               <div className="actions">
-                <div className="has-text-centered">
+                <div>
                   <span className="text">Already a member? </span>
                   <Link to="/login">Log in</Link>
                 </div>

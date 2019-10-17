@@ -179,10 +179,10 @@ const LoginForm = ({ onSubmit }) => {
           <p className="help is-danger">{errors.confirmPassword.message}</p>
         )}
       </div>
-      <div className="signup">
+      <div className="auth-actions">
         <button
           type="submit"
-          className={`signup__button button hvr-grow ${
+          className={`auth-actions__button button hvr-grow ${
             state.isLoading ? 'is-loading' : ''
           }`}
         >
