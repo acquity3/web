@@ -28,7 +28,7 @@ const UnauthenticatedApp = () => {
           <Route path="/login">
             <Login />
           </Route>
-          <Route exact path="/" render={() => <Redirect to="/login" />} />
+          <Route path="/" render={() => <Redirect to="/login" />} />
         </Switch>
       </div>
     </Router>
