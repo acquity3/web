@@ -53,6 +53,16 @@ a {
   border-top-right-radius: 10px;
   box-shadow: 0 2px 20px 0 hsla(0, 0%, 0%, 0.12);
 
+  @media only screen and (max-width: $mobile) {
+    height: calc(100% - 3.5rem);
+    width: 100% !important;
+    padding: 0;
+
+    &:before {
+      content: none !important;
+    }
+  }
+
   &:before {
     content: '';
     background: url('../images/container-bg.svg') no-repeat;
