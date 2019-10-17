@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import TimeAgo from 'react-timeago';
 
 import { moneyFormatter } from 'utils';
 import './Bid.scss';
@@ -14,6 +15,7 @@ const mockBid = {
 };
 
 const Bid = ({ _bid }) => {
+  const bidTime = new Date(mockBid.timestamp * 1000);
   return (
     <div className="bid">
       <div className="bid__header">
@@ -23,7 +25,9 @@ const Bid = ({ _bid }) => {
           </span>
           <span className="bid__header__info__name">{mockBid.stockName}</span>
         </span>
-        <span className="bid__header__timestamp">now</span>
+        <span className="bid__header__timestamp">
+          <TimeAgo title={bidTime.toLocaleString()} date={bidTime} />
+        </span>
       </div>
       <div className="columns is-mobile">
         <div className="bid__content column">
@@ -36,8 +40,11 @@ const Bid = ({ _bid }) => {
             </div>
             <div className="bid__details column">
               <span className="bid__details__label">Price:</span>
-              <span className="bid__details__value">
-                S$ {parseFloat(mockBid.price).toLocaleString()}
+              <span
+                className="bid__details__value"
+                title={`$S ${mockBid.price.toLocaleString()}`}
+              >
+                S$ {moneyFormatter(mockBid.price)}
               </span>
             </div>
             <div className="bid__details column">

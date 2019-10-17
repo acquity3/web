@@ -9,7 +9,7 @@ const OngoingBids = ({ ongoingBids }) => {
       {ongoingBids.length === 0 ? (
         <div className="ongoingBids__emptyText">You have no ongoing bids!</div>
       ) : (
-        ongoingBids.map(bid => <Bid bid={bid} />)
+        ongoingBids.map((bid, i) => <Bid key={bid.id || i} bid={bid} />)
       )}
     </div>
   );
