@@ -1,4 +1,5 @@
 @import 'assets/scss/variables';
+@import 'assets/scss/buttons';
 
 .art-container {
   display: flex;
@@ -26,14 +27,8 @@
       justify-content: space-between;
       margin-top: 2rem;
       padding-right: 0.5rem;
-
       &__button {
         min-width: 40%;
-        border-radius: 15px;
-        font-size: 1.1rem;
-        font-family: 'Nexa Bold' !important;
-        background-image: $action-button-bg;
-        color: white;
       }
     }
 

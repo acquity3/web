@@ -1,0 +1,14 @@
+@import 'assets/scss/variables';
+
+.button {
+  min-width: 40%;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-family: 'Nexa Bold' !important;
+  background-image: $action-button-bg;
+  color: white;
+
+  &:hover {
+    color: white;
+  }
+}
