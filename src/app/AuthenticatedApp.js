@@ -6,8 +6,10 @@ import {
   Redirect
 } from 'react-router-dom';
 
-import Main from 'routes/main';
 import Navbar from 'components/navbar';
+import Main from 'routes/main';
+import NewBid from 'routes/bids/NewBid';
+import EditBid from 'routes/bids/EditBid';
 
 const AuthenticatedApp = () => {
   return (
@@ -21,6 +23,8 @@ const AuthenticatedApp = () => {
             render={() => <Redirect to="/" />}
           />
           <Route path="/home" component={Main} />
+          <Route path="/bids/new" component={NewBid} />
+          <Route path="/bids/edit/:id" component={EditBid} />
           <Route exact path="/" render={() => <Redirect to="/home" />} />
         </Switch>
       </div>
