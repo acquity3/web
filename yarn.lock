@@ -7106,6 +7106,11 @@ lodash.debounce@^4.0.8:
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha1-gteb/zCmfEAF/9XiUVMArZyk168=
 
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -9495,6 +9500,14 @@ react-async@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/react-async/-/react-async-8.0.0.tgz#81edd40e641206737a988076f3afcc270c6bbd27"
   integrity sha512-LokBZLLkT80URrfDWu5Z/42GBOlYYxPGPTfo+uOjDti9RVRXa69AYlJuHZr+TyCJcn61kYQvjQo8StzA2LKULg==
+
+react-countdown-now@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/react-countdown-now/-/react-countdown-now-2.1.1.tgz#88901eb776907338da137effbf7cdbec5b9274c6"
+  integrity sha512-DGSd/EGzigIsixQNzPQbk376zG49IVAyMCUkMgDEuIXlIRKQwB44Fg8uA3zrZ+aQVAuzsyb6fJWskPxIP56DYg==
+  dependencies:
+    lodash.isequal "^4.5.0"
+    prop-types "^15.7.2"
 
 react-dev-utils@^9.1.0:
   version "9.1.0"
