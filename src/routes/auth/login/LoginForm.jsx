@@ -102,7 +102,7 @@ const LoginForm = ({ onSubmit }) => {
       <div className="login">
         <button
           type="submit"
-          className={`login__button button ${
+          className={`login__button button hvr-grow ${
             state.isLoading ? 'is-loading' : ''
           }`}
         >

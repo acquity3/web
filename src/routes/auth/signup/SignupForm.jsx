@@ -2,6 +2,8 @@ import React, { useReducer } from 'react';
 import zxcvbn from 'zxcvbn';
 import useForm from 'react-hook-form';
 
+import 'assets/scss/animations.scss';
+
 import PasswordStrengthProgressBar from './PasswordStrengthProgressBar';
 import './SignupForm.scss';
 
@@ -180,7 +182,7 @@ const LoginForm = ({ onSubmit }) => {
       <div className="signup">
         <button
           type="submit"
-          className={`signup__button button ${
+          className={`signup__button button hvr-grow ${
             state.isLoading ? 'is-loading' : ''
           }`}
         >
