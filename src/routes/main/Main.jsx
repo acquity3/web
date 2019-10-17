@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import PageContainer from 'components/pageContainer/PageContainer';
-import OngoingBids from 'components/ongoingBids/OngoingBids';
-import RoundDetails from 'components/roundDetails/RoundDetails';
+import PageContainer from 'components/pageContainer';
+import OngoingBids from './ongoingBids';
+import RoundDetails from './roundDetails';
 import './Main.scss';
 
 const Main = () => {
