@@ -12,7 +12,7 @@ import Navbar from 'components/navbar';
 const AuthenticatedApp = () => {
   return (
     <Router>
-      <div className="app section">
+      <div className="app">
         <Navbar isAuthenticated />
         <Switch>
           <Route

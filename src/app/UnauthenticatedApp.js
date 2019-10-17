@@ -16,7 +16,7 @@ import Navbar from 'components/navbar';
 const UnauthenticatedApp = () => {
   return (
     <Router>
-      <div className="app section">
+      <div className="app">
         <Navbar isAuthenticated={false} />
         <Switch>
           <Route path="/signup">

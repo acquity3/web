@@ -4,15 +4,15 @@ import Bid from './Bid';
 import './OngoingBids.scss';
 
 const OngoingBids = ({ ongoingBids }) => {
-  if (ongoingBids.length === 0) {
-    return (
-      <div className="ongoingBids">
+  return (
+    <div className="ongoingBids">
+      {ongoingBids.length === 0 ? (
         <div className="ongoingBids__emptyText">You have no ongoing bids!</div>
-      </div>
-    );
-  }
-
-  return ongoingBids.map(bid => <Bid bid={bid} />);
+      ) : (
+        ongoingBids.map(bid => <Bid bid={bid} />)
+      )}
+    </div>
+  );
 };
 
 export default OngoingBids;

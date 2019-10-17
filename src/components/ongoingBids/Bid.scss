@@ -1,0 +1,78 @@
+@import 'assets/scss/variables';
+
+.bid {
+  font-family: 'Nexa Bold';
+  width: 100%;
+  border: 1px solid $grey-lighter;
+  border-radius: 10px;
+  padding: 1rem;
+
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  &__header {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+
+    &__info {
+      font-size: 1.2rem;
+      display: flex;
+      flex-flow: row wrap;
+      flex-wrap: wrap;
+    }
+
+    &__timestamp {
+      font-family: 'Nexa Light';
+      font-size: 0.9rem;
+    }
+  }
+
+  &__content {
+    text-align: left;
+
+    .columns {
+      display: flex;
+      flex-flow: row wrap;
+      flex-wrap: wrap;
+      margin: 0;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    padding: 0;
+
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+
+    &__label {
+      font-family: 'Nexa Light';
+      font-size: 0.9rem;
+    }
+    &__value {
+      font-size: 1.5rem;
+
+      @media only screen and (max-width: $tablet) {
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  &__editButton {
+    align-self: flex-end;
+
+    &--circle {
+      border-radius: 50% !important;
+      height: 2rem;
+      width: 2rem;
+    }
+  }
+}

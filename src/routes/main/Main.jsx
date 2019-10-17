@@ -9,7 +9,7 @@ import './Main.scss';
 
 const Main = () => {
   // TODO: Call backend to check if user has bids
-  const ongoingBids = [];
+  const ongoingBids = [1, 1];
   return (
     <div className="columns is-marginless is-mobile is-centered">
       <div className="is-container column is-two-thirds-tablet is-four-fifths-mobile">
