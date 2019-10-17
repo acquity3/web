@@ -2,7 +2,9 @@ import React from 'react';
 import SimpleBar from 'simplebar-react';
 import 'simplebar/dist/simplebar.min.css';
 
-const Container = ({ children }) => {
+import './PageContainer.scss';
+
+const PageContainer = ({ children }) => {
   return (
     <div className="columns is-marginless is-mobile is-centered">
       <div className="is-container column is-two-thirds-tablet is-four-fifths-mobile">
@@ -14,4 +16,4 @@ const Container = ({ children }) => {
   );
 };
 
-export default Container;
+export default PageContainer;
