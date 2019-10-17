@@ -33,7 +33,7 @@ const ForgotPasswordForm = ({ onSubmit, isSubmitting }) => {
       <div className="auth-actions">
         <button
           type="submit"
-          className={`auth-actions__button button hvr-grow ${
+          className={`auth-actions__button button--cta button hvr-grow ${
             isSubmitting ? 'is-loading' : ''
           }`}
         >

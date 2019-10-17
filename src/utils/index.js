@@ -21,5 +21,12 @@ const moneyFormatter = num => {
   return num;
 };
 
+const validateMoneyString = string => {
+  if (string) {
+    return string.match(/^[0-9]+(\.[0-9]{1,2})?$/gm);
+  }
+  return false;
+};
+
 // eslint-disable-next-line import/prefer-default-export
-export { getInitials, moneyFormatter };
+export { getInitials, moneyFormatter, validateMoneyString };

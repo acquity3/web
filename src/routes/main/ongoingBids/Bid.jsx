@@ -63,7 +63,7 @@ const Bid = ({ _bid }) => {
         <div className="column is-narrow bid__editButton">
           <Link to={{ pathname: `/bids/edit/${mockBid.id}`, bid: mockBid }}>
             <button
-              className="button bid__editButton--circle hvr-grow"
+              className="button button--cta button--nav--circle hvr-grow"
               type="button"
             >
               <i className="fas fa-arrow-right" />

@@ -1,0 +1,27 @@
+.form {
+  &__field {
+    input {
+      height: 2.75rem;
+    }
+
+    .control {
+      .button {
+        height: 2.75rem;
+      }
+    }
+
+    &__icon {
+      height: 2.75rem !important;
+      width: 2.75rem !important;
+    }
+  }
+
+  label {
+    font-family: 'Nexa Light';
+    font-weight: normal;
+
+    &.label {
+      padding-left: 0.5rem;
+    }
+  }
+}

@@ -25,6 +25,11 @@ $action-button-bg: linear-gradient(
   rgba(38, 126, 208, 1) 0%,
   rgba(85, 96, 232, 1) 100%
 );
+$danger-button-bg: linear-gradient(
+  45deg,
+  rgba(185, 47, 76, 1) 0%,
+  rgba(224, 42, 69, 1) 100%
+);
 
 $body-bg: #f7f8fb;
 
@@ -47,6 +52,7 @@ $button-color: white;
 $button-focus-color: white;
 $button-active-color: white;
 $button-hover-color: white;
+$control-radius: 15px;
 // $family-sans-serif: "Nunito", sans-serif;
 // $grey-dark: $brown;
 // $grey-light: $beige-light;

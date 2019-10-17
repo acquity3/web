@@ -8,8 +8,8 @@ import {
 
 import Navbar from 'components/navbar';
 import Main from 'routes/main';
-import NewBid from 'routes/bids/NewBid';
-import EditBid from 'routes/bids/EditBid';
+import NewBid from 'routes/bids/newBid';
+import EditBid from 'routes/bids/editBid';
 
 const AuthenticatedApp = () => {
   return (

@@ -16,7 +16,7 @@ const Main = () => {
         <div className="page__content">
           <OngoingBids ongoingBids={ongoingBids} />
           <Link to="bids/new">
-            <button type="button" className="button hvr-grow">
+            <button type="button" className="button button--cta hvr-grow">
               Create New Bid
             </button>
           </Link>

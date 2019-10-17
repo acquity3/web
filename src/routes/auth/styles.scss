@@ -11,17 +11,6 @@
 
 .content-container {
   .form {
-    &__field {
-      input {
-        height: 2.75rem;
-      }
-
-      &__icon {
-        height: 2.75rem !important;
-        width: 2.75rem !important;
-      }
-    }
-
     .auth-actions {
       display: flex;
       justify-content: space-between;
@@ -29,15 +18,6 @@
       padding-right: 0.5rem;
       &__button {
         min-width: 40%;
-      }
-    }
-
-    label {
-      font-family: 'Nexa Light';
-      font-weight: normal;
-
-      &.label {
-        padding-left: 0.5rem;
       }
     }
 
