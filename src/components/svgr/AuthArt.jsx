@@ -1,8 +1,8 @@
 import React from 'react';
 
-const LoginArt = () => (
+const AuthArt = () => (
   <svg
-    style={{ display: 'flex', width: '100%', height: '100%' }}
+    style={{ display: 'flex', width: '100%', height: 'initial' }}
     viewBox="0 0 4000 3061.58"
   >
     <defs>
@@ -544,4 +544,4 @@ const LoginArt = () => (
   </svg>
 );
 
-export default LoginArt;
+export default AuthArt;

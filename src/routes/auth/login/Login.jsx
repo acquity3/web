@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAuth } from 'contexts/authContext';
-import LoginArt from 'components/svgr/LoginArt';
+import AuthArt from 'components/svgr/AuthArt';
 import LoginForm from './LoginForm';
 
 import './Login.scss';
@@ -16,7 +16,7 @@ const Login = () => {
         <div className="columns is-variable is-6">
           <div className="column is-half is-hidden-mobile">
             <div className="art-container">
-              <LoginArt />
+              <AuthArt />
             </div>
           </div>
           <div className="column is-half">

@@ -2,7 +2,6 @@ import React, { useReducer } from 'react';
 import useForm from 'react-hook-form';
 
 import 'assets/scss/checkmark.scss';
-import './LoginForm.scss';
 
 const LoginForm = ({ onSubmit }) => {
   const { register, handleSubmit: validateInputs, errors } = useForm();

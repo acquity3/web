@@ -1,3 +1,13 @@
+@import 'assets/scss/variables';
+
+.art-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+  padding-top: 1rem;
+}
+
 .content-container {
   .form {
     &__field {
@@ -8,6 +18,28 @@
       &__icon {
         height: 2.75rem !important;
         width: 2.75rem !important;
+      }
+    }
+
+    .signup,
+    .login {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      padding-right: 0.5rem;
+
+      .remember-me {
+        display: flex;
+        align-items: center;
+      }
+
+      &__button {
+        min-width: 40%;
+        border-radius: 15px;
+        font-size: 1.1rem;
+        font-family: 'Nexa Bold' !important;
+        background-image: $action-button-bg;
+        color: white;
       }
     }
 
