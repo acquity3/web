@@ -1,0 +1,14 @@
+@import 'assets/scss/variables';
+
+.ongoingBids {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 1rem;
+  &__emptyText {
+    color: $blue;
+    font-family: 'Nexa Bold';
+    font-size: 1.6rem;
+  }
+}

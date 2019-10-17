@@ -5,6 +5,9 @@
     padding: 0;
   }
   padding: 0 1rem;
-
   background: $body-bg;
+
+  &--background-white {
+    background: white;
+  }
 }

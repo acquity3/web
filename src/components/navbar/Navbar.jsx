@@ -15,7 +15,9 @@ const Navbar = ({ isAuthenticated }) => {
 
   return (
     <nav
-      className="navbar is-fixed-top"
+      className={`navbar is-fixed-top ${
+        isAuthenticated ? 'navbar--background-white' : ''
+      }`}
       role="navigation"
       aria-label="main navigation"
     >

@@ -2,8 +2,6 @@ import React, { useReducer } from 'react';
 import zxcvbn from 'zxcvbn';
 import useForm from 'react-hook-form';
 
-import 'assets/scss/animations.scss';
-
 import PasswordStrengthProgressBar from './PasswordStrengthProgressBar';
 import './SignupForm.scss';
 

@@ -1,9 +1,27 @@
-.tabs.is-toggle li {
-  &:not(:last-child) {
-    margin-right: 1rem;
+@import 'assets/scss/variables';
+@import 'assets/scss/buttons';
+
+.main {
+  &__header {
+    font-family: 'Nexa Bold';
+    font-size: 1.5rem;
+    margin: 3rem 2rem;
+    color: $blue;
   }
-  a {
-    border: none;
-    border-radius: 20px !important;
+
+  &__content {
+    margin: auto 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__divider {
+      width: 100%;
+    }
+  }
+
+  .is-divider {
+    margin: 3rem 0;
   }
 }
