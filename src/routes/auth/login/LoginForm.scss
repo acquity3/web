@@ -1,19 +1,24 @@
-form {
-  label.label {
-    font-weight: normal;
-  }
+@import 'assets/scss/variables';
 
-  .actions-wrapper {
-    margin-top: 1.5rem;
+.form {
+  .login {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+    padding-right: 0.5rem;
 
-    .forget-password-link {
-      font-size: 0.85rem;
+    .remember-me {
+      display: flex;
+      align-items: center;
     }
-  }
 
-  .login-button {
-    width: -webkit-fill-available;
-    margin: 0 0.5rem;
-    margin-top: 1.5rem;
+    &__button {
+      min-width: 40%;
+      border-radius: 15px;
+      font-size: 1.1rem;
+      font-family: 'Nexa Bold' !important;
+      background-image: $action-button-bg;
+      color: white;
+    }
   }
 }

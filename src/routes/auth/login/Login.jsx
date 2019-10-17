@@ -11,9 +11,9 @@ const Login = () => {
   const { login } = useAuth();
 
   return (
-    <div className="columns is-centered is-vertically-centered">
-      <div className="column is-four-fifths-tablet is-full-mobile">
-        <div className="columns">
+    <div className="columns is-marginless is-centered">
+      <div className="column is-two-thirds-desktop is-four-fifths-tablet is-full-mobile">
+        <div className="columns is-variable is-6">
           <div className="column is-half is-hidden-mobile">
             <div className="art-container">
               <LoginArt />
@@ -21,13 +21,18 @@ const Login = () => {
           </div>
           <div className="column is-half">
             <div className="content-container">
-              <h1 className="form-title">Log in</h1>
+              <h1 className="form-title">Sign In</h1>
               <div className="form-wrapper">
                 <LoginForm onSubmit={login} />
               </div>
-              <div className="has-text-centered">
-                <span>Don&apos;t have an account yet? </span>
-                <Link to="/signup">Sign up</Link>
+
+              <div className="actions">
+                <Link className="actions__forgetpassword" to="/forgot-password">
+                  Forgot your password?
+                </Link>
+                <Link className="actions__signup" to="/signup">
+                  Don&apos;t have an account yet? Sign up here.
+                </Link>
               </div>
             </div>
           </div>

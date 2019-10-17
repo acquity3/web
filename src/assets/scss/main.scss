@@ -63,7 +63,6 @@ body {
   .content-container {
     position: relative;
     height: 100%;
-    overflow: auto;
 
     .header-container {
       height: 3rem;
@@ -73,10 +72,4 @@ body {
       height: calc(100% - 3rem);
     }
   }
-}
-
-.is-vertically-centered {
-  height: 100%;
-  display: flex;
-  align-items: center;
 }
