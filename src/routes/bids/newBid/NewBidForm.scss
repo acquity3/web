@@ -1,0 +1,36 @@
+@import 'assets/scss/variables';
+
+.securities__dropdown {
+  height: 2.75rem;
+  padding-left: 0.75em !important;
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+  min-width: 6rem;
+  background: $grey;
+
+  .react-dropdown-select {
+    &-dropdown {
+      width: max-content;
+      min-width: inherit;
+    }
+
+    &-content {
+      align-items: center;
+      height: inherit;
+      white-space: nowrap;
+
+      input {
+        text-align: start;
+      }
+
+      span {
+        height: inherit;
+        display: flex;
+        align-items: center;
+      }
+    }
+    &-item {
+      width: 100%;
+    }
+  }
+}
