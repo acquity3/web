@@ -8,21 +8,25 @@ import './Main.scss';
 import OngoingBidsGhost from './ongoingBids/OngoingBidsGhost';
 
 const mockBid1 = {
-  id: '123tei2E2',
-  bidNum: '1',
-  stockName: 'Grab Holdings Pte Ltd',
-  quantity: '3000',
-  price: '6.89',
-  timestamp: '1570866188'
+  id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  numberOfShares: 3333,
+  price: 7.02,
+  securityId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  securityName: 'Grab',
+  roundId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  timestamp: 1568832197
 };
 
 const mockBid2 = {
-  id: '125kjm3ee',
-  bidNum: '2',
-  stockName: 'Grab Holdings Pte Ltd',
-  quantity: '600',
-  price: '7',
-  timestamp: '1570867188'
+  id: '3fa85f64-5717-4562-b3fc-2c9657jja66afa6',
+  userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  numberOfShares: 699,
+  price: 5.66,
+  securityId: '3fa823234-5717-4562-b3fc-2c963f66afa6',
+  securityName: 'Carousell',
+  roundId: '3fa23364-5717-4562-b3fc-2c963f66afa6',
+  timestamp: 1570819397
 };
 
 const Main = () => {

@@ -36,24 +36,24 @@ const NewBidForm = ({ onSubmit, securities, formData }) => {
       onSubmit={validateInputs(onSubmit)}
     >
       <input
-        id="selectedSecurityId"
+        id="securityId"
         className="is-hidden"
         type="text"
-        name="selectedSecurityId"
+        name="securityId"
         ref={register({
           required: 'This field is required'
         })}
       />
       <input
-        id="selectedSecurityName"
+        id="securityName"
         className="is-hidden"
         type="text"
-        name="selectedSecurityName"
+        name="securityName"
         ref={register({
           required: 'This field is required'
         })}
       />
-      <label htmlFor="numShares" className="label">
+      <label htmlFor="numberOfShares" className="label">
         Number of shares
       </label>
       <div className="form__field field has-addons">
@@ -61,7 +61,7 @@ const NewBidForm = ({ onSubmit, securities, formData }) => {
           <Select
             contentRenderer={customContentRenderer}
             className={`securities__dropdown ${
-              errors.selectedSecurityId ? 'is-danger' : ''
+              errors.securityId ? 'is-danger' : ''
             }`}
             valueField="id"
             labelField="name"
@@ -70,8 +70,8 @@ const NewBidForm = ({ onSubmit, securities, formData }) => {
               formData
                 ? [
                     {
-                      id: formData.selectedSecurityId,
-                      name: formData.selectedSecurityName
+                      id: formData.securityId,
+                      name: formData.securityName
                     }
                   ]
                 : []
@@ -81,23 +81,23 @@ const NewBidForm = ({ onSubmit, securities, formData }) => {
             placeholder=""
             options={securities}
             onChange={value => {
-              setValue('selectedSecurityName', value[0].name, true);
-              setValue('selectedSecurityId', value[0].id, true);
+              setValue('securityName', value[0].name, true);
+              setValue('securityId', value[0].id, true);
             }}
           />
         </div>
         <div className="control is-expanded">
           <input
-            id="numShares"
+            id="numberOfShares"
             onKeyPress={evt => {
               const charCode = evt.which ? evt.which : evt.keyCode;
               if (charCode > 31 && (charCode < 48 || charCode > 57)) {
                 evt.preventDefault();
               }
             }}
-            className={`input ${errors.numShares ? 'is-danger' : ''}`}
+            className={`input ${errors.numberOfShares ? 'is-danger' : ''}`}
             type="text"
-            name="numShares"
+            name="numberOfShares"
             placeholder="3000"
             ref={register({
               required: 'This field is required',
@@ -114,8 +114,8 @@ const NewBidForm = ({ onSubmit, securities, formData }) => {
               }
             })}
           />
-          {errors.numShares && (
-            <p className="help is-danger">{errors.numShares.message}</p>
+          {errors.numberOfShares && (
+            <p className="help is-danger">{errors.numberOfShares.message}</p>
           )}
         </div>
       </div>
@@ -179,7 +179,9 @@ const NewBidForm = ({ onSubmit, securities, formData }) => {
           <span className="estimate__amount--currency">SGD</span>
           <span className="estimate__amount--amount">
             {validateMoneyString(watchedFields.price)
-              ? (watchedFields.price * watchedFields.numShares).toLocaleString()
+              ? (
+                  watchedFields.price * watchedFields.numberOfShares
+                ).toLocaleString()
               : '-'}
           </span>
         </div>

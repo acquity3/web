@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import PageContainer from 'components/pageContainer';
 
@@ -40,13 +39,13 @@ const Confirmation = ({ bid, handleBackClick, history, apiCall }) => {
             <div className="confirmation__details">
               <div className="confirmation__details__label">Company</div>
               <div className="confirmation__details__value">
-                {bid.selectedSecurityName}
+                {bid.securityName}
               </div>
               <div className="confirmation__details__label">
                 Number of shares
               </div>
               <div className="confirmation__details__value">
-                {bid.numShares}
+                {bid.numberOfShares}
               </div>
               <div className="confirmation__details__label">
                 Maximum price per share
@@ -60,7 +59,7 @@ const Confirmation = ({ bid, handleBackClick, history, apiCall }) => {
               <div className="confirmation__estimate__amount confirmation__details__value">
                 <span className="estimate__amount--currency">SGD</span>
                 <span className="estimate__amount--amount">
-                  {moneyFormatter(bid.price * bid.numShares)}
+                  {moneyFormatter(bid.price * bid.numberOfShares)}
                 </span>
               </div>
             </div>
@@ -86,17 +85,6 @@ const Confirmation = ({ bid, handleBackClick, history, apiCall }) => {
       </div>
     </PageContainer>
   );
-};
-
-Confirmation.propTypes = {
-  bid: PropTypes.shape({
-    numShares: PropTypes.string,
-    price: PropTypes.string,
-    selectedSecurityName: PropTypes.string,
-    selectedSecurityId: PropTypes.string
-  }).isRequired,
-  handleBackClick: PropTypes.func.isRequired,
-  apiCall: PropTypes.func.isRequired
 };
 
 export default withRouter(Confirmation);

@@ -11,9 +11,12 @@ const moneyFormatter = num => {
   return parseFloat(num).toFixed(2);
 };
 
-const validateMoneyString = string => {
-  if (string) {
-    return string.match(/^[0-9]+(\.[0-9]{1,2})?$/gm);
+const validateMoneyString = money => {
+  if (money) {
+    if (typeof money === 'number') {
+      return money.toString().match(/^[0-9]+(\.[0-9]{1,2})?$/gm);
+    }
+    return money.match(/^[0-9]+(\.[0-9]{1,2})?$/gm);
   }
   return false;
 };

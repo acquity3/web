@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 
@@ -12,10 +11,7 @@ const Bid = ({ bid }) => {
     <div className="bid">
       <div className="bid__header">
         <span className="bid__header__info">
-          <span className="bid__header__info__bidNumber">
-            Bid #{bid.bidNum}:&nbsp;
-          </span>
-          <span className="bid__header__info__name">{bid.stockName}</span>
+          <span className="bid__header__info__name">{bid.securityName}</span>
         </span>
         <span className="bid__header__timestamp">
           <TimeAgo title={bidTime.toLocaleString()} date={bidTime} />
@@ -27,7 +23,7 @@ const Bid = ({ bid }) => {
             <div className="bid__details column">
               <span className="bid__details__label">Quantity:</span>
               <span className="bid__details__value">
-                {parseFloat(bid.quantity).toLocaleString()}
+                {parseFloat(bid.numberOfShares).toLocaleString()}
               </span>
             </div>
             <div className="bid__details column">
@@ -43,9 +39,11 @@ const Bid = ({ bid }) => {
               <span className="bid__details__label">Estimated total:</span>
               <span
                 className="bid__details__value"
-                title={`$S ${(bid.price * bid.quantity).toLocaleString()}`}
+                title={`$S ${(
+                  bid.price * bid.numberOfShares
+                ).toLocaleString()}`}
               >
-                S$ {moneyFormatter(bid.price * bid.quantity)}
+                S$ {moneyFormatter(bid.price * bid.numberOfShares)}
               </span>
             </div>
           </div>
@@ -63,17 +61,6 @@ const Bid = ({ bid }) => {
       </div>
     </div>
   );
-};
-
-Bid.propTypes = {
-  bid: PropTypes.shape({
-    id: PropTypes.string,
-    bidNum: PropTypes.string,
-    stockName: PropTypes.string,
-    quantity: PropTypes.string,
-    price: PropTypes.string,
-    timestamp: PropTypes.string
-  }).isRequired
 };
 
 export default Bid;

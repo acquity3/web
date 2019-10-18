@@ -27,9 +27,9 @@ const NewBid = ({ history }) => {
   if (state.showConfirm) {
     const apiCall = () =>
       ApiService.post('buy_order', {
-        numberOfShares: parseInt(state.formData.numShares, 0),
+        numberOfShares: parseInt(state.formData.numberOfShares, 0),
         price: parseFloat(state.formData.price),
-        securityId: state.formData.selectedSecurityId
+        securityId: state.formData.securityId
       });
     return (
       <Confirmation

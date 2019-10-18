@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
 
 import { validateMoneyString } from 'utils/moneyUtils';
@@ -22,10 +21,10 @@ const StockFormAddon = ({ stockName, iconUrl }) => {
   );
 };
 
-const EditBidForm = ({ onSubmit, bid }) => {
+const EditBidForm = ({ onSubmit, formData }) => {
   const { register, handleSubmit: validateInputs, errors, watch } = useForm({
     mode: 'onBlur',
-    defaultValues: { numShares: bid.quantity, price: bid.price }
+    defaultValues: formData
   });
   const watchedFields = watch();
 
@@ -35,23 +34,40 @@ const EditBidForm = ({ onSubmit, bid }) => {
       noValidate
       onSubmit={validateInputs(onSubmit)}
     >
-      <label htmlFor="numShares" className="label">
+      <input
+        id="securityName"
+        className="is-hidden"
+        type="text"
+        name="securityName"
+        ref={register}
+      />
+      <input
+        id="securityId"
+        className="is-hidden"
+        type="text"
+        name="securityId"
+        ref={register}
+      />
+      <label htmlFor="numberOfShares" className="label">
         Number of shares
       </label>
       <div className="form__field field has-addons">
-        <StockFormAddon stockName={bid.stockName} iconUrl={bid.iconUrl} />
+        <StockFormAddon
+          stockName={formData.securityName}
+          iconUrl={formData.iconUrl}
+        />
         <div className="control is-expanded">
           <input
-            id="numShares"
+            id="numberOfShares"
             onKeyPress={evt => {
               const charCode = evt.which ? evt.which : evt.keyCode;
               if (charCode > 31 && (charCode < 48 || charCode > 57)) {
                 evt.preventDefault();
               }
             }}
-            className={`input ${errors.numShares ? 'is-danger' : ''}`}
+            className={`input ${errors.numberOfShares ? 'is-danger' : ''}`}
             type="text"
-            name="numShares"
+            name="numberOfShares"
             placeholder="3000"
             ref={register({
               required: 'This field is required',
@@ -68,8 +84,8 @@ const EditBidForm = ({ onSubmit, bid }) => {
               }
             })}
           />
-          {errors.numShares && (
-            <p className="help is-danger">{errors.numShares.message}</p>
+          {errors.numberOfShares && (
+            <p className="help is-danger">{errors.numberOfShares.message}</p>
           )}
         </div>
       </div>
@@ -129,7 +145,9 @@ const EditBidForm = ({ onSubmit, bid }) => {
           <span className="estimate__amount--currency">SGD</span>
           <span className="estimate__amount--amount">
             {validateMoneyString(watchedFields.price)
-              ? (watchedFields.price * watchedFields.numShares).toLocaleString()
+              ? (
+                  watchedFields.price * watchedFields.numberOfShares
+                ).toLocaleString()
               : '-'}
           </span>
         </div>
@@ -149,19 +167,6 @@ const EditBidForm = ({ onSubmit, bid }) => {
       </div>
     </form>
   );
-};
-
-EditBidForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  bid: PropTypes.shape({
-    stockName: PropTypes.string,
-    iconUrl: PropTypes.string,
-    id: PropTypes.string,
-    bidNum: PropTypes.string,
-    quantity: PropTypes.string,
-    price: PropTypes.string,
-    timestamp: PropTypes.string
-  }).isRequired
 };
 
 export default EditBidForm;

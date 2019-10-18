@@ -2,27 +2,31 @@
 import React, { useEffect, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import ApiService from 'services/apiService';
 import PageContainer from 'components/pageContainer';
 import EditBidForm from './EditBidForm';
+import Confirmation from '../confirmation';
 
 import './EditBid.scss';
 import '../style.scss';
 
 // Temporary mock bid until hooked to backend
 const mockBid = {
-  id: '123tei2E2',
-  bidNum: '2',
-  stockName: 'Grab Holdings Pte Ltd',
-  quantity: '3000',
-  price: '6.89',
-  timestamp: '1570866188'
+  id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  numberOfShares: '3333',
+  price: '7.02',
+  securityId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
+  securityName: 'Grab',
+  roundId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
 };
 
 const EditBid = ({ match, location, history }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
     error: false,
-    bidState: null
+    showConfirm: false,
+    formData: null
   });
   const bidId = match.params.id;
   const { bid } = location;
@@ -32,12 +36,27 @@ const EditBid = ({ match, location, history }) => {
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (!bid) {
-      setState({ bidState: mockBid, isLoading: false });
+      setState({ formData: mockBid, isLoading: false });
     } else {
-      setState({ bidState: bid, isLoading: false });
+      setState({ formData: bid, isLoading: false });
     }
     return () => {};
   }, [bidId, bid]);
+
+  if (state.showConfirm) {
+    const apiCall = () =>
+      ApiService.patch(`buy_order/${bidId}`, {
+        newNumberOfShares: parseInt(state.formData.numberOfShares, 0),
+        newPrice: parseFloat(state.formData.price)
+      });
+    return (
+      <Confirmation
+        bid={state.formData}
+        apiCall={apiCall}
+        handleBackClick={() => setState({ showConfirm: false })}
+      />
+    );
+  }
 
   return (
     <PageContainer>
@@ -61,8 +80,10 @@ const EditBid = ({ match, location, history }) => {
               <div>Loading</div>
             ) : (
               <EditBidForm
-                bid={state.bidState}
-                onSubmit={data => console.log('submitting', data)}
+                formData={state.formData}
+                onSubmit={data => {
+                  setState({ formData: data, showConfirm: true });
+                }}
                 onDelete={data => console.log('deleting', data)}
               />
             )}
