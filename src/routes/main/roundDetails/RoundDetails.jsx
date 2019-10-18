@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import Countdown, { zeroPad } from 'react-countdown-now';
 
 import ApiService from 'services/apiService';
+import NotifyDetails from './NotifyDetails';
 import './RoundDetails.scss';
+import RoundDetailsGhost from './RoundDetailsGhost';
 
 const countdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
@@ -51,39 +53,40 @@ const countdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
 };
 
 const RoundDetails = () => {
-  const [timeForRoundEnd, setTimeForRoundEnd] = useState(new Date(null));
+  const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
+    isLoading: true,
+    timeForRoundEnd: new Date(null)
+  });
 
   // TODO: add catch statement to show error,
   // TODO: add animation for loading
   useEffect(() => {
     ApiService.get('round/active').then(res => {
       // Multiply by 1000 since converting timestamp to milliseconds
-      setTimeForRoundEnd(new Date(res.data * 1000));
+      if (res.data) {
+        setState({
+          timeForRoundEnd: res.data
+        });
+      }
+      setState({ isLoading: false });
     });
   }, []);
 
   return (
     <div className="roundDetails">
       <div className="roundDetails__content">
-        <Countdown date={timeForRoundEnd} renderer={countdownRenderer} />
+        {state.isLoading ? (
+          <RoundDetailsGhost />
+        ) : (
+          <Countdown
+            date={state.timeForRoundEnd}
+            renderer={countdownRenderer}
+          />
+        )}
       </div>
       <Link to="/previous-round/summary">
         View summary of the previous round &gt;
       </Link>
-    </div>
-  );
-};
-
-const NotifyDetails = () => {
-  return (
-    <div className="countdownDetails">
-      <div className="countdownDetails__header">
-        The next round has not opened yet.
-      </div>
-      <div className="countdownDetails__text">
-        You may still place your bids. We will notify you when the next round
-        begins
-      </div>
     </div>
   );
 };
