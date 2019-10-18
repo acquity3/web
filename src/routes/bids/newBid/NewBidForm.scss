@@ -1,23 +1,6 @@
 @import 'assets/scss/variables';
 
 .newBid {
-  .form {
-    &__field {
-      input {
-        height: 2.75rem;
-      }
-
-      .control {
-        .button {
-          font-family: 'Nexa Bold' !important;
-          font-size: 1.2rem;
-          height: 2.75rem;
-          line-height: 1.2rem;
-          color: $dark !important;
-        }
-      }
-    }
-  }
   .security__display {
     font-family: 'Nexa Bold';
     font-size: 1.2rem;

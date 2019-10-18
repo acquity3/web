@@ -12,11 +12,22 @@
     label.label {
       font-family: 'Nexa Bold';
     }
-    .form__field {
+    &__field {
       input {
+        height: 2.75rem;
         text-align: end;
         font-family: 'Nexa Light' !important;
         font-size: 1.2rem;
+      }
+
+      .control {
+        .button {
+          font-family: 'Nexa Bold' !important;
+          font-size: 1.2rem;
+          height: 2.75rem;
+          line-height: 1.2rem;
+          color: $dark !important;
+        }
       }
     }
   }
