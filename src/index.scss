@@ -7,6 +7,14 @@ iframe {
   height: 100%;
 }
 
+#root {
+  overflow-y: auto;
+  overflow-y: overlay;
+  position: absolute;
+  height: calc(100vh - 4rem);
+  width: 100%;
+}
+
 html {
   overflow-y: auto;
   font-size: 16px;
@@ -23,11 +31,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#root,
-.app {
-  // display: flow-root;
 }
 
 button,
