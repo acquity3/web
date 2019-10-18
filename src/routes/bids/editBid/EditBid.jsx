@@ -52,7 +52,7 @@ const EditBid = ({ match, location, history }) => {
               <i className="fas fa-arrow-left" />
             </button>
           </div>
-          <span className="editBid__header__text column">Edit Bid</span>
+          <span className="bidPage__header__text column">Edit Bid</span>
           <div className="column is-1" />
         </div>
         <div className="page__content columns is-mobile">

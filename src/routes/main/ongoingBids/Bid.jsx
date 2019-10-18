@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 
-import { moneyFormatter } from 'utils';
+import { moneyFormatter } from 'utils/moneyUtils';
 import './Bid.scss';
 
 const Bid = ({ bid }) => {

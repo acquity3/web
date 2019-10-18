@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
 import Select from 'react-dropdown-select';
 
-import { validateMoneyString } from 'utils';
+import { validateMoneyString } from 'utils/moneyUtils';
 
 import './NewBidForm.scss';
 

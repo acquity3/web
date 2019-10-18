@@ -50,7 +50,7 @@ const NewBid = ({ history }) => {
               <i className="fas fa-arrow-left" />
             </button>
           </div>
-          <span className="editBid__header__text column">Bid Information</span>
+          <span className="bidPage__header__text column">Bid Information</span>
           <div className="column is-1" />
         </div>
         <div className="page__content columns is-mobile">

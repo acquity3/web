@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
 
-import { validateMoneyString } from 'utils';
+import { validateMoneyString } from 'utils/moneyUtils';
 
 const StockFormAddon = ({ stockName, iconUrl }) => {
   return (
