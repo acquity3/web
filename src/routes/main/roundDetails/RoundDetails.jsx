@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Countdown, { zeroPad } from 'react-countdown-now';
 
+import ApiService from 'services/apiService';
 import './RoundDetails.scss';
 
 const countdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -50,14 +51,21 @@ const countdownRenderer = ({ days, hours, minutes, seconds, completed }) => {
 };
 
 const RoundDetails = () => {
-  // TODO: Hook to API to retrieve next round.
-  // Can be timestamp that has passed, then will automatically go to closed
-  const timeToEndOfRound = Date.now() + 10000;
+  const [timeForRoundEnd, setTimeForRoundEnd] = useState(new Date(null));
+
+  // TODO: add catch statement to show error,
+  // TODO: add animation for loading
+  useEffect(() => {
+    ApiService.get('round/active').then(res => {
+      // Multiply by 1000 since converting timestamp to milliseconds
+      setTimeForRoundEnd(new Date(res.data * 1000));
+    });
+  }, []);
 
   return (
     <div className="roundDetails">
       <div className="roundDetails__content">
-        <Countdown date={timeToEndOfRound} renderer={countdownRenderer} />
+        <Countdown date={timeForRoundEnd} renderer={countdownRenderer} />
       </div>
       <Link to="/previous-round/summary">
         View summary of the previous round &gt;
