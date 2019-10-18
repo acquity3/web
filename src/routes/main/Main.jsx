@@ -46,13 +46,15 @@ const Main = () => {
           {state.isLoading ? (
             <OngoingBidsGhost />
           ) : (
-            <OngoingBids ongoingBids={state.ongoingBids} />
+            <>
+              <OngoingBids ongoingBids={state.ongoingBids} />
+              <Link to="bids/new">
+                <button type="button" className="button button--cta hvr-grow">
+                  Create New Bid
+                </button>
+              </Link>
+            </>
           )}
-          <Link to="bids/new">
-            <button type="button" className="button button--cta hvr-grow">
-              Create New Bid
-            </button>
-          </Link>
           <div className="is-divider main__content__divider" />
           <RoundDetails />
         </div>
