@@ -5,6 +5,7 @@ import ApiService from 'services/apiService';
 import NewBidForm from './NewBidForm';
 
 import '../style.scss';
+import Confirmation from '../confirmation';
 
 const NewBid = ({ history }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
@@ -24,17 +25,18 @@ const NewBid = ({ history }) => {
   }, []);
 
   if (state.showConfirm) {
+    const apiCall = () =>
+      ApiService.post('buy_order', {
+        numberOfShares: parseInt(state.formData.numShares, 0),
+        price: parseFloat(state.formData.price),
+        securityId: state.formData.selectedSecurityId
+      });
     return (
-      <div>
-        Showing confirm
-        <button
-          onClick={() => setState({ showConfirm: false })}
-          className="button button--cta button--nav--circle hvr-grow"
-          type="button"
-        >
-          <i className="fas fa-arrow-left" />
-        </button>
-      </div>
+      <Confirmation
+        bid={state.formData}
+        apiCall={apiCall}
+        handleBackClick={() => setState({ showConfirm: false })}
+      />
     );
   }
   return (
