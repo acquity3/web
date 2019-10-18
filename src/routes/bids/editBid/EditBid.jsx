@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useEffect, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
 
@@ -5,6 +6,7 @@ import PageContainer from 'components/pageContainer';
 import EditBidForm from './EditBidForm';
 
 import './EditBid.scss';
+import '../style.scss';
 
 // Temporary mock bid until hooked to backend
 const mockBid = {
@@ -39,7 +41,7 @@ const EditBid = ({ match, location, history }) => {
 
   return (
     <PageContainer>
-      <div className="editBid page">
+      <div className="bidPage page">
         <div className="page__header columns is-mobile">
           <div className="column is-1">
             <button

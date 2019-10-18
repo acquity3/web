@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
 
 import { validateMoneyString } from 'utils';
-import './EditBidForm.scss';
 
 const StockFormAddon = ({ stockName, iconUrl }) => {
   return (
@@ -31,7 +30,11 @@ const EditBidForm = ({ onSubmit, bid }) => {
   const watchedFields = watch();
 
   return (
-    <form className="form" noValidate onSubmit={validateInputs(onSubmit)}>
+    <form
+      className="form bidPage"
+      noValidate
+      onSubmit={validateInputs(onSubmit)}
+    >
       <label htmlFor="numShares" className="label">
         Number of shares
       </label>

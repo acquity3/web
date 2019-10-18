@@ -4,9 +4,13 @@ import PageContainer from 'components/pageContainer';
 import ApiService from 'services/apiService';
 import NewBidForm from './NewBidForm';
 
+import '../style.scss';
+
 const NewBid = ({ history }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
+    showConfirm: false,
+    formData: null,
     securities: []
   });
 
@@ -19,9 +23,23 @@ const NewBid = ({ history }) => {
     });
   }, []);
 
+  if (state.showConfirm) {
+    return (
+      <div>
+        Showing confirm
+        <button
+          onClick={() => setState({ showConfirm: false })}
+          className="button button--cta button--nav--circle hvr-grow"
+          type="button"
+        >
+          <i className="fas fa-arrow-left" />
+        </button>
+      </div>
+    );
+  }
   return (
     <PageContainer>
-      <div className="editBid page">
+      <div className="bidPage page">
         <div className="page__header columns is-mobile">
           <div className="column is-1">
             <button
@@ -42,7 +60,10 @@ const NewBid = ({ history }) => {
             ) : (
               <NewBidForm
                 securities={state.securities}
-                onSubmit={data => console.log('submitting', data)}
+                formData={state.formData}
+                onSubmit={data => {
+                  setState({ formData: data, showConfirm: true });
+                }}
               />
             )}
           </div>
