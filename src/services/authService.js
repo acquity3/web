@@ -32,6 +32,7 @@ const getUser = async () => {
   }
   // Check with backend to see if key is still valid
   const response = await ApiService.get('auth/me');
+
   if (response.status === 200) {
     const { me: userData } = response.data;
     return userData;

@@ -1,19 +1,4 @@
-form {
-  label.label {
-    font-weight: normal;
-  }
-
-  .actions-wrapper {
-    margin-top: 1.5rem;
-
-    .forget-password-link {
-      font-size: 0.85rem;
-    }
-  }
-
-  .login-button {
-    width: -webkit-fill-available;
-    margin: 0 0.5rem;
-    margin-top: 1.5rem;
-  }
+.remember-me {
+  display: flex;
+  align-items: center;
 }

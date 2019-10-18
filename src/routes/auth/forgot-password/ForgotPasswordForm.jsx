@@ -5,8 +5,8 @@ const ForgotPasswordForm = ({ onSubmit, isSubmitting }) => {
   const { register, handleSubmit, errors } = useForm();
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)}>
-      <div className="field">
+    <form className="form" noValidate onSubmit={handleSubmit(onSubmit)}>
+      <div className="form__field field">
         <label htmlFor="email" className="label">
           Email address
         </label>
@@ -30,14 +30,16 @@ const ForgotPasswordForm = ({ onSubmit, isSubmitting }) => {
           )}
         </div>
       </div>
-      <button
-        type="submit"
-        className={`button is-block is-info is-fullwidth ${
-          isSubmitting ? 'is-loading' : ''
-        }`}
-      >
-        Request reset link
-      </button>
+      <div className="auth-actions">
+        <button
+          type="submit"
+          className={`auth-actions__button button--cta button hvr-grow ${
+            isSubmitting ? 'is-loading' : ''
+          }`}
+        >
+          Request reset link
+        </button>
+      </div>
     </form>
   );
 };

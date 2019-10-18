@@ -1,9 +1,13 @@
-.tabs.is-toggle li {
-  &:not(:last-child) {
-    margin-right: 1rem;
+@import 'assets/scss/variables';
+@import 'assets/scss/buttons';
+
+.main {
+  &__content {
+    &__divider {
+      width: 100%;
+    }
   }
-  a {
-    border: none;
-    border-radius: 20px !important;
+  .is-divider {
+    margin: 3rem 0;
   }
 }

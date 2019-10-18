@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import useForm from 'react-hook-form';
-import { Link } from 'react-router-dom';
 
+import 'assets/scss/checkmark.scss';
 import './LoginForm.scss';
 
 const LoginForm = ({ onSubmit }) => {
@@ -33,7 +33,7 @@ const LoginForm = ({ onSubmit }) => {
   };
 
   return (
-    <form noValidate onSubmit={validateInputs(handleSubmit)}>
+    <form className="form" noValidate onSubmit={validateInputs(handleSubmit)}>
       {state.loginErrorMessage && (
         <div className="notification is-danger">
           <button
@@ -45,9 +45,9 @@ const LoginForm = ({ onSubmit }) => {
           {state.loginErrorMessage}
         </div>
       )}
-      <div className="field">
+      <div className="form__field field">
         <label htmlFor="email" className="label">
-          Email
+          Email address
         </label>
         <div className="control">
           <input
@@ -69,7 +69,7 @@ const LoginForm = ({ onSubmit }) => {
           )}
         </div>
       </div>
-      <div className="field">
+      <div className="form__field field">
         <label htmlFor="password" className="label">
           Password
         </label>
@@ -84,9 +84,10 @@ const LoginForm = ({ onSubmit }) => {
             })}
           />
           <button
+            tabIndex={-1}
             type="button"
             onClick={togglePasswordShown}
-            className="show-password icon is-small is-right"
+            className="form__field__icon show-password icon is-small is-right"
           >
             {state.isPasswordShown ? (
               <i className="fas fa-eye-slash" />
@@ -99,19 +100,23 @@ const LoginForm = ({ onSubmit }) => {
           )}
         </div>
       </div>
-      <div className="actions-wrapper">
-        <Link className="forget-password-link" to="/forgot-password">
-          Forgot password?
-        </Link>
+      <div className="auth-actions">
+        <button
+          type="submit"
+          className={`auth-actions__button button--cta button hvr-grow ${
+            state.isLoading ? 'is-loading' : ''
+          }`}
+        >
+          Sign in
+        </button>
+        <div className="remember-me">
+          <label className="checkbox b-contain">
+            <span>Remember me</span>
+            <input type="checkbox" />
+            <div className="b-input" />
+          </label>
+        </div>
       </div>
-      <button
-        type="submit"
-        className={`login-button button is-block is-info ${
-          state.isLoading ? 'is-loading' : ''
-        }`}
-      >
-        Log In
-      </button>
     </form>
   );
 };

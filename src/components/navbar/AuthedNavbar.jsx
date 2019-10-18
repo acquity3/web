@@ -14,7 +14,9 @@ const AuthedNavbar = ({ isNavbarExpanded, location: { pathname } }) => {
         <div className="tabs is-centered">
           <ul>
             <li
-              className={`${pathname.startsWith('/home') ? 'is-active' : ''}`}
+              className={`${
+                pathname.match('(/home|/bids).*') ? 'is-active' : ''
+              }`}
             >
               <Link to="/">Home</Link>
             </li>

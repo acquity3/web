@@ -1,81 +1,48 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import SimpleBar from 'simplebar-react';
-import 'simplebar/dist/simplebar.min.css';
+import PageContainer from 'components/pageContainer';
+import OngoingBids from './ongoingBids';
+import RoundDetails from './roundDetails';
 import './Main.scss';
 
-const MainHeader = ({ currActive }) => {
+const mockBid1 = {
+  id: '123tei2E2',
+  bidNum: '1',
+  stockName: 'Grab Holdings Pte Ltd',
+  quantity: '3000',
+  price: '6.89',
+  timestamp: '1570866188'
+};
+
+const mockBid2 = {
+  id: '125kjm3ee',
+  bidNum: '2',
+  stockName: 'Grab Holdings Pte Ltd',
+  quantity: '600',
+  price: '7',
+  timestamp: '1570867188'
+};
+
+const Main = () => {
+  // TODO: Call backend to check if user has bids
+  const ongoingBids = [mockBid1, mockBid2];
   return (
-    <div className="header-container">
-      <div className="tabs is-centered is-toggle">
-        <ul>
-          <li className={`${currActive === 'bids' ? 'is-active' : ''}`}>
-            <Link to="/home/bids" className="action-button">
-              Bids
-            </Link>
-          </li>
-          <li className={`${currActive === 'offers' ? 'is-active' : ''}`}>
-            <Link to="/home/offers" className="action-button">
-              Offers
-            </Link>
-          </li>
-          <li className={`${currActive === 'history' ? 'is-active' : ''}`}>
-            <Link to="/home/history" className="action-button">
-              History
-            </Link>
-          </li>
-        </ul>
+    <PageContainer>
+      <div className="main page">
+        <div className="page__header">Ongoing Bids</div>
+        <div className="page__content">
+          <OngoingBids ongoingBids={ongoingBids} />
+          <Link to="bids/new">
+            <button type="button" className="button button--cta hvr-grow">
+              Create New Bid
+            </button>
+          </Link>
+          <div className="is-divider main__content__divider" />
+          <RoundDetails />
+        </div>
       </div>
-    </div>
-  );
-};
-
-// Temporary dummy components
-const Bids = () => (
-  <div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-    <div>Bids</div>
-  </div>
-);
-const Offers = () => <div>Offers</div>;
-const History = () => <div>History</div>;
-
-const renderPage = page => {
-  switch (page) {
-    case 'bids':
-      return <Bids />;
-    case 'offers':
-      return <Offers />;
-    case 'history':
-      return <History />;
-    default:
-      return <Redirect to="/404" />;
-  }
-};
-
-const Main = ({ match }) => {
-  return (
-    <div className="content-container">
-      <MainHeader currActive={match.params.page} />
-      <SimpleBar className="page-content-container">
-        <div>Welcome to main page</div>
-        {renderPage(match.params.page)}
-      </SimpleBar>
-    </div>
+    </PageContainer>
   );
 };
 

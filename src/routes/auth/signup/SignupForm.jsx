@@ -1,6 +1,8 @@
 import React, { useReducer } from 'react';
 import zxcvbn from 'zxcvbn';
 import useForm from 'react-hook-form';
+
+import PasswordStrengthProgressBar from './PasswordStrengthProgressBar';
 import './SignupForm.scss';
 
 const LoginForm = ({ onSubmit }) => {
@@ -49,8 +51,8 @@ const LoginForm = ({ onSubmit }) => {
     passwordField === '' ? -1 : zxcvbn(passwordField).score;
 
   return (
-    <form noValidate onSubmit={validateInputs(handleSubmit)}>
-      <div className="field">
+    <form className="form" noValidate onSubmit={validateInputs(handleSubmit)}>
+      <div className="form__field field">
         <label htmlFor="fullname-field" className="label">
           Full name
         </label>
@@ -72,7 +74,7 @@ const LoginForm = ({ onSubmit }) => {
           )}
         </div>
       </div>
-      <div className="field">
+      <div className="form__field field">
         <label htmlFor="email-field" className="label">
           Email address
         </label>
@@ -97,7 +99,7 @@ const LoginForm = ({ onSubmit }) => {
           )}
         </div>
       </div>
-      <div className="field">
+      <div className="form__field field">
         <label htmlFor="password-field" className="label">
           Password
         </label>
@@ -121,8 +123,9 @@ const LoginForm = ({ onSubmit }) => {
           />
           <button
             type="button"
+            tabIndex={-1}
             onClick={togglePasswordShown}
-            className="show-password icon is-small is-right"
+            className="show-password form__field__icon icon is-small is-right"
           >
             {state.isPasswordShown ? (
               <i className="fas fa-eye-slash" />
@@ -141,7 +144,7 @@ const LoginForm = ({ onSubmit }) => {
         )}
         <PasswordStrengthProgressBar strength={passwordStrength} />
       </div>
-      <div className="field">
+      <div className="form__field field">
         <label htmlFor="confirm-password-field" className="label">
           Confirm password
         </label>
@@ -158,9 +161,10 @@ const LoginForm = ({ onSubmit }) => {
             })}
           />
           <button
+            tabIndex={-1}
             type="button"
             onClick={toggleConfirmPasswordShown}
-            className="show-password icon is-small is-right"
+            className="show-password form__field__icon icon is-small is-right"
           >
             {state.isConfirmPasswordShown ? (
               <i className="fas fa-eye-slash" />
@@ -173,56 +177,17 @@ const LoginForm = ({ onSubmit }) => {
           <p className="help is-danger">{errors.confirmPassword.message}</p>
         )}
       </div>
-      <button
-        type="submit"
-        className={`signup-button button is-block is-info is-fullwidth ${
-          state.isLoading ? 'is-loading' : ''
-        }`}
-      >
-        Register
-      </button>
+      <div className="auth-actions">
+        <button
+          type="submit"
+          className={`auth-actions__button button--cta button hvr-grow ${
+            state.isLoading ? 'is-loading' : ''
+          }`}
+        >
+          Register now
+        </button>
+      </div>
     </form>
-  );
-};
-
-const PasswordStrengthProgressBar = ({ strength }) => {
-  const classification = {
-    '-1': {
-      className: 'is-danger',
-      label: 'Password is blank'
-    },
-    0: {
-      className: 'is-danger',
-      label: 'Too weak'
-    },
-    1: {
-      className: 'is-danger',
-      label: 'Too weak'
-    },
-    2: {
-      className: 'is-danger',
-      label: 'Too weak'
-    },
-    3: {
-      className: 'is-warning',
-      label: 'Could be stronger'
-    },
-    4: {
-      className: 'is-success',
-      label: 'Strong password'
-    }
-  };
-  return (
-    <div className="progress-bar-container">
-      <progress
-        className={`progress is-small ${classification[strength].className}`}
-        value={strength}
-        max="4"
-      />
-      <span className="progress-bar-text">
-        {classification[strength].label}
-      </span>
-    </div>
   );
 };
 

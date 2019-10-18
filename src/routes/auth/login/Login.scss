@@ -1,0 +1,12 @@
+.actions {
+  margin-top: 2rem;
+  padding-left: 0.5rem;
+  font-size: 0.9rem;
+  font-family: 'Nexa Bold';
+  display: inline-flex;
+  flex-direction: column;
+
+  a:not(:last-child) {
+    padding-bottom: 0.2rem;
+  }
+}

@@ -1,13 +1,19 @@
 @charset "utf-8";
 
 @import 'assets/scss/variables.scss';
+@import 'assets/scss/animations.scss';
 @import 'bulma/bulma.sass';
-@import 'bulma-pageloader/src/sass/index.sass';
+@import 'bulma-extensions/bulma-pageloader/src/sass/index.sass';
+@import 'bulma-extensions/bulma-divider/src/sass/index.sass';
 
 body {
   position: relative;
   z-index: -2;
-  background: $light;
+  color: $dark;
+}
+
+a {
+  font-family: 'Nexa Bold';
 }
 
 .tabs {
@@ -48,6 +54,16 @@ body {
   border-top-right-radius: 10px;
   box-shadow: 0 2px 20px 0 hsla(0, 0%, 0%, 0.12);
 
+  @media only screen and (max-width: $mobile) {
+    height: calc(100% - 3.5rem);
+    width: 100% !important;
+    padding: 0;
+
+    &:before {
+      content: none !important;
+    }
+  }
+
   &:before {
     content: '';
     background: url('../images/container-bg.svg') no-repeat;
@@ -64,14 +80,13 @@ body {
   .content-container {
     position: relative;
     height: 100%;
-    overflow: auto;
 
     .header-container {
       height: 3rem;
     }
 
     .page-content-container {
-      height: calc(100% - 3rem);
+      height: 100%;
     }
   }
 }

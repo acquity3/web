@@ -25,6 +25,13 @@ $action-button-bg: linear-gradient(
   rgba(38, 126, 208, 1) 0%,
   rgba(85, 96, 232, 1) 100%
 );
+$danger-button-bg: linear-gradient(
+  45deg,
+  rgba(185, 47, 76, 1) 0%,
+  rgba(224, 42, 69, 1) 100%
+);
+
+$body-bg: #f7f8fb;
 
 // Set your brand colors
 // $purple: #8a4d76;
@@ -34,6 +41,18 @@ $action-button-bg: linear-gradient(
 // $beige-lighter: #eff0eb;
 
 // Update Bulma's global variables
+$section-padding: 2rem 0;
+$label-color: $dark;
+$button-background-color: none;
+$input-radius: 15px;
+$button-border-color: rgba(85, 96, 232, 0.25);
+$button-focus-box-shadow-color: rgba(85, 96, 232, 0.25);
+$button-active-border-color: rgba(85, 96, 232, 0.25);
+$button-color: white;
+$button-focus-color: white;
+$button-active-color: white;
+$button-hover-color: white;
+$control-radius: 15px;
 // $family-sans-serif: "Nunito", sans-serif;
 // $grey-dark: $brown;
 // $grey-light: $beige-light;
@@ -41,7 +60,7 @@ $action-button-bg: linear-gradient(
 // $link: $pink;
 
 // Update some of Bulma's component variables
-// $body-background-color: $beige-lighter;
+$body-background-color: $body-bg;
 // $control-border-width: 2px;
 // $input-border-color: transparent;
 // $input-shadow: none;

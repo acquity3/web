@@ -6,32 +6,27 @@ import {
   Redirect
 } from 'react-router-dom';
 
-import Main from 'routes/main';
 import Navbar from 'components/navbar';
+import Main from 'routes/main';
+import NewBid from 'routes/bids/newBid';
+import EditBid from 'routes/bids/editBid';
 
 const AuthenticatedApp = () => {
   return (
     <Router>
       <div className="app">
         <Navbar isAuthenticated />
-        <div className="columns is-marginless is-mobile is-centered">
-          <div className="is-container column is-two-thirds-tablet is-four-fifths-mobile">
-            <Switch>
-              <Route
-                exact
-                path={['/login', '/signup']}
-                render={() => <Redirect to="/" />}
-              />
-              <Route path="/home/:page" component={Main} />
-
-              <Route
-                exact
-                path="/"
-                render={() => <Redirect to="/home/bids" />}
-              />
-            </Switch>
-          </div>
-        </div>
+        <Switch>
+          <Route
+            exact
+            path={['/login', '/signup']}
+            render={() => <Redirect to="/" />}
+          />
+          <Route path="/home" component={Main} />
+          <Route path="/bids/new" component={NewBid} />
+          <Route path="/bids/edit/:id" component={EditBid} />
+          <Route exact path="/" render={() => <Redirect to="/home" />} />
+        </Switch>
       </div>
     </Router>
   );
