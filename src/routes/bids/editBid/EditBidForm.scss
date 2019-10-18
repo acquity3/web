@@ -2,9 +2,14 @@
 
 .editBid {
   .form {
+    label.label {
+      font-family: 'Nexa Bold';
+    }
     .form__field {
       input {
         text-align: end;
+        font-family: 'Nexa Light' !important;
+        font-size: 1.2rem;
       }
     }
   }
@@ -23,6 +28,10 @@
       &--currency {
         font-family: 'Nexa Bold';
         margin-right: 0.4rem;
+      }
+
+      &--amount {
+        font-family: 'Nexa Light';
       }
     }
   }

@@ -1,19 +1,44 @@
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
-import Container from 'components/pageContainer/PageContainer';
 
-import './EditBid.scss';
+import PageContainer from 'components/pageContainer';
 import EditBidForm from './EditBidForm';
 
-const EditBid = ({ _match, _location, history }) => {
-  // const bidId = match.params.id;
-  // const { bid } = location;
+import './EditBid.scss';
+
+// Temporary mock bid until hooked to backend
+const mockBid = {
+  id: '123tei2E2',
+  bidNum: '2',
+  stockName: 'Grab Holdings Pte Ltd',
+  quantity: '3000',
+  price: '6.89',
+  timestamp: '1570866188'
+};
+
+const EditBid = ({ match, location, history }) => {
+  const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
+    isLoading: true,
+    error: false,
+    bidState: null
+  });
+  const bidId = match.params.id;
+  const { bid } = location;
 
   // TODO: Retrieve bid with id from backend if undefined.
   // TODO: Throw error if unauthorized to edit given bid.
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (!bid) {
+      setState({ bidState: mockBid, isLoading: false });
+    } else {
+      setState({ bidState: bid, isLoading: false });
+    }
+    return () => {};
+  }, [bidId, bid]);
 
   return (
-    <Container>
+    <PageContainer>
       <div className="editBid page">
         <div className="page__header columns is-mobile">
           <div className="column is-1">
@@ -30,11 +55,19 @@ const EditBid = ({ _match, _location, history }) => {
         </div>
         <div className="page__content columns is-mobile">
           <div className="form-wrapper column is-full-mobile is-four-fifths-tablet is-half-desktop">
-            <EditBidForm onSubmit={data => console.log(data)} />
+            {state.isLoading ? (
+              <div>Loading</div>
+            ) : (
+              <EditBidForm
+                bid={state.bidState}
+                onSubmit={data => console.log('submitting', data)}
+                onDelete={data => console.log('deleting', data)}
+              />
+            )}
           </div>
         </div>
       </div>
-    </Container>
+    </PageContainer>
   );
 };
 

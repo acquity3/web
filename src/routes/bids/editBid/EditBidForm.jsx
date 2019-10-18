@@ -1,32 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
 
 import { validateMoneyString } from 'utils';
 import './EditBidForm.scss';
 
-const mockStock = {
-  name: 'Grabtastic',
-  iconUrl:
-    'https://upload.wikimedia.org/wikipedia/en/1/12/Grab_%28application%29_logo.svg'
-};
-
-const StockFormAddon = ({ stock }) => {
+const StockFormAddon = ({ stockName, iconUrl }) => {
   return (
     <div className="control">
       <button tabIndex={-1} type="button" className="button is-static">
-        <img
-          style={{ maxWidth: '80%', maxHeight: '80%' }}
-          src={stock.iconUrl}
-          alt={stock.name}
-        />
+        {iconUrl ? (
+          <img
+            style={{ maxWidth: '80%', maxHeight: '80%' }}
+            src={iconUrl}
+            alt={stockName}
+          />
+        ) : (
+          stockName
+        )}
       </button>
     </div>
   );
 };
 
-const EditBidForm = ({ onSubmit }) => {
+const EditBidForm = ({ onSubmit, bid }) => {
   const { register, handleSubmit: validateInputs, errors, watch } = useForm({
-    mode: 'onBlur'
+    mode: 'onBlur',
+    defaultValues: { numShares: bid.quantity, price: bid.price }
   });
   const watchedFields = watch();
 
@@ -36,7 +36,7 @@ const EditBidForm = ({ onSubmit }) => {
         Number of shares
       </label>
       <div className="form__field field has-addons">
-        <StockFormAddon stock={mockStock} />
+        <StockFormAddon stockName={bid.stockName} iconUrl={bid.iconUrl} />
         <div className="control is-expanded">
           <input
             id="numShares"
@@ -51,7 +51,9 @@ const EditBidForm = ({ onSubmit }) => {
             name="numShares"
             placeholder="3000"
             ref={register({
-              required: 'This field is required'
+              required: 'This field is required',
+              validate: value =>
+                value > 0 || 'Number of shares must be bigger than 0'
             })}
           />
           {errors.numShares && (
@@ -123,6 +125,19 @@ const EditBidForm = ({ onSubmit }) => {
       </div>
     </form>
   );
+};
+
+EditBidForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  bid: PropTypes.shape({
+    stockName: PropTypes.string,
+    iconUrl: PropTypes.string,
+    id: PropTypes.string,
+    bidNum: PropTypes.string,
+    quantity: PropTypes.string,
+    price: PropTypes.string,
+    timestamp: PropTypes.string
+  }).isRequired
 };
 
 export default EditBidForm;
