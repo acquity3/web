@@ -1,9 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
 
 import { validateMoneyString } from 'utils';
-import './EditBidForm.scss';
 
 const StockFormAddon = ({ stockName, iconUrl }) => {
   return (
@@ -23,10 +21,9 @@ const StockFormAddon = ({ stockName, iconUrl }) => {
   );
 };
 
-const EditBidForm = ({ onSubmit, bid }) => {
+const NewBidForm = ({ onSubmit }) => {
   const { register, handleSubmit: validateInputs, errors, watch } = useForm({
-    mode: 'onBlur',
-    defaultValues: { numShares: bid.quantity, price: bid.price }
+    mode: 'onBlur'
   });
   const watchedFields = watch();
 
@@ -36,7 +33,7 @@ const EditBidForm = ({ onSubmit, bid }) => {
         Number of shares
       </label>
       <div className="form__field field has-addons">
-        <StockFormAddon stockName={bid.stockName} iconUrl={bid.iconUrl} />
+        <StockFormAddon stockName="Grab" />
         <div className="control is-expanded">
           <input
             id="numShares"
@@ -138,27 +135,9 @@ const EditBidForm = ({ onSubmit, bid }) => {
             Confirm
           </button>
         </div>
-        <div className="control">
-          <button type="button" className="button--danger button hvr-grow">
-            Delete
-          </button>
-        </div>
       </div>
     </form>
   );
 };
 
-EditBidForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  bid: PropTypes.shape({
-    stockName: PropTypes.string,
-    iconUrl: PropTypes.string,
-    id: PropTypes.string,
-    bidNum: PropTypes.string,
-    quantity: PropTypes.string,
-    price: PropTypes.string,
-    timestamp: PropTypes.string
-  }).isRequired
-};
-
-export default EditBidForm;
+export default NewBidForm;
