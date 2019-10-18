@@ -10,33 +10,27 @@ import Confirmation from '../confirmation';
 import './EditBid.scss';
 import '../style.scss';
 
-// Temporary mock bid until hooked to backend
-const mockBid = {
-  id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  numberOfShares: '3333',
-  price: '7.02',
-  securityId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  securityName: 'Grab',
-  roundId: '3fa85f64-5717-4562-b3fc-2c963f66afa6'
-};
-
 const EditBid = ({ match, location, history }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
-    error: false,
+    hasError: false,
     showConfirm: false,
     formData: null
   });
   const bidId = match.params.id;
   const { bid } = location;
 
-  // TODO: Retrieve bid with id from backend if undefined.
-  // TODO: Throw error if unauthorized to edit given bid.
   // eslint-disable-next-line consistent-return
   useEffect(() => {
+    // Did not come from home page, came from URL
     if (!bid) {
-      setState({ formData: mockBid, isLoading: false });
+      ApiService.get(`buy_order/${bidId}`)
+        .then(response => {
+          setState({ formData: response.data, isLoading: false });
+        })
+        .catch(() => {
+          setState({ isLoading: false, hasError: true });
+        });
     } else {
       setState({ formData: bid, isLoading: false });
     }
@@ -56,6 +50,10 @@ const EditBid = ({ match, location, history }) => {
         handleBackClick={() => setState({ showConfirm: false })}
       />
     );
+  }
+
+  if (state.hasError) {
+    return <div>ERRORRRR</div>;
   }
 
   return (

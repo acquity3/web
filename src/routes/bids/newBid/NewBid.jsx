@@ -10,18 +10,23 @@ import Confirmation from '../confirmation';
 const NewBid = ({ history }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
+    hasError: false,
     showConfirm: false,
     formData: null,
     securities: []
   });
 
   useEffect(() => {
-    ApiService.get('security/').then(response => {
-      setState({
-        isLoading: false,
-        securities: response.data
+    ApiService.get('security/')
+      .then(response => {
+        setState({
+          isLoading: false,
+          securities: response.data
+        });
+      })
+      .catch(() => {
+        setState({ isLoading: false, hasError: true });
       });
-    });
   }, []);
 
   if (state.showConfirm) {
@@ -39,6 +44,11 @@ const NewBid = ({ history }) => {
       />
     );
   }
+
+  if (state.hasError) {
+    return <div>ERRORRRR</div>;
+  }
+
   return (
     <PageContainer>
       <div className="bidPage page">
