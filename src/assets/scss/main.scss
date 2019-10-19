@@ -69,6 +69,7 @@ a {
 
   @media only screen and (max-width: $mobile) {
     width: 100% !important;
+    min-height: calc(100vh - 4rem);
   }
 
   min-height: calc(100vh - 6.5rem);
@@ -77,9 +78,6 @@ a {
   padding: 0;
 
   .content-container {
-    position: relative;
-    height: 100%;
-
     .header-container {
       height: 3rem;
     }

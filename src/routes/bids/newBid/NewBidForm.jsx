@@ -49,6 +49,9 @@ const NewBidForm = ({ onSubmit, securities, formData, isLoading }) => {
         <div className="control">
           <InputDropdownSelect
             options={securities}
+            valueField="id"
+            labelField="name"
+            iconField="iconUrl"
             isLoading={isLoading}
             isError={errors.securityId}
             onChange={value => {

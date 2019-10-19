@@ -42,6 +42,8 @@ $body-bg: #f7f8fb;
 // $beige-lighter: #eff0eb;
 
 // Update Bulma's global variables
+$body-color: $dark;
+$text: $dark;
 $section-padding: 2rem 0;
 $label-color: $dark;
 $button-background-color: none;
@@ -62,6 +64,7 @@ $control-radius: 10px;
 
 // Update some of Bulma's component variables
 $body-background-color: $body-bg;
+$dropdown-item-color: $text;
 // $control-border-width: 2px;
 // $input-border-color: transparent;
 // $input-shadow: none;
