@@ -15,7 +15,9 @@ const OngoingItemsContainer = ({ type, apiEndpoint }) => {
 
   useEffect(() => {
     ApiService.get(apiEndpoint).then(res => {
-      setState({ ongoingItems: res.data, isLoading: false });
+      const ongoingItems = res.data;
+      ongoingItems.sort((a, b) => b.updatedAt - a.updatedAt);
+      setState({ ongoingItems, isLoading: false });
     });
   }, [type, apiEndpoint]);
 
