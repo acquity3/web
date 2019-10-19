@@ -1,51 +1,87 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
 
-import { validateMoneyString } from 'utils';
+import { validateMoneyString } from 'utils/moneyUtils';
+import InputDropdownSelect from 'components/inputDropdownSelect';
 
-const StockFormAddon = ({ stockName, iconUrl }) => {
-  return (
-    <div className="control">
-      <button tabIndex={-1} type="button" className="button is-static">
-        {iconUrl ? (
-          <img
-            style={{ maxWidth: '80%', maxHeight: '80%' }}
-            src={iconUrl}
-            alt={stockName}
-          />
-        ) : (
-          stockName
-        )}
-      </button>
-    </div>
-  );
-};
-
-const NewBidForm = ({ onSubmit }) => {
-  const { register, handleSubmit: validateInputs, errors, watch } = useForm({
-    mode: 'onBlur'
+const NewBidForm = ({ onSubmit, securities, formData, isLoading }) => {
+  const {
+    register,
+    handleSubmit: validateInputs,
+    errors,
+    watch,
+    setValue
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: formData || {}
   });
   const watchedFields = watch();
 
   return (
-    <form className="form" noValidate onSubmit={validateInputs(onSubmit)}>
-      <label htmlFor="numShares" className="label">
+    <form
+      className="form newBid"
+      noValidate
+      onSubmit={validateInputs(onSubmit)}
+    >
+      <input
+        id="securityId"
+        className="is-hidden"
+        type="text"
+        name="securityId"
+        ref={register({
+          required: 'This field is required'
+        })}
+      />
+      <input
+        id="securityName"
+        className="is-hidden"
+        type="text"
+        name="securityName"
+        ref={register({
+          required: 'This field is required'
+        })}
+      />
+      <label htmlFor="numberOfShares" className="label">
         Number of shares
       </label>
       <div className="form__field field has-addons">
-        <StockFormAddon stockName="Grab" />
+        <div className="control">
+          <InputDropdownSelect
+            options={securities}
+            valueField="id"
+            labelField="name"
+            iconField="iconUrl"
+            isLoading={isLoading}
+            isError={errors.securityId}
+            onChange={value => {
+              setValue('securityName', value[0].name, true);
+              setValue('securityId', value[0].id, true);
+            }}
+            values={
+              formData
+                ? [
+                    {
+                      id: formData.securityId,
+                      name: formData.securityName
+                    }
+                  ]
+                : []
+            }
+          />
+        </div>
         <div className="control is-expanded">
           <input
-            id="numShares"
+            id="numberOfShares"
             onKeyPress={evt => {
               const charCode = evt.which ? evt.which : evt.keyCode;
               if (charCode > 31 && (charCode < 48 || charCode > 57)) {
                 evt.preventDefault();
               }
             }}
-            className={`input ${errors.numShares ? 'is-danger' : ''}`}
+            className={`input ${errors.numberOfShares ? 'is-danger' : ''}`}
             type="text"
-            name="numShares"
+            name="numberOfShares"
             placeholder="3000"
             ref={register({
               required: 'This field is required',
@@ -62,8 +98,8 @@ const NewBidForm = ({ onSubmit }) => {
               }
             })}
           />
-          {errors.numShares && (
-            <p className="help is-danger">{errors.numShares.message}</p>
+          {errors.numberOfShares && (
+            <p className="help is-danger">{errors.numberOfShares.message}</p>
           )}
         </div>
       </div>
@@ -73,7 +109,11 @@ const NewBidForm = ({ onSubmit }) => {
       </label>
       <div className="form__field field has-addons">
         <div className="control">
-          <button tabIndex={-1} type="button" className="button is-static">
+          <button
+            tabIndex={-1}
+            type="button"
+            className="button is-static has-text-dark"
+          >
             SGD
           </button>
         </div>
@@ -123,7 +163,9 @@ const NewBidForm = ({ onSubmit }) => {
           <span className="estimate__amount--currency">SGD</span>
           <span className="estimate__amount--amount">
             {validateMoneyString(watchedFields.price)
-              ? (watchedFields.price * watchedFields.numShares).toLocaleString()
+              ? (
+                  watchedFields.price * watchedFields.numberOfShares
+                ).toLocaleString()
               : '-'}
           </span>
         </div>
@@ -138,6 +180,16 @@ const NewBidForm = ({ onSubmit }) => {
       </div>
     </form>
   );
+};
+
+NewBidForm.propTypes = {
+  securities: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string
+    })
+  ).isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default NewBidForm;

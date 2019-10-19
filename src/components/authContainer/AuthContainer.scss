@@ -7,9 +7,13 @@
   justify-content: center;
   height: 100%;
   padding-top: 3rem;
+  padding-right: 3rem;
 }
 
 .content-container {
+  @media only screen and (min-width: $tablet) {
+    padding-left: 3rem;
+  }
   .form {
     .auth-actions {
       display: flex;

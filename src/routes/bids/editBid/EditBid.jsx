@@ -1,45 +1,64 @@
+/* eslint-disable no-console */
 import React, { useEffect, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import ApiService from 'services/apiService';
 import PageContainer from 'components/pageContainer';
 import EditBidForm from './EditBidForm';
+import Confirmation from '../confirmation';
 
 import './EditBid.scss';
-
-// Temporary mock bid until hooked to backend
-const mockBid = {
-  id: '123tei2E2',
-  bidNum: '2',
-  stockName: 'Grab Holdings Pte Ltd',
-  quantity: '3000',
-  price: '6.89',
-  timestamp: '1570866188'
-};
+import '../style.scss';
 
 const EditBid = ({ match, location, history }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
-    error: false,
-    bidState: null
+    hasError: false,
+    showConfirm: false,
+    formData: null
   });
   const bidId = match.params.id;
   const { bid } = location;
 
-  // TODO: Retrieve bid with id from backend if undefined.
-  // TODO: Throw error if unauthorized to edit given bid.
   // eslint-disable-next-line consistent-return
   useEffect(() => {
+    // Did not come from home page, came from URL
     if (!bid) {
-      setState({ bidState: mockBid, isLoading: false });
+      ApiService.get(`buy_order/${bidId}`)
+        .then(response => {
+          setState({ formData: response.data, isLoading: false });
+        })
+        .catch(() => {
+          setState({ isLoading: false, hasError: true });
+        });
     } else {
-      setState({ bidState: bid, isLoading: false });
+      setState({ formData: bid, isLoading: false });
     }
     return () => {};
   }, [bidId, bid]);
 
+  if (state.showConfirm) {
+    const apiCall = () =>
+      ApiService.patch(`buy_order/${bidId}`, {
+        newNumberOfShares: parseInt(state.formData.numberOfShares, 0),
+        newPrice: parseFloat(state.formData.price)
+      });
+    return (
+      <Confirmation
+        bid={state.formData}
+        apiCall={apiCall}
+        handleBackClick={() => setState({ showConfirm: false })}
+      />
+    );
+  }
+
+  if (state.hasError) {
+    return <div>ERRORRRR</div>;
+  }
+
   return (
     <PageContainer>
-      <div className="editBid page">
+      <div className="bidPage page">
         <div className="page__header columns is-mobile">
           <div className="column is-1">
             <button
@@ -50,7 +69,7 @@ const EditBid = ({ match, location, history }) => {
               <i className="fas fa-arrow-left" />
             </button>
           </div>
-          <span className="editBid__header__text column">Edit Bid</span>
+          <span className="bidPage__header__text column">Edit Bid</span>
           <div className="column is-1" />
         </div>
         <div className="page__content columns is-mobile">
@@ -59,8 +78,10 @@ const EditBid = ({ match, location, history }) => {
               <div>Loading</div>
             ) : (
               <EditBidForm
-                bid={state.bidState}
-                onSubmit={data => console.log('submitting', data)}
+                formData={state.formData}
+                onSubmit={data => {
+                  setState({ formData: data, showConfirm: true });
+                }}
                 onDelete={data => console.log('deleting', data)}
               />
             )}

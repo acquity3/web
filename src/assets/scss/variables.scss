@@ -13,6 +13,7 @@ $blue: #1f4190;
 $red: #fa2b56;
 $light: #f7f8fb;
 $dark: #595f6f;
+$grey: #f7f8fb;
 $grey-light: #bfc4ce;
 $grey-lighter: #dddfe7;
 
@@ -41,10 +42,12 @@ $body-bg: #f7f8fb;
 // $beige-lighter: #eff0eb;
 
 // Update Bulma's global variables
+$body-color: $dark;
+$text: $dark;
 $section-padding: 2rem 0;
 $label-color: $dark;
 $button-background-color: none;
-$input-radius: 15px;
+$input-radius: 10px;
 $button-border-color: rgba(85, 96, 232, 0.25);
 $button-focus-box-shadow-color: rgba(85, 96, 232, 0.25);
 $button-active-border-color: rgba(85, 96, 232, 0.25);
@@ -52,7 +55,7 @@ $button-color: white;
 $button-focus-color: white;
 $button-active-color: white;
 $button-hover-color: white;
-$control-radius: 15px;
+$control-radius: 10px;
 // $family-sans-serif: "Nunito", sans-serif;
 // $grey-dark: $brown;
 // $grey-light: $beige-light;
@@ -61,6 +64,7 @@ $control-radius: 15px;
 
 // Update some of Bulma's component variables
 $body-background-color: $body-bg;
+$dropdown-item-color: $text;
 // $control-border-width: 2px;
 // $input-border-color: transparent;
 // $input-shadow: none;
