@@ -17,7 +17,7 @@ const OngoingItemsContainer = ({ type, apiEndpoint }) => {
     ApiService.get(apiEndpoint).then(res => {
       setState({ ongoingItems: res.data, isLoading: false });
     });
-  }, [type]);
+  }, [type, apiEndpoint]);
 
   return (
     <div className="info">
