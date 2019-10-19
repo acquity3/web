@@ -5,9 +5,15 @@
   &__content {
     &__divider {
       width: 100%;
+      margin: 3rem 0;
+
+      @media only screen and (max-width: $tablet) {
+        margin: 2rem 0;
+      }
+
+      @media only screen and (max-width: $mobile) {
+        margin: 1rem 0;
+      }
     }
-  }
-  .is-divider {
-    margin: 3rem 0;
   }
 }

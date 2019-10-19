@@ -1,22 +1,28 @@
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useReducer } from 'react';
+import { Redirect } from 'react-router-dom';
 import PageContainer from 'components/pageContainer';
 
 import { moneyFormatter } from 'utils/moneyUtils';
 import './Confirmation.scss';
 
-const Confirmation = ({ bid, handleBackClick, history, apiCall }) => {
-  const [isLoading, setIsLoading] = useState(false);
+const Confirmation = ({ bid, handleBackClick, apiCall }) => {
+  const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
+    isLoading: false,
+    isSuccessfulRequest: false
+  });
 
   const handleConfirmClick = () => {
-    setIsLoading(true);
+    setState({ isLoading: true });
     apiCall()
       .then(_response => {
-        setIsLoading(false);
-        history.replaceState('/');
+        setState({ isLoading: false, isSuccess: true });
       })
-      .catch(() => setIsLoading(false));
+      .catch(() => setState({ isLoading: false }));
   };
+
+  if (state.isSuccess) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <PageContainer>
@@ -74,7 +80,7 @@ const Confirmation = ({ bid, handleBackClick, history, apiCall }) => {
                 onClick={handleConfirmClick}
                 type="button"
                 className={`button--cta button hvr-grow ${
-                  isLoading ? 'is-loading' : ''
+                  state.isLoading ? 'is-loading' : ''
                 }`}
               >
                 Confirm
@@ -87,4 +93,4 @@ const Confirmation = ({ bid, handleBackClick, history, apiCall }) => {
   );
 };
 
-export default withRouter(Confirmation);
+export default Confirmation;

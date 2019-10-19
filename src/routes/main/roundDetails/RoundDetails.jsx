@@ -65,7 +65,7 @@ const RoundDetails = () => {
       // Multiply by 1000 since converting timestamp to milliseconds
       if (res.data) {
         setState({
-          timeForRoundEnd: res.data
+          timeForRoundEnd: res.data.endTime * 1000
         });
       }
       setState({ isLoading: false });

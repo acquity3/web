@@ -7,7 +7,7 @@ import NewBidForm from './NewBidForm';
 import '../style.scss';
 import Confirmation from '../confirmation';
 
-const NewBid = ({ history }) => {
+const NewBid = ({ history, apiEndpoint }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
     hasError: false,
@@ -31,7 +31,7 @@ const NewBid = ({ history }) => {
 
   if (state.showConfirm) {
     const apiCall = () =>
-      ApiService.post('buy_order', {
+      ApiService.post(apiEndpoint, {
         numberOfShares: parseInt(state.formData.numberOfShares, 0),
         price: parseFloat(state.formData.price),
         securityId: state.formData.securityId
