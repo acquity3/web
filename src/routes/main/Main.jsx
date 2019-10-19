@@ -1,42 +1,26 @@
-import React, { useReducer, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 
-import ApiService from 'services/apiService';
+import { useUser } from 'contexts/userContext';
 import PageContainer from 'components/pageContainer';
-import OngoingBidsGhost from './ongoingBids/OngoingBidsGhost';
-import OngoingBids from './ongoingBids';
+import OngoingItems from './ongoingItems';
 import RoundDetails from './roundDetails';
+
 import './Main.scss';
 
 const Main = () => {
-  const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
-    isLoading: true,
-    ongoingBids: []
-  });
-
-  useEffect(() => {
-    ApiService.get('buy_order').then(res => {
-      setState({ ongoingBids: res.data, isLoading: false });
-    });
-  }, []);
+  const user = useUser();
 
   return (
     <PageContainer>
       <div className="main page">
-        <div className="page__header">Ongoing Bids</div>
         <div className="page__content">
-          {state.isLoading ? (
-            <OngoingBidsGhost />
-          ) : (
+          {user.canSell && (
             <>
-              <OngoingBids ongoingBids={state.ongoingBids} />
-              <Link to="bids/new">
-                <button type="button" className="button button--cta hvr-grow">
-                  Create New Bid
-                </button>
-              </Link>
+              <OngoingItems type="offers" />
+              <div className="is-divider main__content__divider" />
             </>
           )}
+          <OngoingItems type="bids" />
           <div className="is-divider main__content__divider" />
           <RoundDetails />
         </div>
