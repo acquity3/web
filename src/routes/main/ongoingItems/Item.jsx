@@ -6,7 +6,7 @@ import { moneyFormatter } from 'utils/moneyUtils';
 import './Item.scss';
 
 const Item = ({ item, type }) => {
-  const lastUpdateTime = new Date(item.createdAt * 1000);
+  const lastUpdateTime = new Date(item.updatedAt * 1000);
   return (
     <div className="item">
       <div className="item__header">
