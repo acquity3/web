@@ -6,7 +6,7 @@ import { moneyFormatter } from 'utils/moneyUtils';
 import './Bid.scss';
 
 const Bid = ({ bid }) => {
-  const bidTime = new Date(bid.timestamp * 1000);
+  const lastUpdateTime = new Date(bid.updatedAt * 1000);
   return (
     <div className="bid">
       <div className="bid__header">
@@ -14,7 +14,10 @@ const Bid = ({ bid }) => {
           <span className="bid__header__info__name">{bid.securityName}</span>
         </span>
         <span className="bid__header__timestamp">
-          <TimeAgo title={bidTime.toLocaleString()} date={bidTime} />
+          <TimeAgo
+            title={lastUpdateTime.toLocaleString()}
+            date={lastUpdateTime}
+          />
         </span>
       </div>
       <div className="columns is-mobile">

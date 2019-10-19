@@ -1,33 +1,12 @@
 import React, { useReducer, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+import ApiService from 'services/apiService';
 import PageContainer from 'components/pageContainer';
 import OngoingBidsGhost from './ongoingBids/OngoingBidsGhost';
 import OngoingBids from './ongoingBids';
 import RoundDetails from './roundDetails';
 import './Main.scss';
-
-const mockBid1 = {
-  id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  numberOfShares: 3333,
-  price: 7.02,
-  securityId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  securityName: 'Grab',
-  roundId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  timestamp: 1568832197
-};
-
-const mockBid2 = {
-  id: '3fa85f64-5717-4562-b3fc-2c9657jja66afa6',
-  userId: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
-  numberOfShares: 699,
-  price: 5.66,
-  securityId: '3fa823234-5717-4562-b3fc-2c963f66afa6',
-  securityName: 'Carousell',
-  roundId: '3fa23364-5717-4562-b3fc-2c963f66afa6',
-  timestamp: 1570819397
-};
 
 const Main = () => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
@@ -36,12 +15,11 @@ const Main = () => {
   });
 
   useEffect(() => {
-    // TODO: Call backend to check if user has bids
-    // Fake API call for now
-    setTimeout(() => {
-      setState({ ongoingBids: [mockBid1, mockBid2], isLoading: false });
-    }, 250);
+    ApiService.get('buy_order').then(res => {
+      setState({ ongoingBids: res.data, isLoading: false });
+    });
   }, []);
+
   return (
     <PageContainer>
       <div className="main page">
