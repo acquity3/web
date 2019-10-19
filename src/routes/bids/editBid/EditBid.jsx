@@ -10,21 +10,21 @@ import Confirmation from '../confirmation';
 import './EditBid.scss';
 import '../style.scss';
 
-const EditBid = ({ match, location, history }) => {
+const EditBid = ({ match, location, history, apiEndpoint }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
     hasError: false,
     showConfirm: false,
     formData: null
   });
-  const bidId = match.params.id;
-  const { bid } = location;
+  const itemId = match.params.id;
+  const { item } = location;
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     // Did not come from home page, came from URL
-    if (!bid) {
-      ApiService.get(`buy_order/${bidId}`)
+    if (!item) {
+      ApiService.get(`${apiEndpoint}/${itemId}`)
         .then(response => {
           setState({ formData: response.data, isLoading: false });
         })
@@ -32,14 +32,14 @@ const EditBid = ({ match, location, history }) => {
           setState({ isLoading: false, hasError: true });
         });
     } else {
-      setState({ formData: bid, isLoading: false });
+      setState({ formData: item, isLoading: false });
     }
     return () => {};
-  }, [bidId, bid]);
+  }, [itemId, item, apiEndpoint]);
 
   if (state.showConfirm) {
     const apiCall = () =>
-      ApiService.patch(`buy_order/${bidId}`, {
+      ApiService.patch(`${apiEndpoint}/${itemId}`, {
         newNumberOfShares: parseInt(state.formData.numberOfShares, 0),
         newPrice: parseFloat(state.formData.price)
       });

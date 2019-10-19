@@ -7,15 +7,14 @@ import Items from './Items';
 
 import './OngoingItemsContainer.scss';
 
-const OngoingItemsContainer = ({ type }) => {
+const OngoingItemsContainer = ({ type, apiEndpoint }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
     ongoingItems: []
   });
 
   useEffect(() => {
-    const apiUrl = type === 'bids' ? 'buy_order' : 'sell_order';
-    ApiService.get(apiUrl).then(res => {
+    ApiService.get(apiEndpoint).then(res => {
       setState({ ongoingItems: res.data, isLoading: false });
     });
   }, [type]);

@@ -16,11 +16,11 @@ const Main = () => {
         <div className="page__content">
           {user.canSell && (
             <>
-              <OngoingItems type="offers" />
+              <OngoingItems type="offers" apiEndpoint="sell_order" />
               <div className="is-divider main__content__divider" />
             </>
           )}
-          <OngoingItems type="bids" />
+          <OngoingItems type="bids" apiEndpoint="buy_order" />
           <div className="is-divider main__content__divider" />
           <RoundDetails />
         </div>
