@@ -2,10 +2,10 @@ import React, { useReducer, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import PageContainer from 'components/pageContainer';
+import OngoingBidsGhost from './ongoingBids/OngoingBidsGhost';
 import OngoingBids from './ongoingBids';
 import RoundDetails from './roundDetails';
 import './Main.scss';
-import OngoingBidsGhost from './ongoingBids/OngoingBidsGhost';
 
 const mockBid1 = {
   id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -40,7 +40,7 @@ const Main = () => {
     // Fake API call for now
     setTimeout(() => {
       setState({ ongoingBids: [mockBid1, mockBid2], isLoading: false });
-    }, 2000);
+    }, 250);
   }, []);
   return (
     <PageContainer>

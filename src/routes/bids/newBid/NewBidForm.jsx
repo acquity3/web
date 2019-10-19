@@ -1,22 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import useForm from 'react-hook-form';
-import Select from 'react-dropdown-select';
 
 import { validateMoneyString } from 'utils/moneyUtils';
+import InputDropdownSelect from 'components/inputDropdownSelect';
 
-import './NewBidForm.scss';
-
-const customContentRenderer = ({ state }) => {
-  const { values } = state;
-  if (values[0]) {
-    return <div className="security__display">{values[0].name}</div>;
-  }
-
-  return <div className="security__display--none">Select</div>;
-};
-
-const NewBidForm = ({ onSubmit, securities, formData }) => {
+const NewBidForm = ({ onSubmit, securities, formData, isLoading }) => {
   const {
     register,
     handleSubmit: validateInputs,
@@ -58,14 +47,14 @@ const NewBidForm = ({ onSubmit, securities, formData }) => {
       </label>
       <div className="form__field field has-addons">
         <div className="control">
-          <Select
-            contentRenderer={customContentRenderer}
-            className={`securities__dropdown ${
-              errors.securityId ? 'is-danger' : ''
-            }`}
-            valueField="id"
-            labelField="name"
-            searchBy="name"
+          <InputDropdownSelect
+            options={securities}
+            isLoading={isLoading}
+            isError={errors.securityId}
+            onChange={value => {
+              setValue('securityName', value[0].name, true);
+              setValue('securityId', value[0].id, true);
+            }}
             values={
               formData
                 ? [
@@ -76,14 +65,6 @@ const NewBidForm = ({ onSubmit, securities, formData }) => {
                   ]
                 : []
             }
-            closeOnSelect
-            searchable={false}
-            placeholder=""
-            options={securities}
-            onChange={value => {
-              setValue('securityName', value[0].name, true);
-              setValue('securityId', value[0].id, true);
-            }}
           />
         </div>
         <div className="control is-expanded">

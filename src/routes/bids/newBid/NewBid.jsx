@@ -67,17 +67,14 @@ const NewBid = ({ history }) => {
         </div>
         <div className="page__content columns is-mobile">
           <div className="form-wrapper column is-full-mobile is-four-fifths-tablet is-half-desktop">
-            {state.isLoading ? (
-              <div>Wait pls</div>
-            ) : (
-              <NewBidForm
-                securities={state.securities}
-                formData={state.formData}
-                onSubmit={data => {
-                  setState({ formData: data, showConfirm: true });
-                }}
-              />
-            )}
+            <NewBidForm
+              isLoading={state.isLoading}
+              securities={state.securities}
+              formData={state.formData}
+              onSubmit={data => {
+                setState({ formData: data, showConfirm: true });
+              }}
+            />
           </div>
         </div>
       </div>
