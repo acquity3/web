@@ -11,7 +11,7 @@ const ChatList = () => {
   const basePath = getCurrentPathWithoutParam(url);
 
   return (
-    <ul className="chatlist">
+    <ul className="chatlist column is-hidden-mobile is-two-fifths">
       {chatList.map(chat => (
         <ChatItem key={chat.chatRoomId} chat={chat} basePath={basePath} />
       ))}

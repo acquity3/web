@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import PageContainer from 'components/pageContainer';
 
-import ChatList from './ChatList/ChatList';
+import ChatList from './ChatList';
 import ChatRoom from './ChatRoom/ChatRoom';
 import ChatInput from './ChatInput/ChatInput';
-import ChatOffer from './ChatOffer/ChatOffer';
+import ChatOffer from './ChatOffer';
 import './Chat.scss';
 
 const ChatHeader = ({ correspondentName }) => {
@@ -22,8 +23,18 @@ const ChatHeader = ({ correspondentName }) => {
   );
 };
 
+const ChatContent = () => {
+  return (
+    <div className="column chat__content">
+      <ChatOffer />
+      <ChatRoom />
+      <ChatInput />
+    </div>
+  );
+};
+
 const Chat = () => {
-  const chatRoomId = useSelector(state => state.chat.chatRoomId);
+  const { chatRoomId } = useParams();
   const correspondentName = useSelector(
     state => state.chat.chatRoom.length > 0 && state.chat.chatRoom[0].dealerName
   );
@@ -33,20 +44,8 @@ const Chat = () => {
       {/* TODO: clean up redux model to not use arrays and make keys more meaningful */}
       <ChatHeader correspondentName={correspondentName} />
       <div className="columns is-gapless">
-        <div className="column is-hidden-mobile is-two-fifths">
-          <ChatList />
-        </div>
-        <div className="column">
-          {chatRoomId === '' ? (
-            <div className="chat__chatroom">No messages here yet...</div>
-          ) : (
-            <div>
-              <ChatOffer />
-              <ChatRoom />
-              <ChatInput />
-            </div>
-          )}
-        </div>
+        <ChatList />
+        {chatRoomId && <ChatContent />}
       </div>
     </PageContainer>
   );
