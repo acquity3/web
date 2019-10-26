@@ -54,7 +54,7 @@ const AuthenticatedApp = () => {
                 <EditBid {...props} apiEndpoint="sell_order" type="offer" />
               )}
             />
-            <Route exact path="/chat/:chatRoomId?" component={Chat} />
+            <Route exact path="/matches/:chatRoomId?" component={Chat} />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
           </Switch>
         </div>
