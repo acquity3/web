@@ -43,6 +43,7 @@
   }
 
   &__content {
+    height: calc(100vh - 11.9rem);
     display: flex;
     flex-direction: column;
   }

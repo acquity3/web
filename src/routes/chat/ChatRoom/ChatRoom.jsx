@@ -8,7 +8,7 @@ const ChatRoom = () => {
   const chatRoom = useSelector(state => state.chat.chatRoom);
 
   return (
-    <div>
+    <div className="chatMessages">
       {chatRoom.map(chat => (
         <ChatMessage key={chat.createdAt} chat={chat} />
       ))}
