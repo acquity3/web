@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import './ChatList.scss';
 import ChatItem from './ChatItem';
 
-/* TODO(#24): add make offer button in chat functional */
 const ChatList = () => {
   const chatList = useSelector(state => state.chat.chatList);
   return (

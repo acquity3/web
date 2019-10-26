@@ -2,6 +2,7 @@ import React from 'react';
 
 import './ChatOffer.scss';
 
+/* TODO(#24): add make offer button in chat functional */
 const ChatOffer = () => {
   return (
     <div>
