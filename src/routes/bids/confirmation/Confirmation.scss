@@ -1,14 +1,16 @@
+@import 'assets/scss/variables';
+
 .confirmation {
   &__details {
     text-align: center;
     margin-bottom: 3rem;
     &__label {
-      font-family: 'Nexa Bold';
+      font-family: $weight-heavy;
       padding-bottom: 0.2rem;
     }
 
     &__value {
-      font-family: 'Nexa Light';
+      font-family: $weight-light;
       font-size: 1.4rem;
       padding-bottom: 0.6rem;
     }
@@ -16,7 +18,7 @@
 
   &__disclaimer {
     font-size: 0.8rem;
-    font-family: 'Nexa Light';
+    font-family: $weight-light;
     text-align: center;
     margin-bottom: 2rem;
   }
