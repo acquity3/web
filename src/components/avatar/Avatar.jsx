@@ -8,7 +8,7 @@ const Avatar = ({
   userName,
   profileImageUrl,
   diameter = '2.5rem',
-  className
+  className = ''
 }) => {
   return (
     <div className={`${className} avatar`}>

@@ -1,25 +1,6 @@
 @import 'assets/scss/variables';
-$chat-active-bg: #267ed0;
 
 .chatlist {
-  &__item {
-    width: 100%;
-    padding: 0.5rem;
-    background: white;
-    color: $blue;
-
-    &--selected {
-      background: $chat-active-bg;
-      color: white;
-    }
-  }
-  &__name {
-    font-weight: bold;
-  }
-  &__date {
-    font-size: 14px;
-    float: right;
-  }
   &__status {
     float: right;
     height: 10px;

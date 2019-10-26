@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Truncate from 'react-truncate';
 import { useDispatch } from 'react-redux';
 import TimeAgo from 'react-timeago';
 
@@ -12,50 +11,59 @@ const ChatItem = ({ chat, basePath }) => {
   const { chatRoomId } = useParams();
   const dispatch = useDispatch();
 
+  const formatter = (value, unit, _suffix) => {
+    let shortenedUnit;
+    switch (unit) {
+      case 'second':
+      case 'minute':
+      case 'hour':
+      case 'day':
+      case 'week':
+      case 'year':
+        shortenedUnit = unit.charAt(0);
+        break;
+      case 'month':
+        shortenedUnit = 'mo';
+        break;
+      default:
+        shortenedUnit = unit;
+    }
+    return `${value}${shortenedUnit}`;
+  };
+
   useEffect(() => {
     if (chatRoomId) {
       dispatch(fetchChatRoomAction({ chatRoomId }));
     }
-  }, [chatRoomId]);
+  }, [chatRoomId, dispatch]);
 
   return (
-    <li className="chatlist__item" role="row">
+    <li role="row">
       <Link
-        className={`columns is-marginless ${
+        className={`chatlist__item columns is-marginless ${
           chat.chatRoomId === chatRoomId ? 'chatlist__item--selected' : ''
         }`}
         to={`${basePath}/${chat.chatRoomId}`}
       >
-        <div className="chatlist__item__avatar column is-one-fifth">
-          <Avatar userName={chat.dealerName} diameter="3rem" />
-        </div>
-        <div className="column">
-          <Truncate
-            className="chatlist__name"
-            lines={1}
-            ellipsis={<span>...</span>}
-          >
-            {chat.dealerName}
-          </Truncate>
-          <Truncate
-            className="chatlist__date"
-            lines={1}
-            ellipsis={<span>...</span>}
-          >
-            <TimeAgo
-              title={(chat.createdAt * 1000).toLocaleString()}
-              date={chat.createdAt * 1000}
-            />
-          </Truncate>
-        </div>
         {/* TODO(#23): online status icon hardcoded */}
-        <div className={`chatlist__status ${'chatlist__status--online'}`} />
-        <div>Selling Amt: 2000</div>
-        <div>Lowest Prices: $6.10</div>
-        <div>
-          <Truncate lines={1} ellipsis={<span>...</span>}>
-            {chat.message}
-          </Truncate>
+        {/* <div className={`chatlist__status ${'chatlist__status--online'}`} /> */}
+        <Avatar
+          className="chatlist__item__avatar column is-narrow"
+          userName={chat.dealerName}
+          diameter="3rem"
+        />
+        <div className="column chatlist__item__details">
+          <div className="detail__header">
+            <div className="detail__header--name">{chat.dealerName}</div>
+            <div className="detail__header--timeago">
+              <TimeAgo date={chat.createdAt * 1000} formatter={formatter} />
+            </div>
+          </div>
+          {/* TODO: Remove hardcode */}
+          <div className="detail__content">
+            <div>Selling Amt: 2000</div>
+            <div>Lowest Price: $6.10</div>
+          </div>
         </div>
       </Link>
     </li>

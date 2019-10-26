@@ -11,7 +11,7 @@ const ChatList = () => {
   const basePath = getCurrentPathWithoutParam(url);
 
   return (
-    <ul>
+    <ul className="chatlist">
       {chatList.map(chat => (
         <ChatItem key={chat.chatRoomId} chat={chat} basePath={basePath} />
       ))}
