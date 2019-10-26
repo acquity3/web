@@ -21,6 +21,7 @@ const ChatInput = () => {
   };
 
   const sendMessage = () => {
+    if (!value) return;
     fetchNewMessage({ message: value });
     setMessage('');
   };
