@@ -1,7 +1,7 @@
 import React from 'react';
-import Avatar from 'react-avatar';
 import TimeAgo from 'react-timeago';
 
+import Avatar from 'components/avatar';
 import './ChatRoom.scss';
 
 const ChatMessage = ({ chat }) => {
@@ -11,7 +11,7 @@ const ChatMessage = ({ chat }) => {
         <div className="columns is-mobile chatroom__window">
           <div className="column is-2">
             <div>
-              <Avatar color="grey" name="Bar" size={40} round="40px" />
+              <Avatar userName={chat.authorName} />
             </div>
           </div>
           <div className="column">

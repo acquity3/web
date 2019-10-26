@@ -1,0 +1,19 @@
+@import 'assets/scss/variables';
+$chat-active-bg: #267ed0;
+
+.chatlist__item {
+  width: 100%;
+  background: white;
+  color: $blue;
+
+  &--selected {
+    background: $chat-active-bg;
+    color: white;
+  }
+
+  &__avatar {
+    .initials {
+      background: white;
+    }
+  }
+}

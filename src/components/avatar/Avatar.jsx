@@ -4,9 +4,14 @@ import { getInitials } from 'utils';
 import './Avatar.scss';
 
 // Displays a circular avatar
-const Avatar = ({ userName, profileImageUrl, diameter = '2.5rem' }) => {
+const Avatar = ({
+  userName,
+  profileImageUrl,
+  diameter = '2.5rem',
+  className
+}) => {
   return (
-    <div className="avatar">
+    <div className={`${className} avatar`}>
       {profileImageUrl ? (
         <figure
           className="profile-pic"

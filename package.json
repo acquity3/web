@@ -13,7 +13,6 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-async": "^8.0.0",
-    "react-avatar": "^3.7.0",
     "react-countdown-now": "^2.1.1",
     "react-dom": "^16.10.2",
     "react-dropdown-select": "^3.6.3",

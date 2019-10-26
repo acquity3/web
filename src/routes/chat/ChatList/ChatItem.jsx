@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import Avatar from 'react-avatar';
 import Truncate from 'react-truncate';
 import { useDispatch } from 'react-redux';
 import TimeAgo from 'react-timeago';
 
+import Avatar from 'components/avatar';
 import { fetchChatRoomAction } from '../ChatDux';
-import './ChatList.scss';
+import './ChatItem.scss';
 
 const ChatItem = ({ chat, basePath }) => {
   const { chatRoomId } = useParams();
@@ -19,15 +19,15 @@ const ChatItem = ({ chat, basePath }) => {
   }, [chatRoomId]);
 
   return (
-    <li role="row">
+    <li className="chatlist__item" role="row">
       <Link
-        className={`columns is-marginless chatlist__item ${
+        className={`columns is-marginless ${
           chat.chatRoomId === chatRoomId ? 'chatlist__item--selected' : ''
         }`}
         to={`${basePath}/${chat.chatRoomId}`}
       >
-        <div className="column is-one-fifth">
-          <Avatar color="grey" name={chat.dealerName} size={40} round="40px" />
+        <div className="chatlist__item__avatar column is-one-fifth">
+          <Avatar userName={chat.dealerName} diameter="3rem" />
         </div>
         <div className="column">
           <Truncate
