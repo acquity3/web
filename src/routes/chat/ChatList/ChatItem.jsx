@@ -1,41 +1,35 @@
-import React, { useCallback } from 'react';
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Avatar from 'react-avatar';
 import Truncate from 'react-truncate';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import TimeAgo from 'react-timeago';
 
 import { fetchChatRoomAction } from '../ChatDux';
 import './ChatList.scss';
 
-const ChatItem = ({ chat }) => {
-  const currentChatRoomId = useSelector(state => state.chat.chatRoomId);
-
+const ChatItem = ({ chat, basePath }) => {
+  const { chatRoomId } = useParams();
   const dispatch = useDispatch();
 
-  const fetchChatRoom = useCallback(
-    ({ chatRoomId }) => {
+  useEffect(() => {
+    if (chatRoomId) {
       dispatch(fetchChatRoomAction({ chatRoomId }));
-    },
-    [dispatch]
-  );
+    }
+  }, [chatRoomId]);
 
   return (
-    <div
-      role="presentation"
-      onClick={() => fetchChatRoom({ chatRoomId: chat.chatRoomId })}
-      className={`columns is-marginless chatlist__item ${
-        chat.chatRoomId === currentChatRoomId
-          ? 'chatlist__item--selected'
-          : 'chatlist__item--unselected'
-      }`}
-    >
-      <div className="column is-one-fifth">
-        <div>
+    <li role="row">
+      <Link
+        className={`columns is-marginless chatlist__item ${
+          chat.chatRoomId === chatRoomId ? 'chatlist__item--selected' : ''
+        }`}
+        to={`${basePath}/${chat.chatRoomId}`}
+      >
+        <div className="column is-one-fifth">
           <Avatar color="grey" name={chat.dealerName} size={40} round="40px" />
         </div>
-      </div>
-      <div className="column">
-        <div>
+        <div className="column">
           <Truncate
             className="chatlist__name"
             lines={1}
@@ -63,8 +57,8 @@ const ChatItem = ({ chat }) => {
             {chat.message}
           </Truncate>
         </div>
-      </div>
-    </div>
+      </Link>
+    </li>
   );
 };
 

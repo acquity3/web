@@ -1,16 +1,16 @@
+@import 'assets/scss/variables';
+$chat-active-bg: #267ed0;
+
 .chatlist {
   &__item {
-    height: 150px;
-    padding-left: 10px;
-    padding-right: 20px;
-    padding-top: 10px;
+    width: 100%;
+    padding: 0.5rem;
+    background: white;
+    color: $blue;
+
     &--selected {
-      background-color: blue;
+      background: $chat-active-bg;
       color: white;
-    }
-    &--unselected {
-      background-color: white;
-      color: black;
     }
   }
   &__name {

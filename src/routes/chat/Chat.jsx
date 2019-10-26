@@ -34,9 +34,7 @@ const Chat = () => {
       <ChatHeader correspondentName={correspondentName} />
       <div className="columns is-gapless">
         <div className="column is-hidden-mobile is-two-fifths">
-          <div>
-            <ChatList />
-          </div>
+          <ChatList />
         </div>
         <div className="column">
           {chatRoomId === '' ? (
