@@ -6,7 +6,7 @@ import ChatMessage from './ChatMessage';
 import './ChatRoom.scss';
 
 const ChatRoom = () => {
-  const [unreadCount, setUnreadCount] = useState(19);
+  const [unreadCount, setUnreadCount] = useState(0);
   const [prevMessageLength, setPrevMessageLength] = useState(0);
   const [isBottom, setIsBottom] = useState(false);
   // ref to message container (for keeping scroll to bottom of chat)
