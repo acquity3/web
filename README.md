@@ -21,6 +21,13 @@ A marketplace to buy and sell stocks from private companies or startups. Acquity
        * [useUser](#useuser)
 
 ## Get started
+First, copy `.env.default` to `.env`:
+```
+cp .env.default .env
+```
+
+Change the parameters if necessary.
+
 In the project directory, you can run:
 
 ### `yarn start`
