@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { useUser } from 'contexts/userContext';
+import { isUnapprovedBuyer } from 'utils/userUtils';
 import PageContainer from 'components/pageContainer';
 import PageHeader from 'components/pageHeader/PageHeader';
-import SocialLogin from './SocialLogin';
 
 const ProfileSettings = () => {
   const user = useUser();
@@ -17,7 +17,13 @@ const ProfileSettings = () => {
           className="accountSettings"
         />
         <div className="page__content">
-          {!user.canBuy && (
+          <div className="message is-info">
+            <div className="message-body">
+              The ability to update account details will come in a later update.
+              Please check back later.
+            </div>
+          </div>
+          {isUnapprovedBuyer(user) && (
             <div className="notification is-warning">
               You will be unable to post a bid until you connect your account to
               an identity provider
@@ -54,7 +60,6 @@ const ProfileSettings = () => {
                     name="email"
                   />
                 </div>
-                <SocialLogin />
               </div>
             </div>
           </div>

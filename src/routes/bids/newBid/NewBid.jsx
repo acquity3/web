@@ -1,10 +1,11 @@
 import React, { useEffect, useReducer } from 'react';
 import { Redirect } from 'react-router-dom';
 
+import { isSeller } from 'utils/userUtils';
 import { useUser } from 'contexts/userContext';
 import PageContainer from 'components/pageContainer';
 import PageHeader from 'components/pageHeader';
-import ApiService from 'services/apiService';
+import ApiService, { CancelToken } from 'services/apiService';
 import NewBidForm from './NewBidForm';
 import Confirmation from '../proceedConfirmation';
 
@@ -21,7 +22,9 @@ const NewBid = ({ apiEndpoint, type }) => {
   });
 
   useEffect(() => {
-    ApiService.get('security/')
+    let unmounted = false;
+    const source = CancelToken.source();
+    ApiService.get('security/', { cancelToken: source.token })
       .then(response => {
         setState({
           isLoading: false,
@@ -29,11 +32,17 @@ const NewBid = ({ apiEndpoint, type }) => {
         });
       })
       .catch(() => {
-        setState({ isLoading: false, hasError: true });
+        if (!unmounted) {
+          setState({ isLoading: false, hasError: true });
+        }
       });
+    return () => {
+      unmounted = true;
+      source.cancel();
+    };
   }, []);
 
-  if (type === 'offer' && !user.canSell) {
+  if (type === 'offer' && !isSeller(user)) {
     return <Redirect to="/" />;
   }
 
