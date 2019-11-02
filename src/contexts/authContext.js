@@ -2,8 +2,7 @@ import React from 'react';
 import { useAsync } from 'react-async';
 
 import AuthService from 'services/authService';
-
-import FullPageSpinner from 'components/FullPageSpinner';
+import Loading from 'components/loading';
 
 const AuthContext = React.createContext();
 
@@ -28,7 +27,7 @@ const AuthProvider = props => {
 
   if (!firstAttemptFinished) {
     if (isPending) {
-      return <FullPageSpinner />;
+      return <Loading />;
     }
     if (isRejected) {
       return (
@@ -39,13 +38,17 @@ const AuthProvider = props => {
       );
     }
   }
-  const login = form => AuthService.login(form).then(reload);
-  const register = form => AuthService.register(form).then(reload);
+  const login = code =>
+    AuthService.login(code)
+      .then(reload)
+      .catch(e => {
+        return Promise.reject(new Error(e));
+      });
   const logout = () => AuthService.logout().then(reload);
 
   return (
     <AuthContext.Provider
-      value={{ data, login, logout, register }}
+      value={{ data, login, logout }}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
     />

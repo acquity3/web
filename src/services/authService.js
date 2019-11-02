@@ -1,3 +1,4 @@
+import { SITE_URL } from 'constants/urls';
 import TokenUtils from 'utils/tokenUtils';
 import ApiService from './apiService';
 
@@ -6,22 +7,26 @@ const logout = () => {
   return Promise.resolve();
 };
 
-const login = async ({ email, password }) => {
-  const response = await ApiService.post('auth', { email, password });
+const login = async ({ userType, code }) => {
+  const requestBody = {
+    redirectUri: `${SITE_URL}/auth/callback`,
+    code,
+    userType
+  };
+  const response = await ApiService.post(`/auth/linkedin`, requestBody).catch(
+    error => {
+      return Promise.reject(new Error(error));
+    }
+  );
   return TokenUtils.storeToken(response);
 };
 
-const register = async ({ email, password, fullName }) => {
-  const response = await ApiService.post('user/', {
-    email,
-    password,
-    fullName
+const getLinkedInRedirect = () => {
+  return ApiService.get('/auth/linkedin', {
+    params: {
+      redirectUri: `${SITE_URL}/auth/callback`
+    }
   });
-
-  if (response.status === 200) {
-    return login({ email, password });
-  }
-  return Promise.reject(response.statusText);
 };
 
 const getUser = async () => {
@@ -44,8 +49,13 @@ const getUser = async () => {
     });
   } catch (error) {
     logout();
-    return Promise.reject(error);
+    return Promise.reject(new Error(error));
   }
 };
 
-export default { login, register, logout, getUser };
+export default {
+  login,
+  logout,
+  getUser,
+  getLinkedInRedirect
+};
