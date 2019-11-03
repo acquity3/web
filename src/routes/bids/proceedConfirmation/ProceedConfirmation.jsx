@@ -2,21 +2,12 @@ import React, { useReducer } from 'react';
 import { Redirect } from 'react-router-dom';
 
 import PageContainer from 'components/pageContainer';
+import ErrorMessage from 'components/errorMessage';
 import PageHeader from 'components/pageHeader';
-import { moneyFormatter, toLocaleCurrency } from 'utils/moneyUtils';
+import { moneyFormatter, toSgdCurrency } from 'utils/moneyUtils';
 
 import OrderDisclaimer from '../orderDisclaimer';
 import './ProceedConfirmation.scss';
-
-const ErrorMessage = () => {
-  return (
-    <article className="confirmationError message is-danger">
-      <div className="confirmationError__message message-body">
-        Something went wrong. Have you reached your bid or offer limit?
-      </div>
-    </article>
-  );
-};
 
 const Confirmation = ({ bid, handleBackClick, apiCall, type }) => {
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
@@ -48,7 +39,9 @@ const Confirmation = ({ bid, handleBackClick, apiCall, type }) => {
         <div className="page__content columns is-mobile is-gapless">
           <div className="column is-full-mobile is-four-fifths-tablet is-half-desktop">
             <div className="confirmation__details">
-              {state.isError && <ErrorMessage />}
+              {state.isError && (
+                <ErrorMessage message="Something went wrong. Have you reached your bid or offer limit?" />
+              )}
               <div className="confirmation__details__block">
                 <div className="confirmation__details__label">Company</div>
                 <div className="confirmation__details__value">
@@ -70,7 +63,7 @@ const Confirmation = ({ bid, handleBackClick, apiCall, type }) => {
                     : 'Minimum price per share'}
                 </div>
                 <div className="confirmation__details__value">
-                  {toLocaleCurrency(bid.price)}
+                  {toSgdCurrency(bid.price)}
                 </div>
               </div>
               <div className="confirmation__details__block">
@@ -81,7 +74,7 @@ const Confirmation = ({ bid, handleBackClick, apiCall, type }) => {
                   <span className="estimate__amount--currency">SGD </span>
                   <span
                     className="estimate__amount--amount"
-                    title={toLocaleCurrency(bid.price * bid.numberOfShares)}
+                    title={toSgdCurrency(bid.price * bid.numberOfShares)}
                   >
                     {moneyFormatter(bid.price * bid.numberOfShares)}
                   </span>
