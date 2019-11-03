@@ -15,10 +15,13 @@ const misc = createSlice({
     },
     setUser: (state, { payload }) => {
       state.user = payload;
+    },
+    clearUser: state => {
+      state.user = null;
     }
   }
 });
 
-export const { setUserType, setUser } = misc.actions;
+export const { setUserType, setUser, clearUser } = misc.actions;
 
 export default misc.reducer;

@@ -2,11 +2,12 @@ import store from 'app/store';
 
 import { SITE_URL } from 'constants/urls';
 import TokenUtils from 'utils/tokenUtils';
-import { setUser } from 'reducers/MiscDux';
+import { setUser, clearUser } from 'reducers/MiscDux';
 import ApiService from './apiService';
 
 const logout = () => {
   TokenUtils.removeToken();
+  store.dispatch(clearUser());
   return Promise.resolve();
 };
 
