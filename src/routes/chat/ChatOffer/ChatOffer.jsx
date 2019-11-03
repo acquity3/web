@@ -96,6 +96,9 @@ const ChatCreateOffer = ({ setHeader }) => {
   const userTypeValue = useSelector(state => state.misc.userType);
   const [priceValue, setPrice] = useState('');
   const [numberOfSharesValue, setNumberOfShares] = useState('');
+  const { sellerHiddenId, buyerHiddenId } = useSelector(
+    state => state.chat.chatRoom
+  );
 
   const fetchMakeOffer = useCallback(
     ({ price, numberOfShares, chatRoomId, userType }) => {
@@ -104,11 +107,12 @@ const ChatCreateOffer = ({ setHeader }) => {
           price,
           numberOfShares,
           chatRoomId,
-          userType
+          userType,
+          authorHiddenId: userType === 'seller' ? sellerHiddenId : buyerHiddenId
         })
       );
     },
-    [dispatch]
+    [dispatch, buyerHiddenId, sellerHiddenId]
   );
 
   const createNewOffer = () => {

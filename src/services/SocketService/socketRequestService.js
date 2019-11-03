@@ -22,18 +22,25 @@ const requestChatRoom = ({ chatRoomId }) => {
   );
 };
 
-const requestNewMessage = ({ chatRoomId, message }) => {
+const requestNewMessage = ({ chatRoomId, message, authorHiddenId }) => {
   Socket.socket.emit(
     'req_new_message',
     snakecaseKeys({
       token: tokenUtils.getToken(),
       message,
-      chatRoomId
+      chatRoomId,
+      authorHiddenId
     })
   );
 };
 
-const requestNewOffer = ({ price, numberOfShares, userType, chatRoomId }) => {
+const requestNewOffer = ({
+  price,
+  numberOfShares,
+  userType,
+  chatRoomId,
+  authorHiddenId
+}) => {
   Socket.socket.emit(
     'req_new_offer',
     snakecaseKeys({
@@ -41,7 +48,8 @@ const requestNewOffer = ({ price, numberOfShares, userType, chatRoomId }) => {
       price,
       numberOfShares,
       userType,
-      chatRoomId
+      chatRoomId,
+      authorHiddenId
     })
   );
 };

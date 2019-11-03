@@ -22,7 +22,7 @@ const chat = createSlice({
   reducers: {
     updateChatListAction: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
-      state.chatList = _orderBy(payload, ['createdAt'], ['desc']);
+      state.chatList = _orderBy(payload, ['updatedAt'], ['desc']);
     },
     fetchChatListAction: (state, { payload }) => {
       SocketRequestService.requestChatList(payload);
@@ -55,9 +55,21 @@ const chat = createSlice({
       SocketRequestService.requestNewOffer(payload);
     },
     updateAcceptOfferAction: (state, { payload }) => {
-      // TODO: add accept offer functionality
-      // eslint-disable-next-line no-console
-      console.log(payload);
+      const chatListIndex = _findIndex(
+        state.chatList,
+        c => c.chatRoomId === payload.chatRoomId
+      );
+      // eslint-disable-next-line no-param-reassign
+      state.chatList[chatListIndex].isDealClosed = payload.isDealClosed;
+      const chatMessageIndex = _findIndex(
+        state.chatRoom.conversation,
+        c => c.id === payload.newChat.id
+      );
+      // eslint-disable-next-line no-param-reassign
+      state.chatRoom.isDealClosed = payload.isDealClosed;
+      // eslint-disable-next-line no-param-reassign
+      state.chatRoom.conversation[chatMessageIndex].offerStatus =
+        payload.newChat.offerStatus;
     },
     fetchAcceptOfferAction: (state, { payload }) => {
       SocketRequestService.requestAcceptOffer(payload);
