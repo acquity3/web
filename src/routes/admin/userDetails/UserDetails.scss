@@ -40,6 +40,13 @@
     display: inline-flex;
     align-items: flex-end;
 
+    &--performed {
+      .button {
+        font-size: 1.1rem;
+        flex: 1;
+      }
+    }
+
     .button {
       &--cta {
         flex: 2;

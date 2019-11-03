@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useUser } from 'contexts/userContext';
-import { isUnapprovedBuyer } from 'utils/userUtils';
 import PageContainer from 'components/pageContainer';
 import PageHeader from 'components/pageHeader/PageHeader';
 
@@ -23,12 +22,6 @@ const ProfileSettings = () => {
               Please check back later.
             </div>
           </div>
-          {isUnapprovedBuyer(user) && (
-            <div className="notification is-warning">
-              You will be unable to post a bid until you connect your account to
-              an identity provider
-            </div>
-          )}
           <div className="accountInfo">
             <div className="form">
               <div className="form__field field">

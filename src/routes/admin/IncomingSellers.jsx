@@ -1,6 +1,6 @@
 import React from 'react';
 
-import UserDetails from './UserDetails';
+import UserDetails from './userDetails';
 
 import './IncomingUsers.scss';
 
