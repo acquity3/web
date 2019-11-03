@@ -1,13 +1,15 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PageContainer from 'components/pageContainer';
+import { fetchChatRoomAction, fetchChatListAction } from 'reducers/ChatDux';
 
 import ChatList from './ChatList';
 import ChatRoom from './ChatRoom/ChatRoom';
 import ChatInput from './ChatInput/ChatInput';
 import ChatOffer from './ChatOffer';
 import './Chat.scss';
+import { useSocket } from '../../contexts/socketContext';
 
 const ChatHeader = ({ correspondentName }) => {
   return (
@@ -34,11 +36,24 @@ const ChatContent = () => {
 };
 
 const Chat = () => {
+  const dispatch = useDispatch();
   const { chatRoomId } = useParams();
   const correspondentName = useSelector(
     state => state.chat.chatRoom.length > 0 && state.chat.chatRoom[0].dealerName
   );
+  const userType = useSelector(state => state.misc.userType);
 
+  const { socketInit, socketEnd } = useSocket();
+  useEffect(() => {
+    socketInit();
+    dispatch(fetchChatListAction({ userType }));
+    if (chatRoomId) {
+      dispatch(fetchChatRoomAction({ chatRoomId }));
+    }
+    return () => {
+      socketEnd();
+    };
+  });
   return (
     <PageContainer className="chat">
       {/* TODO: clean up redux model to not use arrays and make keys more meaningful */}

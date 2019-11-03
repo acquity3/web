@@ -7,7 +7,15 @@ const chat = createSlice({
   name: 'chat',
   initialState: {
     chatList: [],
-    chatRoom: [],
+    chatRoom: {
+      chatRoomId: '',
+      sellerPrice: null,
+      sellerNumberOfShares: null,
+      buyerPrice: null,
+      buyerNumberOfShares: null,
+      updatedAt: null,
+      conversation: []
+    },
     message: '',
     chatRoomId: ''
   },
@@ -16,8 +24,8 @@ const chat = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.chatList = _orderBy(payload, ['createdAt'], ['desc']);
     },
-    fetchChatListAction: () => {
-      SocketRequestService.requestChatList();
+    fetchChatListAction: (state, { payload }) => {
+      SocketRequestService.requestChatList(payload);
     },
     fetchChatRoomAction: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
@@ -31,26 +39,41 @@ const chat = createSlice({
     fetchNewMessageAction: (state, { payload }) => {
       SocketRequestService.requestNewMessage(payload);
     },
-    updateNewMessageAction: (state, { payload }) => {
-      state.chatRoom.push({ ...payload });
+    updateNewChatAction: (state, { payload }) => {
+      const { newChat } = payload;
+      state.chatRoom.conversation.push({ ...newChat });
       const index = _findIndex(
         state.chatList,
         c => c.chatRoomId === payload.chatRoomId
       );
-      state.chatList.splice(index, 1, payload);
       // eslint-disable-next-line no-param-reassign
-      state.chatList = _orderBy(state.chatList, ['createdAt'], ['desc']);
+      state.chatList[index].updatedAt = payload.updatedAt;
+      // eslint-disable-next-line no-param-reassign
+      state.chatList = _orderBy(state.chatList, ['updatedAt'], ['desc']);
+    },
+    fetchNewOfferAction: (state, { payload }) => {
+      SocketRequestService.requestNewOffer(payload);
+    },
+    updateAcceptOfferAction: (state, { payload }) => {
+      // TODO: add accept offer functionality
+      // eslint-disable-next-line no-console
+      console.log(payload);
+    },
+    fetchAcceptOfferAction: (state, { payload }) => {
+      SocketRequestService.requestAcceptOffer(payload);
     }
   }
 });
-
 export const {
   updateChatListAction,
   fetchChatListAction,
   fetchChatRoomAction,
   updateChatRoomAction,
   fetchNewMessageAction,
-  updateNewMessageAction
+  fetchNewOfferAction,
+  updateNewChatAction,
+  updateAcceptOfferAction,
+  fetchAcceptOfferAction
 } = chat.actions;
 
 export default chat.reducer;

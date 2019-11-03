@@ -14,7 +14,7 @@ const ChatRoom = () => {
   let chatMessagesRef = document.getElementById('messagesContainer');
   let newMessageDividerRef = document.getElementById('newMessageDivider');
 
-  const chatMessages = useSelector(state => state.chat.chatRoom);
+  const chatMessages = useSelector(state => state.chat.chatRoom.conversation);
 
   const handleScroll = useCallback(
     event => {
@@ -86,7 +86,7 @@ const ChatRoom = () => {
       )}
       {chatMessages.map((message, index) => {
         return (
-          <div key={message.createdAt}>
+          <div key={message.updatedAt}>
             {/* TODO: Next time when each message has properties like firstUnreadMessage, can use that to demarcate the new message boundary, and scroll to this instead of the bottom on first load */}
             {index === prevMessageLength && (
               <div

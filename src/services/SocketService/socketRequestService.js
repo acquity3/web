@@ -2,15 +2,19 @@ import snakecaseKeys from 'snakecase-keys';
 import tokenUtils from 'utils/tokenUtils';
 import Socket from './socketSetup';
 
-const requestChatList = () => {
-  Socket.socket.emit('set_chat_list', {
-    token: tokenUtils.getToken()
-  });
+const requestChatList = ({ userType }) => {
+  Socket.socket.emit(
+    'req_chat_rooms',
+    snakecaseKeys({
+      token: tokenUtils.getToken(),
+      userType
+    })
+  );
 };
 
 const requestChatRoom = ({ chatRoomId }) => {
   Socket.socket.emit(
-    'set_chat_room',
+    'req_conversation',
     snakecaseKeys({
       token: tokenUtils.getToken(),
       chatRoomId
@@ -20,7 +24,7 @@ const requestChatRoom = ({ chatRoomId }) => {
 
 const requestNewMessage = ({ chatRoomId, message }) => {
   Socket.socket.emit(
-    'set_new_message',
+    'req_new_message',
     snakecaseKeys({
       token: tokenUtils.getToken(),
       message,
@@ -29,8 +33,35 @@ const requestNewMessage = ({ chatRoomId, message }) => {
   );
 };
 
+const requestNewOffer = ({ price, numberOfShares, userType, chatRoomId }) => {
+  Socket.socket.emit(
+    'req_new_offer',
+    snakecaseKeys({
+      token: tokenUtils.getToken(),
+      price,
+      numberOfShares,
+      userType,
+      chatRoomId
+    })
+  );
+};
+
+const requestAcceptOffer = ({ offerId, userType, chatRoomId }) => {
+  Socket.socket.emit(
+    'req_accept_offer',
+    snakecaseKeys({
+      token: tokenUtils.getToken(),
+      offerId,
+      userType,
+      chatRoomId
+    })
+  );
+};
+
 export default {
   requestChatList,
   requestChatRoom,
-  requestNewMessage
+  requestNewMessage,
+  requestNewOffer,
+  requestAcceptOffer
 };
