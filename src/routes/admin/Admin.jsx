@@ -20,7 +20,9 @@ const Admin = () => {
     const fetchData = async () => {
       try {
         const response = await ApiService.get('/requests');
-        setState({ requests: response.data });
+        if (!didCancel) {
+          setState({ requests: response.data });
+        }
       } catch (error) {
         if (!didCancel) {
           setState({ isError: true });
