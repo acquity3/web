@@ -1,0 +1,7 @@
+// Modifying various elements without touching their base parents
+// Forgive the hard to trace classes :(
+.is-container--dark {
+  .info__header {
+    color: white;
+  }
+}
