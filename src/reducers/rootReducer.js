@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux-starter-kit';
+import { combineReducers } from 'redux';
 import chat from 'reducers/ChatDux';
 import securities from 'reducers/SecuritiesDux';
 import misc from 'reducers/MiscDux';
