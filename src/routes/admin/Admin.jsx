@@ -1,22 +1,50 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useEffect, useReducer } from 'react';
 
-import { useUser } from 'contexts/userContext';
 import PageContainer from 'components/pageContainer';
-import { isCommittee } from 'utils/userUtils';
-import { HOME } from 'constants/routes';
+import ApiService from 'services/apiService';
+import ErrorMessage from 'components/errorMessage';
+
+import IncomingBuyers from './IncomingBuyers';
+import './Admin.scss';
+import IncomingSellers from './IncomingSellers';
 
 const Admin = () => {
-  const user = useUser();
+  const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
+    isError: false,
+    requests: {}
+  });
 
-  if (!isCommittee(user)) {
-    return <Redirect to={HOME} />;
-  }
+  useEffect(() => {
+    let didCancel = false;
+
+    const fetchData = async () => {
+      try {
+        const response = await ApiService.get('/requests');
+        if (!didCancel) {
+          setState({ requests: response.data });
+        }
+      } catch (error) {
+        if (!didCancel) {
+          setState({ isError: true });
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      didCancel = true;
+    };
+  }, []);
 
   return (
     <PageContainer dark>
       <div className="main page">
-        <div className="page__content">Admin page</div>
+        <div className="page__content">
+          {state.isError && <ErrorMessage />}
+          <IncomingBuyers incomingBuyers={state.requests.buyers || []} />
+          <IncomingSellers incomingSellers={state.requests.sellers || []} />
+        </div>
       </div>
     </PageContainer>
   );

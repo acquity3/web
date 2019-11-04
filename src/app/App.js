@@ -2,13 +2,16 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { retryPromise } from 'utils';
 import { useUser } from 'contexts/userContext';
 import Loading from 'components/loading';
 import './App.scss';
 
 const loadAuthenticatedApp = () => import('./AuthenticatedApp');
-const AuthenticatedApp = React.lazy(loadAuthenticatedApp);
-const UnauthenticatedApp = React.lazy(() => import('./UnauthenticatedApp'));
+const AuthenticatedApp = React.lazy(() => retryPromise(loadAuthenticatedApp));
+const UnauthenticatedApp = React.lazy(() =>
+  retryPromise(() => import('./UnauthenticatedApp'))
+);
 
 toast.configure();
 

@@ -1,9 +1,13 @@
+import store from 'app/store';
+
 import { SITE_URL } from 'constants/urls';
 import TokenUtils from 'utils/tokenUtils';
+import { setUser, clearUser } from 'reducers/MiscDux';
 import ApiService from './apiService';
 
 const logout = () => {
   TokenUtils.removeToken();
+  store.dispatch(clearUser());
   return Promise.resolve();
 };
 
@@ -30,17 +34,23 @@ const getLinkedInRedirect = () => {
 };
 
 const getUser = async () => {
+  const state = store.getState();
+  const { user } = state.misc;
   const token = TokenUtils.getToken();
   // No user yet.
   if (!token) {
     return Promise.resolve(null);
   }
+
+  if (user && Date.now() - user.lastRetrieved < 600000) {
+    return user;
+  }
   // Check with backend to see if key is still valid
-  let response;
   try {
-    response = await ApiService.get('auth/me');
+    const response = await ApiService.get('auth/me');
     if (response.status === 200) {
       const { me: userData } = response.data;
+      store.dispatch(setUser({ ...userData, lastRetrieved: Date.now() }));
       return userData;
     }
     throw new Error({

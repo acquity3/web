@@ -1,21 +1,21 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import pluralize from 'pluralize';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useUser } from 'contexts/userContext';
 import ApiService from 'services/apiService';
 import {
   updateSecurities,
-  setCurrentSelectedBuySecurity,
-  setCurrentSelectedSellSecurity
+  setCurrentSelectedBuySecurity
 } from 'reducers/SecuritiesDux';
 import { isUnapprovedBuyer } from 'utils/userUtils';
 import InputDropdownSelect from 'components/inputDropdownSelect';
 import AccountApprovalModal from 'components/modal/AccountApprovalModal';
+import ErrorMessage from 'components/errorMessage';
 import 'assets/scss/modal.scss';
 
-import Items from './Items';
-import './OngoingItemsContainer.scss';
+import OngoingBids from './OngoingBids';
+import '../containerStyle.scss';
+import './OngoingBidsContainer.scss';
 
 const BidWarning = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,48 +58,57 @@ const BidWarning = () => {
   );
 };
 
-const OngoingItemsContainer = ({ type, apiEndpoint }) => {
+const OngoingBidsContainer = () => {
   const user = useUser();
 
   const dispatch = useDispatch();
-  const {
-    securities,
-    currentSelectedBuySecurity,
-    currentSelectedSellSecurity
-  } = useSelector(state => state.securities);
+  const { securities, currentSelectedBuySecurity } = useSelector(
+    state => state.securities
+  );
 
   const [state, setState] = useReducer((s, a) => ({ ...s, ...a }), {
     isLoading: true,
-    ongoingItems: []
+    isError: false,
+    ongoingBids: []
   });
 
   const handleSelectSecurity = value => {
-    if (type === 'bids') {
-      dispatch(setCurrentSelectedBuySecurity(value[0]));
-    } else {
-      dispatch(setCurrentSelectedSellSecurity(value[0]));
-    }
+    dispatch(setCurrentSelectedBuySecurity(value[0]));
   };
 
   useEffect(() => {
-    Promise.all([ApiService.get(apiEndpoint), ApiService.get('security/')])
-      .then(responses => {
-        const ongoingItems = responses[0].data;
-        ongoingItems.sort((a, b) => b.updatedAt - a.updatedAt);
-        dispatch(updateSecurities(responses[1].data));
-        setState({ ongoingItems, isLoading: false });
-      })
-      .catch(() => {
-        setState({ isLoading: false, hasError: true });
-      });
-  }, [type, apiEndpoint, dispatch]);
+    let didCancel = false;
+
+    const fetchData = async () => {
+      try {
+        const responses = await Promise.all([
+          ApiService.get('buy_order'),
+          ApiService.get('security')
+        ]);
+        if (!didCancel) {
+          const ongoingBids = responses[0].data;
+          ongoingBids.sort((a, b) => b.updatedAt - a.updatedAt);
+          dispatch(updateSecurities(responses[1].data));
+          setState({ ongoingBids, isLoading: false });
+        }
+      } catch (error) {
+        if (!didCancel) {
+          setState({ isLoading: false, isError: true });
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      didCancel = true;
+    };
+  }, [dispatch]);
 
   return (
     <div className="info">
       <div className="info__header">
-        <span className="header--pretext">
-          Ongoing {pluralize(type, 1)} for&nbsp;
-        </span>
+        <span className="header--pretext">Ongoing Bids for&nbsp;</span>
         <span className="info__header--company">
           <InputDropdownSelect
             options={securities}
@@ -108,25 +117,19 @@ const OngoingItemsContainer = ({ type, apiEndpoint }) => {
             labelField="name"
             iconField="iconUrl"
             isLoading={state.isLoading}
-            values={
-              type === 'bids'
-                ? [currentSelectedBuySecurity]
-                : [currentSelectedSellSecurity]
-            }
+            values={[currentSelectedBuySecurity]}
             onChange={handleSelectSecurity}
           />
         </span>{' '}
       </div>
-      {isUnapprovedBuyer(user) && type === 'bids' && <BidWarning />}
+      {isUnapprovedBuyer(user) && <BidWarning />}
       <div className="info__content">
-        <Items
-          type={type}
-          loading={state.isLoading}
-          ongoingItems={state.ongoingItems}
-        />
+        {state.isError && <ErrorMessage />}
+        <OngoingBids isLoading={state.isLoading} bids={state.ongoingBids} />
       </div>
+      <div className="is-divider main__content__divider" />
     </div>
   );
 };
 
-export default OngoingItemsContainer;
+export default OngoingBidsContainer;
