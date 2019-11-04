@@ -30,7 +30,7 @@ const chat = createSlice({
     fetchChatRoomAction: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
       state.chatRoomId = payload.chatRoomId;
-      SocketRequestService.requestChatRoom({ chatRoomId: payload.chatRoomId });
+      SocketRequestService.requestChatRoom(payload);
     },
     updateChatRoomAction: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign

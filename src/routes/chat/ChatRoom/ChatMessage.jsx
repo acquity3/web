@@ -9,21 +9,25 @@ const Conversation = ({ chat }) => {
     timeStyle: 'short'
   });
   const userType = useSelector(state => state.misc.userType);
-  const { sellerHiddenId, buyerHiddenId } = useSelector(
-    state => state.chat.chatRoom
-  );
-  const authorId = userType === 'seller' ? sellerHiddenId : buyerHiddenId;
   return (
     <div className="chatMessage">
       <div
         className={`chatMessage__bubble chatMessage__bubble--${
-          authorId === chat.authorHiddenId ? 'right' : 'left'
+          chat.userType === userType ? 'right' : 'left'
         }`}
       >
         {chat.type === 'message' ? (
-          <Message chat={chat} timeString={timeString} authorId={authorId} />
+          <Message
+            chat={chat}
+            timeString={timeString}
+            chatUserType={chat.userType}
+          />
         ) : (
-          <Offer chat={chat} timeString={timeString} authorId={authorId} />
+          <Offer
+            chat={chat}
+            timeString={timeString}
+            chatUserType={chat.userType}
+          />
         )}
       </div>
     </div>
@@ -43,7 +47,7 @@ const Message = ({ chat, timeString }) => {
   );
 };
 
-const Offer = ({ chat, timeString, authorId }) => {
+const Offer = ({ chat, timeString, chatUserType }) => {
   const dispatch = useDispatch();
 
   const [show, setShow] = useState(false);
@@ -87,7 +91,7 @@ const Offer = ({ chat, timeString, authorId }) => {
             {timeString}
           </span>
         </div>
-        {authorId !== chat.authorHiddenId ? (
+        {chatUserType !== userTypeValue ? (
           <div className="columns is-gapless is-mobile">
             <button
               type="button"

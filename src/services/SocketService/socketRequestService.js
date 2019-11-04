@@ -12,24 +12,25 @@ const requestChatList = ({ userType }) => {
   );
 };
 
-const requestChatRoom = ({ chatRoomId }) => {
+const requestChatRoom = ({ chatRoomId, userType }) => {
   Socket.socket.emit(
     'req_conversation',
     snakecaseKeys({
       token: tokenUtils.getToken(),
-      chatRoomId
+      chatRoomId,
+      userType
     })
   );
 };
 
-const requestNewMessage = ({ chatRoomId, message, authorHiddenId }) => {
+const requestNewMessage = ({ chatRoomId, message, userType }) => {
   Socket.socket.emit(
     'req_new_message',
     snakecaseKeys({
       token: tokenUtils.getToken(),
       message,
       chatRoomId,
-      authorHiddenId
+      userType
     })
   );
 };

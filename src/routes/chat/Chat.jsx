@@ -48,7 +48,8 @@ const Chat = () => {
     socketInit();
     dispatch(fetchChatListAction({ userType }));
     if (chatRoomId) {
-      dispatch(fetchChatRoomAction({ chatRoomId }));
+      console.log(userType);
+      dispatch(fetchChatRoomAction({ chatRoomId, userType }));
     }
     return () => {
       socketEnd();

@@ -8,9 +8,6 @@ const ChatInput = () => {
   const dispatch = useDispatch();
   const chatRoomId = useSelector(state => state.chat.chatRoomId);
   const userType = useSelector(state => state.misc.userType);
-  const { sellerHiddenId, buyerHiddenId } = useSelector(
-    state => state.chat.chatRoom
-  );
   const [value, setMessage] = React.useState('');
 
   const fetchNewMessage = useCallback(
@@ -19,11 +16,11 @@ const ChatInput = () => {
         fetchNewMessageAction({
           chatRoomId,
           message,
-          authorHiddenId: userType === 'seller' ? sellerHiddenId : buyerHiddenId
+          userType
         })
       );
     },
-    [dispatch, chatRoomId, sellerHiddenId, buyerHiddenId, userType]
+    [dispatch, chatRoomId, userType]
   );
 
   const handleChange = event => {

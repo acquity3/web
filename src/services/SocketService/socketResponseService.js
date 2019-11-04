@@ -30,6 +30,7 @@ export const getChatRoom = () => {
 
 export const getNewMessage = () => {
   Socket.socket.on('res_new_message', payload => {
+    console.log(payload);
     store.dispatch(
       updateNewChatAction({
         ...camelcaseKeys(payload, { deep: true })
