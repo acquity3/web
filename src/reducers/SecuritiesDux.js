@@ -26,6 +26,10 @@ const securities = createSlice({
     },
     setCurrentSelectedSellSecurity: (state, { payload }) => {
       state.currentSelectedSellSecurity = payload;
+    },
+    updateSecurityMarketPrice: (state, { payload }) => {
+      const { id, marketPrice } = payload;
+      state.securities.find(x => x.id === id).marketPrice = marketPrice;
     }
   }
 });
@@ -33,7 +37,8 @@ const securities = createSlice({
 export const {
   updateSecurities,
   setCurrentSelectedBuySecurity,
-  setCurrentSelectedSellSecurity
+  setCurrentSelectedSellSecurity,
+  updateSecurityMarketPrice
 } = securities.actions;
 
 export default securities.reducer;
