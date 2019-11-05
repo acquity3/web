@@ -3,15 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PageContainer from 'components/pageContainer';
 import { fetchChatRoomAction, fetchChatListAction } from 'reducers/ChatDux';
+import { useSocket } from 'contexts/socketContext';
 
-import ChatList from './ChatList';
-import ChatRoom from './ChatRoom/ChatRoom';
-import ChatInput from './ChatInput/ChatInput';
-import ChatOffer from './ChatOffer';
+import ChatRooms from './ChatRooms';
+import ChatMessages from './ChatConversation/ChatMessages';
+import ChatSendMessage from './ChatSendMessage/ChatSendMessage';
+import ChatHeader from './ChatHeader/ChatHeader';
 import './Chat.scss';
-import { useSocket } from '../../contexts/socketContext';
 
-const ChatHeader = ({ correspondentName }) => {
+const ChatNav = ({ correspondentName }) => {
   return (
     <>
       <div className="chat__header columns">
@@ -28,9 +28,9 @@ const ChatHeader = ({ correspondentName }) => {
 const ChatContent = () => {
   return (
     <div className="column chat__content">
-      <ChatOffer />
-      <ChatRoom />
-      <ChatInput />
+      <ChatHeader />
+      <ChatMessages />
+      <ChatSendMessage />
     </div>
   );
 };
@@ -48,7 +48,6 @@ const Chat = () => {
     socketInit();
     dispatch(fetchChatListAction({ userType }));
     if (chatRoomId) {
-      console.log(userType);
       dispatch(fetchChatRoomAction({ chatRoomId, userType }));
     }
     return () => {
@@ -58,9 +57,9 @@ const Chat = () => {
   return (
     <PageContainer className="chat">
       {/* TODO: clean up redux model to not use arrays and make keys more meaningful */}
-      <ChatHeader correspondentName={correspondentName} />
+      <ChatNav correspondentName={correspondentName} />
       <div className="columns is-gapless">
-        <ChatList />
+        <ChatRooms />
         {chatRoomId && <ChatContent />}
       </div>
     </PageContainer>

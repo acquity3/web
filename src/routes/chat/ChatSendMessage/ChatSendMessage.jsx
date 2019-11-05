@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchNewMessageAction } from 'reducers/ChatDux';
-import './ChatInput.scss';
+import './ChatSendMessage.scss';
 
-const ChatInput = () => {
+const ChatSendMessage = () => {
   const dispatch = useDispatch();
   const chatRoomId = useSelector(state => state.chat.chatRoomId);
   const userType = useSelector(state => state.misc.userType);
@@ -71,4 +71,4 @@ const ChatInput = () => {
   );
 };
 
-export default ChatInput;
+export default ChatSendMessage;

@@ -3,9 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 
 import Avatar from 'components/avatar';
-import './ChatItem.scss';
+import './ChatRoom.scss';
 
-const ChatItem = ({ chat, basePath }) => {
+const ChatRoom = ({ chat, basePath }) => {
   const { chatRoomId } = useParams();
 
   const formatter = (value, unit, _suffix) => {
@@ -60,4 +60,4 @@ const ChatItem = ({ chat, basePath }) => {
   );
 };
 
-export default ChatItem;
+export default ChatRoom;

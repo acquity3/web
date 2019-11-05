@@ -2,10 +2,10 @@ import React from 'react';
 import { getCurrentPathWithoutParam } from 'utils';
 import { useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import './ChatList.scss';
-import ChatItem from './ChatItem';
+import './ChatRooms.scss';
+import ChatRoom from './ChatRoom';
 
-const ChatList = () => {
+const ChatRooms = () => {
   const chatList = useSelector(state => state.chat.chatList);
   const { url } = useRouteMatch();
   const basePath = getCurrentPathWithoutParam(url);
@@ -13,10 +13,10 @@ const ChatList = () => {
   return (
     <ul className="chatlist column is-hidden-mobile is-two-fifths">
       {chatList.map(chat => (
-        <ChatItem key={chat.chatRoomId} chat={chat} basePath={basePath} />
+        <ChatRoom key={chat.chatRoomId} chat={chat} basePath={basePath} />
       ))}
     </ul>
   );
 };
 
-export default ChatList;
+export default ChatRooms;

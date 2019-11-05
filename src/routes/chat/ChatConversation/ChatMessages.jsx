@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import pluralize from 'pluralize';
 
 import ChatMessage from './ChatMessage';
-import './ChatRoom.scss';
+import './ChatMessages.scss';
 
-const ChatRoom = () => {
+const ChatMessages = () => {
   const [unreadCount, setUnreadCount] = useState(0);
   const [prevMessageLength, setPrevMessageLength] = useState(0);
   const [isBottom, setIsBottom] = useState(false);
@@ -113,4 +113,4 @@ const ChatRoom = () => {
   );
 };
 
-export default ChatRoom;
+export default ChatMessages;
