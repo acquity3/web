@@ -1,0 +1,49 @@
+@import 'assets/scss/variables';
+
+.adjustMarketPrice {
+  min-height: 10rem;
+  border: 2px solid white;
+  padding: 0.5rem;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-auto-rows: 1fr;
+
+  .adjustMarketPriceForm {
+    .card {
+      padding: 1rem;
+      font-family: $weight-heavy;
+      border-radius: 5px;
+    }
+    &__security {
+      margin-bottom: 0.5rem;
+      &--name {
+        font-size: 1.2rem;
+      }
+
+      &__currentPrice {
+        &--label {
+          font-family: $weight-light;
+          font-size: 1.2rem;
+
+          @media screen and (max-width: $tablet) {
+            font-size: 1rem;
+          }
+        }
+
+        &--value {
+          font-size: 1.5rem;
+          @media screen and (max-width: $tablet) {
+            font-size: 1.2rem;
+          }
+        }
+      }
+    }
+
+    &__form {
+      label {
+        padding-left: 0;
+      }
+    }
+  }
+}
