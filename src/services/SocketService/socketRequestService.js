@@ -2,7 +2,7 @@ import snakecaseKeys from 'snakecase-keys';
 import tokenUtils from 'utils/tokenUtils';
 import Socket from './socketSetup';
 
-const requestChatList = ({ userType }) => {
+const requestChatRooms = ({ userType }) => {
   Socket.socket.emit(
     'req_chat_rooms',
     snakecaseKeys({
@@ -12,7 +12,7 @@ const requestChatList = ({ userType }) => {
   );
 };
 
-const requestChatRoom = ({ chatRoomId, userType }) => {
+const requestChatConversation = ({ chatRoomId, userType }) => {
   Socket.socket.emit(
     'req_conversation',
     snakecaseKeys({
@@ -68,8 +68,8 @@ const requestAcceptOffer = ({ offerId, userType, chatRoomId }) => {
 };
 
 export default {
-  requestChatList,
-  requestChatRoom,
+  requestChatRooms,
+  requestChatConversation,
   requestNewMessage,
   requestNewOffer,
   requestAcceptOffer

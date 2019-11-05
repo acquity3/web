@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PageContainer from 'components/pageContainer';
-import { fetchChatRoomAction, fetchChatListAction } from 'reducers/ChatDux';
+import { reqChatConversation, reqChatRooms } from 'reducers/ChatDux';
 import { useSocket } from 'contexts/socketContext';
 
 import ChatRooms from './ChatRooms';
@@ -46,9 +46,9 @@ const Chat = () => {
   const { socketInit, socketEnd } = useSocket();
   useEffect(() => {
     socketInit();
-    dispatch(fetchChatListAction({ userType }));
+    dispatch(reqChatRooms({ userType }));
     if (chatRoomId) {
-      dispatch(fetchChatRoomAction({ chatRoomId, userType }));
+      dispatch(reqChatConversation({ chatRoomId, userType }));
     }
     return () => {
       socketEnd();

@@ -20,26 +20,26 @@ const chat = createSlice({
     chatRoomId: ''
   },
   reducers: {
-    updateChatListAction: (state, { payload }) => {
+    resChatRooms: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
       state.chatList = _orderBy(payload, ['updatedAt'], ['desc']);
     },
-    fetchChatListAction: (state, { payload }) => {
-      SocketRequestService.requestChatList(payload);
+    reqChatRooms: (state, { payload }) => {
+      SocketRequestService.requestChatRooms(payload);
     },
-    fetchChatRoomAction: (state, { payload }) => {
+    reqChatConversation: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
       state.chatRoomId = payload.chatRoomId;
-      SocketRequestService.requestChatRoom(payload);
+      SocketRequestService.requestChatConversation(payload);
     },
-    updateChatRoomAction: (state, { payload }) => {
+    resChatConversation: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
       state.chatRoom = payload.chatRoom;
     },
-    fetchNewMessageAction: (state, { payload }) => {
+    reqNewMessage: (state, { payload }) => {
       SocketRequestService.requestNewMessage(payload);
     },
-    updateNewChatAction: (state, { payload }) => {
+    resNewChat: (state, { payload }) => {
       const { newChat } = payload;
       state.chatRoom.conversation.push({ ...newChat });
       const index = _findIndex(
@@ -51,10 +51,10 @@ const chat = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.chatList = _orderBy(state.chatList, ['updatedAt'], ['desc']);
     },
-    fetchNewOfferAction: (state, { payload }) => {
+    reqNewOffer: (state, { payload }) => {
       SocketRequestService.requestNewOffer(payload);
     },
-    updateAcceptOfferAction: (state, { payload }) => {
+    resAcceptOffer: (state, { payload }) => {
       const chatListIndex = _findIndex(
         state.chatList,
         c => c.chatRoomId === payload.chatRoomId
@@ -71,21 +71,21 @@ const chat = createSlice({
       state.chatRoom.conversation[chatMessageIndex].offerStatus =
         payload.newChat.offerStatus;
     },
-    fetchAcceptOfferAction: (state, { payload }) => {
+    reqAcceptOffer: (state, { payload }) => {
       SocketRequestService.requestAcceptOffer(payload);
     }
   }
 });
 export const {
-  updateChatListAction,
-  fetchChatListAction,
-  fetchChatRoomAction,
-  updateChatRoomAction,
-  fetchNewMessageAction,
-  fetchNewOfferAction,
-  updateNewChatAction,
-  updateAcceptOfferAction,
-  fetchAcceptOfferAction
+  reqChatRooms,
+  resChatRooms,
+  reqChatConversation,
+  resChatConversation,
+  reqNewMessage,
+  resNewChat,
+  reqNewOffer,
+  resAcceptOffer,
+  reqAcceptOffer
 } = chat.actions;
 
 export default chat.reducer;

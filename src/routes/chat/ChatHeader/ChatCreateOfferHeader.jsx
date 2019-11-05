@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchNewOfferAction } from 'reducers/ChatDux';
+import { reqNewOffer } from 'reducers/ChatDux';
 
 import './ChatHeader.scss';
 
@@ -18,7 +18,7 @@ const ChatCreateOffer = ({ setHeader }) => {
   const fetchMakeOffer = useCallback(
     ({ price, numberOfShares, chatRoomId, userType }) => {
       dispatch(
-        fetchNewOfferAction({
+        reqNewOffer({
           price,
           numberOfShares,
           chatRoomId,

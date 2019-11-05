@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAcceptOfferAction } from 'reducers/ChatDux';
+import { reqAcceptOffer } from 'reducers/ChatDux';
 
 import './ChatMessage.scss';
 
@@ -57,7 +57,7 @@ const Offer = ({ chat, timeString, chatUserType }) => {
   const fetchAcceptOffer = useCallback(
     ({ userType, offerId, chatRoomId }) => {
       dispatch(
-        fetchAcceptOfferAction({
+        reqAcceptOffer({
           userType,
           offerId,
           chatRoomId

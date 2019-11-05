@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchNewMessageAction } from 'reducers/ChatDux';
+import { reqNewMessage } from 'reducers/ChatDux';
 import './ChatSendMessage.scss';
 
 const ChatSendMessage = () => {
@@ -13,7 +13,7 @@ const ChatSendMessage = () => {
   const fetchNewMessage = useCallback(
     ({ message }) => {
       dispatch(
-        fetchNewMessageAction({
+        reqNewMessage({
           chatRoomId,
           message,
           userType

@@ -8,8 +8,8 @@ import {
 } from 'reducers/ChatDux';
 import Socket from './socketSetup';
 
-export const getChatRooms = () => {
-  Socket.socket.on('res_chat_rooms', payload => {
+export const getChatList = () => {
+  Socket.socket.on('err_chat_rooms', payload => {
     store.dispatch(
       resChatRooms({
         ...camelcaseKeys(payload)
@@ -18,8 +18,8 @@ export const getChatRooms = () => {
   });
 };
 
-export const getChatConversation = () => {
-  Socket.socket.on('res_conversation', payload => {
+export const getChatRoom = () => {
+  Socket.socket.on('err_conversation', payload => {
     store.dispatch(
       resChatConversation({
         chatRoom: camelcaseKeys(payload, { deep: true })
@@ -29,7 +29,7 @@ export const getChatConversation = () => {
 };
 
 export const getNewMessage = () => {
-  Socket.socket.on('res_new_message', payload => {
+  Socket.socket.on('err_new_message', payload => {
     console.log(payload);
     store.dispatch(
       resNewChat({
@@ -40,7 +40,7 @@ export const getNewMessage = () => {
 };
 
 export const getNewOffer = () => {
-  Socket.socket.on('res_new_offer', payload => {
+  Socket.socket.on('err_new_offer', payload => {
     store.dispatch(
       resNewChat({
         ...camelcaseKeys(payload, { deep: true })
@@ -50,7 +50,7 @@ export const getNewOffer = () => {
 };
 
 export const getAcceptOffer = () => {
-  Socket.socket.on('res_accept_offer', payload => {
+  Socket.socket.on('err_accept_offer', payload => {
     store.dispatch(
       resAcceptOffer({
         ...camelcaseKeys(payload, { deep: true })
@@ -60,8 +60,8 @@ export const getAcceptOffer = () => {
 };
 
 const initialize = () => {
-  Socket.getChatRooms = getChatRooms();
-  Socket.getChatConversation = getChatConversation();
+  Socket.getChatList = getChatList();
+  Socket.getChatRoom = getChatRoom();
   Socket.getNewMessage = getNewMessage();
   Socket.getNewOffer = getNewOffer();
   Socket.getAcceptOffer = getAcceptOffer();
