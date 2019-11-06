@@ -53,7 +53,7 @@ const Chat = () => {
     return () => {
       socketEnd();
     };
-  });
+  }, [chatRoomId, dispatch, socketEnd, socketInit, userType]);
   return (
     <PageContainer className="chat">
       {/* TODO: clean up redux model to not use arrays and make keys more meaningful */}

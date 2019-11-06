@@ -4,7 +4,10 @@ import {
   resChatRooms,
   resChatConversation,
   resNewChat,
-  resAcceptOffer
+  resAcceptOffer,
+  resDeclineOffer,
+  resArchive,
+  testRes
 } from 'reducers/ChatDux';
 import Socket from './socketSetup';
 
@@ -30,7 +33,6 @@ export const getChatConversation = () => {
 
 export const getNewMessage = () => {
   Socket.socket.on('res_new_message', payload => {
-    console.log(payload);
     store.dispatch(
       resNewChat({
         ...camelcaseKeys(payload, { deep: true })
@@ -59,12 +61,56 @@ export const getAcceptOffer = () => {
   });
 };
 
+export const getDeclineOffer = () => {
+  Socket.socket.on('res_decline_offer', payload => {
+    store.dispatch(
+      resDeclineOffer({
+        ...camelcaseKeys(payload, { deep: true })
+      })
+    );
+  });
+};
+
+export const getArchive = () => {
+  Socket.socket.on('res_archive', payload => {
+    store.dispatch(
+      resArchive({
+        ...camelcaseKeys(payload, { deep: true })
+      })
+    );
+  });
+};
+
+export const getRejectMatch = () => {
+  Socket.socket.on('res_reject_match', payload => {
+    store.dispatch(
+      testRes({
+        ...camelcaseKeys(payload, { deep: true })
+      })
+    );
+  });
+};
+
+export const getOtherPartyDetails = () => {
+  Socket.socket.on('res_other_party_details', payload => {
+    store.dispatch(
+      testRes({
+        ...camelcaseKeys(payload, { deep: true })
+      })
+    );
+  });
+};
+
 const initialize = () => {
   Socket.getChatRooms = getChatRooms();
   Socket.getChatConversation = getChatConversation();
   Socket.getNewMessage = getNewMessage();
   Socket.getNewOffer = getNewOffer();
   Socket.getAcceptOffer = getAcceptOffer();
+  Socket.getDeclineOffer = getDeclineOffer();
+  Socket.getArchive = getArchive();
+  Socket.getRejectMatch = getRejectMatch();
+  Socket.getOtherPartyDetails = getOtherPartyDetails();
 };
 
 export default {

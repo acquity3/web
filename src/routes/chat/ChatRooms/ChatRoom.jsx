@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
-
 import Avatar from 'components/avatar';
+
+import ChatArchiveButton from './ChatArchiveButton';
 import './ChatRoom.scss';
 
 const ChatRoom = ({ chat, basePath }) => {
@@ -36,8 +37,6 @@ const ChatRoom = ({ chat, basePath }) => {
         }`}
         to={`${basePath}/${chat.chatRoomId}`}
       >
-        {/* TODO(#23): online status icon hardcoded */}
-        {/* <div className={`chatlist__status ${'chatlist__status--online'}`} /> */}
         <Avatar
           className="chatlist__item__avatar column is-narrow"
           userName={chat.chatRoomId}
@@ -54,6 +53,8 @@ const ChatRoom = ({ chat, basePath }) => {
             <div>Selling Amt: {chat.sellerPrice}</div>
             <div>Lowest Price: {chat.sellerNumberOfShares}</div>
           </div>
+          <div>Archived Status: {chat.isArchived ? 'True' : 'False'}</div>
+          <ChatArchiveButton isArchived={chat.isArchived} />
         </div>
       </Link>
     </li>

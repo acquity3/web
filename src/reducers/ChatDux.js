@@ -16,8 +16,11 @@ const chat = createSlice({
       updatedAt: null,
       conversation: []
     },
-    message: '',
-    chatRoomId: ''
+    chatRoomId: '',
+    error: {
+      message: '',
+      statusCode: ''
+    }
   },
   reducers: {
     resChatRooms: (state, { payload }) => {
@@ -35,6 +38,10 @@ const chat = createSlice({
     resChatConversation: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
       state.chatRoom = payload.chatRoom;
+    },
+    errChat: (state, { payload }) => {
+      // eslint-disable-next-line no-param-reassign
+      state.error = payload;
     },
     reqNewMessage: (state, { payload }) => {
       SocketRequestService.requestNewMessage(payload);
@@ -73,6 +80,36 @@ const chat = createSlice({
     },
     reqAcceptOffer: (state, { payload }) => {
       SocketRequestService.requestAcceptOffer(payload);
+    },
+    resDeclineOffer: (state, { payload }) => {
+      const chatMessageIndex = _findIndex(
+        state.chatRoom.conversation,
+        c => c.id === payload.newChat.id
+      );
+      // eslint-disable-next-line no-param-reassign
+      state.chatRoom.conversation[chatMessageIndex].offerStatus =
+        payload.newChat.offerStatus;
+    },
+    reqDeclineOffer: (state, { payload }) => {
+      SocketRequestService.requestDeclineOffer(payload);
+    },
+    resArchive: (state, { payload }) => {
+      const chatListIndex = _findIndex(
+        state.chatList,
+        c => c.chatRoomId === payload.chatRoomId
+      );
+      // eslint-disable-next-line no-param-reassign
+      state.chatList[chatListIndex].isArchived = payload.isArchived;
+      // eslint-disable-next-line no-param-reassign
+      state.chatRoom.isArchived = payload.isArchived;
+    },
+    reqArchive: (state, { payload }) => {
+      SocketRequestService.requestArchive(payload);
+    },
+    testRes: (state, { payload }) => {
+      // TODO: remove
+      // eslint-disable-next-line no-console
+      console.log(payload);
     }
   }
 });
@@ -85,7 +122,13 @@ export const {
   resNewChat,
   reqNewOffer,
   resAcceptOffer,
-  reqAcceptOffer
+  reqAcceptOffer,
+  resDeclineOffer,
+  reqDeclineOffer,
+  errChat,
+  resArchive,
+  reqArchive,
+  testRes
 } = chat.actions;
 
 export default chat.reducer;

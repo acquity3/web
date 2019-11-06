@@ -1,58 +1,52 @@
 import camelcaseKeys from 'camelcase-keys';
 import store from 'app/store';
-import {
-  resChatRooms,
-  resChatConversation,
-  resNewChat,
-  resAcceptOffer
-} from 'reducers/ChatDux';
+import { errChat } from 'reducers/ChatDux';
 import Socket from './socketSetup';
 
-export const getChatList = () => {
+export const errChatRooms = () => {
   Socket.socket.on('err_chat_rooms', payload => {
     store.dispatch(
-      resChatRooms({
+      errChat({
         ...camelcaseKeys(payload)
       })
     );
   });
 };
 
-export const getChatRoom = () => {
+export const errChatConversation = () => {
   Socket.socket.on('err_conversation', payload => {
     store.dispatch(
-      resChatConversation({
+      errChat({
         chatRoom: camelcaseKeys(payload, { deep: true })
       })
     );
   });
 };
 
-export const getNewMessage = () => {
+export const errNewMessage = () => {
   Socket.socket.on('err_new_message', payload => {
-    console.log(payload);
     store.dispatch(
-      resNewChat({
+      errChat({
         ...camelcaseKeys(payload, { deep: true })
       })
     );
   });
 };
 
-export const getNewOffer = () => {
+export const errNewOffer = () => {
   Socket.socket.on('err_new_offer', payload => {
     store.dispatch(
-      resNewChat({
+      errChat({
         ...camelcaseKeys(payload, { deep: true })
       })
     );
   });
 };
 
-export const getAcceptOffer = () => {
+export const errAcceptOffer = () => {
   Socket.socket.on('err_accept_offer', payload => {
     store.dispatch(
-      resAcceptOffer({
+      errChat({
         ...camelcaseKeys(payload, { deep: true })
       })
     );
@@ -60,11 +54,11 @@ export const getAcceptOffer = () => {
 };
 
 const initialize = () => {
-  Socket.getChatList = getChatList();
-  Socket.getChatRoom = getChatRoom();
-  Socket.getNewMessage = getNewMessage();
-  Socket.getNewOffer = getNewOffer();
-  Socket.getAcceptOffer = getAcceptOffer();
+  Socket.errChatRooms = errChatRooms();
+  Socket.errChatConversation = errChatConversation();
+  Socket.errNewMessage = errNewMessage();
+  Socket.errNewOffer = errNewOffer();
+  Socket.errAcceptOffer = errAcceptOffer();
 };
 
 export default {

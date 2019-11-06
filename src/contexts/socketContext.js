@@ -4,6 +4,7 @@ import {
   socketDisconnect
 } from 'services/SocketService/socketSetup';
 import SocketResponseService from 'services/SocketService/socketResponseService';
+import SocketErrorService from 'services/SocketService/socketErrorService';
 
 const SocketContext = React.createContext();
 
@@ -11,6 +12,7 @@ const SocketProvider = props => {
   const socketInit = () => {
     socketConnect();
     SocketResponseService.initialize();
+    SocketErrorService.initialize();
   };
 
   const socketEnd = () => {
