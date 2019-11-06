@@ -49,7 +49,7 @@ const AdjustMarketPriceForm = ({ security }) => {
                   Current price:&nbsp;
                 </span>
                 <span className="adjustMarketPriceForm__security__currentPrice--value">
-                  US${' '}
+                  US$
                   {security.marketPrice ? (
                     security.marketPrice
                   ) : (
