@@ -17,7 +17,7 @@ export const errChatConversation = () => {
   Socket.socket.on('err_conversation', payload => {
     store.dispatch(
       errChat({
-        chatRoom: camelcaseKeys(payload, { deep: true })
+        ...camelcaseKeys(payload, { deep: true })
       })
     );
   });

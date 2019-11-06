@@ -39,10 +39,6 @@ const chat = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.chatRoom = payload.chatRoom;
     },
-    errChat: (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
-      state.error = payload;
-    },
     reqNewMessage: (state, { payload }) => {
       SocketRequestService.requestNewMessage(payload);
     },
@@ -105,6 +101,10 @@ const chat = createSlice({
     },
     reqArchive: (state, { payload }) => {
       SocketRequestService.requestArchive(payload);
+    },
+    errChat: (state, { payload }) => {
+      // eslint-disable-next-line no-param-reassign
+      state.error = { ...payload };
     },
     testRes: (state, { payload }) => {
       // TODO: remove
