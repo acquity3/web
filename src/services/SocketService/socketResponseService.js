@@ -1,46 +1,50 @@
 import camelcaseKeys from 'camelcase-keys';
 import store from 'app/store';
 import {
-  updateChatListAction,
-  updateChatRoomAction,
-  updateNewMessageAction
+  setChatRooms,
+  setChatConversation,
+  addNewMessage
 } from 'reducers/ChatDux';
-import Socket from './socketSetup';
+import {
+  RECEIVE_CHAT_ROOMS,
+  RECEIVE_CONVERSATION,
+  RECEIVE_NEW_MESSAGE
+} from 'constants/socket';
 
-export const getChatList = () => {
-  Socket.socket.on('get_chat_list', payload => {
+export const setChatRoomsListener = socket => {
+  socket.on(RECEIVE_CHAT_ROOMS, payload => {
     store.dispatch(
-      updateChatListAction({
+      setChatRooms({
         ...camelcaseKeys(payload)
       })
     );
   });
 };
 
-export const getChatRoom = () => {
-  Socket.socket.on('get_chat_room', payload => {
+export const setChatConversationListener = socket => {
+  socket.on(RECEIVE_CONVERSATION, payload => {
     store.dispatch(
-      updateChatRoomAction({
-        chatRoom: camelcaseKeys(payload)
-      })
-    );
-  });
-};
-
-export const getNewMessage = () => {
-  Socket.socket.on('get_new_message', payload => {
-    store.dispatch(
-      updateNewMessageAction({
+      setChatConversation({
         ...camelcaseKeys(payload)
       })
     );
   });
 };
 
-const initialize = () => {
-  Socket.getChatList = getChatList();
-  Socket.getChatRoom = getChatRoom();
-  Socket.getNewMessage = getNewMessage();
+export const addNewMessageListener = socket => {
+  socket.on(RECEIVE_NEW_MESSAGE, payload => {
+    store.dispatch(
+      addNewMessage({
+        ...camelcaseKeys(payload)
+      })
+    );
+  });
+};
+
+const initialize = socket => {
+  setChatRoomsListener(socket);
+  setChatConversationListener(socket);
+  addNewMessageListener(socket);
 };
 
 export default {

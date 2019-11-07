@@ -1,20 +1,9 @@
-import React, { useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 
-import { fetchNewMessageAction } from 'reducers/ChatDux';
 import './ChatInput.scss';
 
 const ChatInput = () => {
-  const dispatch = useDispatch();
-  const chatRoomId = useSelector(state => state.chat.chatRoomId);
   const [value, setMessage] = React.useState('');
-
-  const fetchNewMessage = useCallback(
-    ({ message }) => {
-      dispatch(fetchNewMessageAction({ chatRoomId, message }));
-    },
-    [dispatch, chatRoomId]
-  );
 
   const handleChange = event => {
     setMessage(event.target.value);
@@ -22,7 +11,6 @@ const ChatInput = () => {
 
   const sendMessage = () => {
     if (!value) return;
-    fetchNewMessage({ message: value });
     setMessage('');
   };
 
