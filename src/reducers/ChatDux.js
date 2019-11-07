@@ -2,13 +2,15 @@ import { createSlice } from 'redux-starter-kit';
 import _orderBy from 'lodash/orderBy';
 import _findIndex from 'lodash/findIndex';
 
+export const initialState = {
+  chatRooms: [],
+  chatConversation: [],
+  chatRoomId: ''
+};
+
 const chat = createSlice({
   name: 'chat',
-  initialState: {
-    chatRooms: [],
-    chatConversation: [],
-    chatRoomId: ''
-  },
+  initialState,
   reducers: {
     setChatRooms: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign

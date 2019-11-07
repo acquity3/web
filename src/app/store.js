@@ -1,10 +1,16 @@
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
+import { persistReducer, persistStore, createMigrate } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
 import rootReducer from 'reducers/rootReducer';
-import { persistReducer, persistStore } from 'redux-persist';
+import migrations from 'reducers/migrations';
+
+const MIGRATION_DEBUG = false;
 
 const persistConfig = {
   key: 'acquity',
+  version: 0,
+  migrate: createMigrate(migrations, { debug: MIGRATION_DEBUG }),
   storage
 };
 
