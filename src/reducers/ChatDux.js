@@ -1,56 +1,42 @@
 import { createSlice } from 'redux-starter-kit';
 import _orderBy from 'lodash/orderBy';
 import _findIndex from 'lodash/findIndex';
-import SocketRequestService from 'services/SocketService/socketRequestService';
+
+export const initialState = {
+  chatRooms: [],
+  chatConversation: [],
+  chatRoomId: ''
+};
 
 const chat = createSlice({
   name: 'chat',
-  initialState: {
-    chatList: [],
-    chatRoom: [],
-    message: '',
-    chatRoomId: ''
-  },
+  initialState,
   reducers: {
-    updateChatListAction: (state, { payload }) => {
+    setChatRooms: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
-      state.chatList = _orderBy(payload, ['createdAt'], ['desc']);
+      state.chatRooms = _orderBy(payload, ['createdAt'], ['desc']);
     },
-    fetchChatListAction: () => {
-      SocketRequestService.requestChatList();
-    },
-    fetchChatRoomAction: (state, { payload }) => {
+    setChatConversation: (state, { payload }) => {
       // eslint-disable-next-line no-param-reassign
-      state.chatRoomId = payload.chatRoomId;
-      SocketRequestService.requestChatRoom({ chatRoomId: payload.chatRoomId });
+      state.chatConversation = payload;
     },
-    updateChatRoomAction: (state, { payload }) => {
-      // eslint-disable-next-line no-param-reassign
-      state.chatRoom = payload.chatRoom;
-    },
-    fetchNewMessageAction: (state, { payload }) => {
-      SocketRequestService.requestNewMessage(payload);
-    },
-    updateNewMessageAction: (state, { payload }) => {
-      state.chatRoom.push({ ...payload });
+    addNewMessage: (state, { payload }) => {
+      state.chatConversation.push({ ...payload });
       const index = _findIndex(
-        state.chatList,
+        state.chatRooms,
         c => c.chatRoomId === payload.chatRoomId
       );
-      state.chatList.splice(index, 1, payload);
+      state.chatRooms.splice(index, 1, payload);
       // eslint-disable-next-line no-param-reassign
-      state.chatList = _orderBy(state.chatList, ['createdAt'], ['desc']);
+      state.chatRooms = _orderBy(state.chatRooms, ['createdAt'], ['desc']);
     }
   }
 });
 
 export const {
-  updateChatListAction,
-  fetchChatListAction,
-  fetchChatRoomAction,
-  updateChatRoomAction,
-  fetchNewMessageAction,
-  updateNewMessageAction
+  setChatRooms,
+  setChatConversation,
+  addNewMessage
 } = chat.actions;
 
 export default chat.reducer;
