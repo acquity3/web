@@ -2,6 +2,13 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import {
+  getUserPrice,
+  getUserNumberOfShares,
+  getOtherPartyUserType
+} from 'utils/userUtils';
+import { toSgdCurrency } from 'utils/moneyUtils';
+import { SELLER, BUYER } from 'constants/user';
 import { useSocket } from 'contexts/socketContext';
 import SocketRequestService from 'services/SocketService/socketRequestService';
 import './ChatHeader.scss';
@@ -86,23 +93,50 @@ const ChatCreateOffer = ({ setOffer }) => {
 };
 
 const ChatHeader = () => {
-  const [offer, setOffer] = useState(true);
-
+  const [isOffer, setIsOffer] = useState(true);
+  const {
+    sellerPrice,
+    buyerPrice,
+    sellerNumberOfShares,
+    buyerNumberOfShares
+  } = useSelector(state => state.chat.chatConversation);
+  const userType = useSelector(state => state.misc.userType);
+  const otherPartyUserType = getOtherPartyUserType(userType);
+  const userPrice = getUserPrice(userType, sellerPrice, buyerPrice);
+  const userNumberOfShares = getUserNumberOfShares(
+    userType,
+    sellerNumberOfShares,
+    buyerNumberOfShares
+  );
+  const otherPartyPrice = getUserPrice(
+    otherPartyUserType,
+    sellerPrice,
+    buyerPrice
+  );
+  const otherPartyNumberOfShares = getUserNumberOfShares(
+    otherPartyUserType,
+    sellerNumberOfShares,
+    buyerNumberOfShares
+  );
   const createOffer = () => {
-    setOffer(true);
+    setIsOffer(true);
   };
   return (
     <div className="chat__header column is-paddingless">
       <div className="columns is-mobile is-marginless">
         <ChatOfferDetails
-          headerText="Seller Offer"
-          quantity="2000"
-          price="6.89"
+          headerText={`${userType === SELLER ? BUYER : SELLER} Offer`}
+          quantity={otherPartyNumberOfShares}
+          price={toSgdCurrency(otherPartyPrice)}
         />
-        <ChatOfferDetails headerText="Your Bid" quantity="3000" price="6.30" />
+        <ChatOfferDetails
+          headerText="Your Bid"
+          quantity={userNumberOfShares}
+          price={toSgdCurrency(userPrice)}
+        />
       </div>
-      {offer ? (
-        <ChatCreateOffer setOffer={setOffer} />
+      {isOffer ? (
+        <ChatCreateOffer setOffer={setIsOffer} />
       ) : (
         <div className="chat__header__actions columns is-gapless is-mobile">
           <button
