@@ -3,9 +3,62 @@ import { Link, useParams } from 'react-router-dom';
 import TimeAgo from 'react-timeago';
 
 import Avatar from 'components/avatar';
+import ArchiveLogo from 'components/svgr/ArchiveLogo';
+import UnArchiveLogo from 'components/svgr/UnArchiveLogo';
+import { useSocket } from 'contexts/socketContext';
+import SocketRequestService from 'services/SocketService/socketRequestService';
+
 import './ChatRoom.scss';
 
-const ChatRoom = ({ chat, basePath }) => {
+const ArchiveNav = ({ isViewingUnArchived, chatRoomId }) => {
+  const socket = useSocket();
+  const archiveChatRoom = () => {
+    SocketRequestService.archiveChatRoom({
+      socket,
+      chatRoomId
+    });
+  };
+  const unarchiveChatRoom = () => {
+    SocketRequestService.unarchiveChatRoom({
+      socket,
+      chatRoomId
+    });
+  };
+
+  return (
+    <div className="detail__footer dropdown is-hoverable">
+      <div className="dropdown-trigger">
+        <button
+          type="button"
+          className="button"
+          aria-haspopup="true"
+          aria-controls="dropdown-menu4"
+        >
+          <span className="icon is-small">
+            <i className="fas fa-angle-down" aria-hidden="true" />
+          </span>
+        </button>
+      </div>
+      <div className="dropdown-menu" id="dropdown-menu4" role="menu">
+        <div className="dropdown-content">
+          <div className="dropdown-item">
+            {isViewingUnArchived ? (
+              <button type="button" onClick={archiveChatRoom}>
+                <ArchiveLogo /> archive
+              </button>
+            ) : (
+              <button type="button" onClick={unarchiveChatRoom}>
+                <UnArchiveLogo /> unarchive
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ChatRoom = ({ chat, basePath, isViewingUnArchived }) => {
   const { chatRoomId } = useParams();
 
   const formatter = (value, unit, _suffix) => {
@@ -53,6 +106,10 @@ const ChatRoom = ({ chat, basePath }) => {
             <div>Selling Amt: 2000</div>
             <div>Lowest Price: $6.10</div>
           </div>
+          <ArchiveNav
+            isViewingUnArchived={isViewingUnArchived}
+            chatRoomId={chat.chatRoomId}
+          />
         </div>
       </Link>
     </li>

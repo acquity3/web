@@ -61,6 +61,13 @@ const chat = createSlice({
     },
     declineOffer: () => {
       // TODO: set offer message in chatConversation.conversation to REJECTED
+    },
+    setArchiveChatRoom: (state, { payload }) => {
+      const { chatRoomId } = payload;
+      const chatRoomIndex = state.chatRooms.findIndex(
+        c => c.chatRoomId === chatRoomId
+      );
+      state.chatRooms.splice(chatRoomIndex, 1);
     }
   }
 });
@@ -70,7 +77,8 @@ export const {
   setChatConversation,
   addNewMessage,
   acceptOffer,
-  declineOffer
+  declineOffer,
+  setArchiveChatRoom
 } = chat.actions;
 
 export default chat.reducer;

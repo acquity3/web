@@ -7,7 +7,9 @@ import {
   EMIT_NEW_MESSAGE,
   EMIT_NEW_OFFER,
   EMIT_ACCEPT_OFFER,
-  EMIT_DECLINE_OFFER
+  EMIT_DECLINE_OFFER,
+  EMIT_ARCHIVE_CHATROOM,
+  EMIT_UNARCHIVE_CHATROOM
 } from 'constants/socket';
 
 /**
@@ -21,12 +23,14 @@ import {
  * @param socket
  * @param userType
  */
-const getChatRooms = ({ socket, userType }) => {
+const getChatRooms = ({ socket, userType, isArchived }) => {
+  console.log(userType, isArchived);
   socket.emit(
     EMIT_CHAT_ROOMS,
     snakecaseKeys({
       token: tokenUtils.getToken(),
-      userType
+      userType,
+      isArchived
     })
   );
 };
@@ -161,11 +165,34 @@ const declineOffer = ({ chatRoomId, offerId, userType, socket }) => {
   );
 };
 
+const archiveChatRoom = ({ chatRoomId, socket }) => {
+  socket.emit(
+    EMIT_ARCHIVE_CHATROOM,
+    snakecaseKeys({
+      token: tokenUtils.getToken(),
+      chatRoomId
+    })
+  );
+};
+
+const unarchiveChatRoom = ({ chatRoomId, socket }) => {
+  console.log(chatRoomId);
+  socket.emit(
+    EMIT_UNARCHIVE_CHATROOM,
+    snakecaseKeys({
+      token: tokenUtils.getToken(),
+      chatRoomId
+    })
+  );
+};
+
 export default {
   getChatRooms,
   getChatConversation,
   addNewMessage,
   addNewOffer,
   acceptOffer,
-  declineOffer
+  declineOffer,
+  archiveChatRoom,
+  unarchiveChatRoom
 };

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import './ChatRooms.scss';
 import ChatRoom from './ChatRoom';
 
-const ChatRooms = () => {
+const ChatRooms = ({ isViewingUnArchived }) => {
   const chatRooms = useSelector(state => state.chat.chatRooms);
   const { url } = useRouteMatch();
   const basePath = getCurrentPathWithoutParam(url);
@@ -13,7 +13,12 @@ const ChatRooms = () => {
   return (
     <ul className="chatrooms column is-hidden-mobile is-two-fifths">
       {chatRooms.map(chat => (
-        <ChatRoom key={chat.chatRoomId} chat={chat} basePath={basePath} />
+        <ChatRoom
+          key={chat.chatRoomId}
+          chat={chat}
+          basePath={basePath}
+          isViewingUnArchived={isViewingUnArchived}
+        />
       ))}
     </ul>
   );

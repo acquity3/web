@@ -5,7 +5,8 @@ import {
   setChatConversation,
   addNewMessage,
   acceptOffer,
-  declineOffer
+  declineOffer,
+  setArchiveChatRoom
 } from 'reducers/ChatDux';
 import {
   RECEIVE_CHAT_ROOMS,
@@ -13,7 +14,9 @@ import {
   RECEIVE_NEW_MESSAGE,
   RECEIVE_NEW_OFFER,
   RECEIVE_ACCEPT_OFFER,
-  RECEIVE_DECLINE_OFFER
+  RECEIVE_DECLINE_OFFER,
+  RECEIVE_ARCHIVE_CHATROOM,
+  RECEIVE_UNARCHIVE_CHATROOM
 } from 'constants/socket';
 
 /**
@@ -200,6 +203,26 @@ export const declineOfferListener = socket => {
   });
 };
 
+export const archiveChatRoomListener = socket => {
+  socket.on(RECEIVE_ARCHIVE_CHATROOM, payload => {
+    store.dispatch(
+      setArchiveChatRoom({
+        ...camelcaseKeys(payload, { deep: true })
+      })
+    );
+  });
+};
+
+export const unarchiveChatRoomListener = socket => {
+  socket.on(RECEIVE_UNARCHIVE_CHATROOM, payload => {
+    store.dispatch(
+      setArchiveChatRoom({
+        ...camelcaseKeys(payload, { deep: true })
+      })
+    );
+  });
+};
+
 const initialize = socket => {
   setChatRoomsListener(socket);
   setChatConversationListener(socket);
@@ -207,6 +230,8 @@ const initialize = socket => {
   addNewOfferListener(socket);
   acceptOfferListener(socket);
   declineOfferListener(socket);
+  archiveChatRoomListener(socket);
+  unarchiveChatRoomListener(socket);
 };
 
 export default {
