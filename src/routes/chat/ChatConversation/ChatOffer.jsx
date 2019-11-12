@@ -36,6 +36,16 @@ const PendingOffer = ({ chat, isSentByUser, userType }) => {
       chatRoomId
     });
   };
+
+  const declineOffer = () => {
+    SocketRequestService.declineOffer({
+      offerId: chat.id,
+      userType,
+      socket,
+      chatRoomId
+    });
+  };
+
   if (isSentByUser) {
     return (
       <div className="offerMessage__status offerMessage__status--pending">
@@ -55,6 +65,7 @@ const PendingOffer = ({ chat, isSentByUser, userType }) => {
       <button
         type="button"
         className="button--danger offerMessage__status__pendingActions--reject no-shadow hvr-grow"
+        onClick={declineOffer}
       >
         Reject
       </button>
