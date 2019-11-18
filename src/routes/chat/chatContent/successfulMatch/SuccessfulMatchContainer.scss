@@ -1,0 +1,82 @@
+@import 'assets/scss/variables';
+
+.successfulMatch {
+  padding: 1rem;
+  text-align: center;
+  color: $blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media screen and (max-width: $mobile) {
+    padding: 0rem;
+  }
+
+  &__details {
+    min-width: 50%;
+    color: $dark;
+
+    &--text {
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    &__details {
+      font-size: 1.1rem;
+
+      .column {
+        padding: 0 0.5rem;
+      }
+      &--value {
+        font-weight: bold;
+        padding-left: 0.5rem;
+      }
+    }
+  }
+
+  &__header {
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0 1rem;
+
+    @media screen and (max-width: $mobile) {
+      font-size: 1rem;
+    }
+  }
+
+  &__content {
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    @media screen and (max-width: $mobile) {
+      padding-bottom: 1rem;
+    }
+  }
+
+  &__button {
+    border-radius: 20px;
+    background: $grey;
+    padding: 0.5rem 2rem;
+    font-weight: bold;
+    color: $blue;
+    cursor: pointer;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.16);
+    margin: 0.5rem 0;
+
+    &:hover,
+    &:focus,
+    &:active {
+      box-shadow: 0 0 6px 0 rgba($blue, 0.6);
+    }
+
+    @media screen and (max-width: $mobile) {
+      font-size: 0.9rem;
+    }
+  }
+}

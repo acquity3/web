@@ -1,55 +1,32 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import PageContainer from 'components/pageContainer';
+import { CHAT } from 'constants/routes';
 
-import ChatRooms from './ChatRooms';
-import ChatMessages from './ChatConversation/ChatMessages';
-import ChatInput from './ChatInput/ChatInput';
-import ChatHeader from './ChatHeader';
+import ChatNav from './ChatNav';
+import ChatList from './chatList';
+import ChatContent from './chatContent';
 import './Chat.scss';
-
-const ChatNav = ({ isShowingChatRoom }) => {
-  const history = useHistory();
-
-  const handleBackClick = () => history.goBack();
-  return (
-    <div className="chat__header columns">
-      <div className="column chat__header__left">
-        {isShowingChatRoom && (
-          <button
-            onClick={handleBackClick}
-            className="chat__header__back button button--cta button--nav--circle"
-            type="button"
-          >
-            <i className="fas fa-arrow-left" />
-          </button>
-        )}
-        <span>Matches</span>
-      </div>
-    </div>
-  );
-};
-
-const ChatContent = () => {
-  return (
-    <div className="column chat__content">
-      <ChatHeader />
-      <ChatMessages />
-      <ChatInput />
-    </div>
-  );
-};
 
 const Chat = () => {
   const { chatRoomId } = useParams();
+  const chat = useSelector(state => state.chat.unarchived[chatRoomId]);
+  const chatNavHeaderText = chat ? chat.friendlyName : '';
+
+  if (chatRoomId && !chat) {
+    return <Redirect to={CHAT} />;
+  }
 
   return (
     <PageContainer className="chat">
-      {/* TODO: clean up redux model to not use arrays and make keys more meaningful */}
-      <ChatNav isShowingChatRoom={!!chatRoomId} />
+      <ChatNav
+        isShowingChatRoom={!!chatRoomId}
+        headerText={chatNavHeaderText}
+      />
       <div className="columns is-mobile is-gapless">
-        <ChatRooms isShowingChatRoom={!!chatRoomId} />
+        <ChatList isShowingChatRoom={!!chatRoomId} />
         {chatRoomId && <ChatContent />}
       </div>
     </PageContainer>

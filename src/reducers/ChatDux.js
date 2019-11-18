@@ -1,72 +1,86 @@
 import { createSlice } from 'redux-starter-kit';
-import _orderBy from 'lodash/orderBy';
 
 export const initialState = {
-  chatRooms: [],
-  chatConversation: {
-    chatRoomId: '',
-    sellerPrice: null,
-    sellNumberOfShares: null,
-    buyerPrice: null,
-    buyerNumberOfShares: null,
-    updatedAt: null,
-    isDealClosed: true,
-    conversation: []
-  },
-  chatRoomId: ''
+  archived: {},
+  unarchived: {}
 };
 
+/* eslint-disable no-param-reassign */
 const chat = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    setChatRooms: (state, { payload }) => {
-      /* eslint-disable no-param-reassign */
-      state.chatRooms = _orderBy(payload, ['createdAt'], ['desc']);
-      /* eslint-enable no-param-reassign */
-    },
-    setChatConversation: (state, { payload }) => {
-      /* eslint-disable no-param-reassign */
-      state.chatConversation = payload;
-      /* eslint-enable no-param-reassign */
+    setChats: (state, { payload }) => {
+      const { archived, unarchived } = payload;
+      state.archived = archived;
+      state.unarchived = unarchived;
     },
     addNewMessage: (state, { payload }) => {
-      const { newChat, chatRoomId, updatedAt } = payload;
-      state.chatConversation.conversation.push({ ...newChat });
-      const index = state.chatRooms.findIndex(c => c.chatRoomId === chatRoomId);
+      const { chatRoomId, updatedAt } = payload;
+      const chatRoom = state.unarchived[chatRoomId];
+      if (!chatRoom) return;
 
-      /* eslint-disable no-param-reassign */
-      state.chatRooms[index].createdAt = updatedAt;
-      state.chatRooms = _orderBy(state.chatRooms, ['createdAt'], ['desc']);
-      /* eslint-enable no-param-reassign */
+      chatRoom.chats.push(payload);
+      chatRoom.updatedAt = updatedAt;
     },
-    setOfferStatus: (state, { payload }) => {
-      const { chatRoomId, newChat, updatedAt, isDealClosed } = payload;
-      const messageIndex = state.chatConversation.conversation.findIndex(
-        c => c.id === newChat.id
-      );
-      const chatRoomIndex = state.chatRooms.findIndex(
-        c => c.chatRoomId === chatRoomId
-      );
+    addNewOffer: (state, { payload }) => {
+      const { chatRoomId, updatedAt } = payload;
+      const chatRoom = state.unarchived[chatRoomId];
+      if (!chatRoom) return;
 
-      /* eslint-disable no-param-reassign */
-      // update chatConversation offer timestamp
-      state.chatConversation.conversation[messageIndex] = newChat;
-      state.chatConversation.isDealClosed = isDealClosed;
-      // update chatRooms timestamp
-      state.chatRooms[chatRoomIndex].createdAt = updatedAt;
-      state.chatRooms[chatRoomIndex].isDealClosed = isDealClosed;
-      state.chatRooms = _orderBy(state.chatRooms, ['createdAt'], ['desc']);
-      /* eslint-enable no-param-reassign */
+      // Add offer as message
+      chatRoom.chats.push(payload);
+      // Update the latest offer
+      chatRoom.latestOffer = payload;
+      chatRoom.updatedAt = updatedAt;
+    },
+    updateOfferStatus: (state, { payload }) => {
+      const { chatRoomId, updatedAt, offerStatus } = payload;
+      const chatRoom = state.unarchived[chatRoomId];
+      if (!chatRoom) return;
+
+      // Update prior offer that got updated
+      const oldOfferId = chatRoom.latestOffer.id;
+      const priorOffer = chatRoom.chats.find(msg => msg.id === oldOfferId);
+      priorOffer.offerStatus = offerStatus;
+
+      // Add this updated offer as new message
+      chatRoom.chats.push(payload);
+      // Update chat room's status
+      chatRoom.isDealClosed = payload.isDealClosed;
+      // Update the latest offer
+      chatRoom.latestOffer = payload;
+      chatRoom.updatedAt = updatedAt;
+    },
+    clearUnreadCount: (state, { payload }) => {
+      const { chatRoomId } = payload;
+      const chatRoom = state.unarchived[chatRoomId];
+      if (!chatRoom) return;
+
+      chatRoom.unreadCount = 0;
+    },
+    incrementUnreadCount: (state, { payload }) => {
+      const { chatRoomId, lastReadId } = payload;
+      const chatRoom = state.unarchived[chatRoomId];
+      if (!chatRoom) return;
+
+      // Only update the lastReadId if the user has scrolled to the bottom and set the unreadCount to 0
+      if (chatRoom.unreadCount === 0) {
+        chatRoom.lastReadId = lastReadId;
+      }
+      chatRoom.unreadCount += 1;
     }
   }
 });
+/* eslint-enable no-param-reassign */
 
 export const {
-  setChatRooms,
-  setChatConversation,
+  setChats,
   addNewMessage,
-  setOfferStatus
+  addNewOffer,
+  updateOfferStatus,
+  clearUnreadCount,
+  incrementUnreadCount
 } = chat.actions;
 
 export default chat.reducer;

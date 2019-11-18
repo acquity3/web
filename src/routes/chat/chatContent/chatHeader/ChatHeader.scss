@@ -1,0 +1,68 @@
+@import 'assets/scss/variables';
+
+.chat__header {
+  flex: 0 0 auto;
+
+  &__back {
+    margin-right: 1rem;
+    @media screen and (min-width: $tablet) {
+      display: none;
+    }
+  }
+
+  .columns {
+    flex-flow: wrap;
+  }
+
+  &__details {
+    text-align: center;
+    color: $dark;
+
+    &--mobile {
+      display: none;
+      font-size: 1rem;
+      text-align: center;
+
+      @media screen and (max-width: $tablet) {
+        display: block;
+      }
+    }
+    &__header {
+      font-size: 0.8rem;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    &__details {
+      .details {
+        font-size: 1.1rem;
+        font-weight: normal;
+
+        @media screen and (max-width: $mobile) {
+          font-size: 0.8rem;
+        }
+        &__label {
+          padding-right: 0.2rem;
+        }
+
+        &__value {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  &__actions {
+    button {
+      font-weight: normal;
+      font-size: 1rem;
+      border-radius: 0;
+      border: none !important;
+      outline: 1px solid $grey-lighter !important;
+
+      @media screen and (max-width: $mobile) {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
