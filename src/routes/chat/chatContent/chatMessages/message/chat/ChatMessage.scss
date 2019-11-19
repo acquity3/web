@@ -16,10 +16,6 @@
       transition: background-color 0.5s;
       font-weight: normal;
 
-      &--message {
-        overflow-wrap: break-word;
-      }
-
       &--timestamp {
         font-size: 0.6rem;
         float: right;
