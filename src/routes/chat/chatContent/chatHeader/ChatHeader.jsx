@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import { toCurrency } from 'utils/moneyUtils';
 import { SELLER, BUYER } from 'constants/user';
-import { useUser } from 'contexts/userContext';
 
 import ChatOfferSubheader from './ChatOfferSubheader';
 import RevealIdentitySubheader from './RevealIdentitySubheader';
@@ -27,10 +28,9 @@ const ChatOfferDetails = ({ headerText, quantity, price }) => {
 };
 
 const ChatHeader = ({ chat }) => {
-  const user = useUser();
+  const isUserBuyer = useSelector(state => state.misc.userType === BUYER);
   const [isShowOfferSubheader, setIsShowOfferSubheader] = useState(false);
   const { isDealClosed, buyOrder, sellOrder, isDisbanded, id } = chat;
-  const isUserBuyer = chat.buyerId === user.id;
 
   const handleOpenOfferSubheader = () => {
     setIsShowOfferSubheader(true);
