@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,9 +8,7 @@ import {
 } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { useSocket } from 'contexts/socketContext';
 import { useUser } from 'contexts/userContext';
-import SocketRequestService from 'services/SocketService/socketRequestService';
 import Navbar from 'components/navbar';
 import Main from 'routes/main';
 import NewBid from 'routes/bids/newBid';
@@ -44,12 +42,6 @@ const AuthenticatedApp = () => {
     }
     return redirectToHome();
   };
-
-  const socket = useSocket();
-
-  useEffect(() => {
-    SocketRequestService.getChatRooms({ socket });
-  }, [socket]);
 
   return (
     <Router>

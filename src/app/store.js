@@ -9,9 +9,10 @@ const MIGRATION_DEBUG = false;
 
 const persistConfig = {
   key: 'acquity',
-  version: 0,
+  version: 2,
   migrate: createMigrate(migrations, { debug: MIGRATION_DEBUG }),
-  storage
+  storage,
+  blacklist: ['loading']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

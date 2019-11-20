@@ -13,7 +13,7 @@
   }
 
   &__header {
-    font-family: $weight-heavy;
+    font-weight: bold;
     font-size: 1.5rem;
   }
 
@@ -35,7 +35,7 @@
   a {
     text-align: center;
     padding-bottom: 0.5rem;
-    font-family: $weight-light;
+    font-weight: 300;
     color: #195733;
     text-decoration: underline;
     font-size: 0.8rem;

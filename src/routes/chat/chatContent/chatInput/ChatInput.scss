@@ -1,0 +1,15 @@
+@import 'assets/scss/variables';
+
+.chatInput {
+  padding: 1rem;
+
+  &__sendButton {
+    button {
+      padding: 0 1.5rem;
+
+      @media screen and (max-width: $tablet) {
+        padding: 0 1rem;
+      }
+    }
+  }
+}

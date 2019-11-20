@@ -2,11 +2,12 @@
 
 .chat {
   &__header {
-    font-family: $weight-heavy;
+    font-weight: bold;
     font-size: 1.5rem;
     margin: 0 !important;
     color: $blue;
     border-bottom: 2px solid $grey-lighter;
+    position: relative;
 
     @media only screen and (max-width: $mobile) {
       margin: 1rem 0;
@@ -16,15 +17,25 @@
       margin: 1rem;
     }
 
-    &__left {
-      padding: 1.5rem 1rem 1.5rem 2rem !important;
+    &__right {
+      padding: 1.5rem;
       display: inline-flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+    }
+
+    &__left {
+      padding: 1.5rem 1rem 1.5rem 2rem;
+      display: inline-flex;
+      align-items: center;
+
+      @media screen and (max-width: $tablet) {
+        padding: 1rem;
+      }
 
       .view-archive {
         font-size: 1rem;
-        font-family: $weight-light;
+        font-weight: normal;
         color: $dark;
       }
     }
@@ -44,7 +55,16 @@
 
   &__content {
     height: calc(100vh - 11.9rem);
-    display: flex;
+    display: grid;
+    grid-template-rows: min-content auto min-content min-content;
     flex-direction: column;
+
+    @media screen and (max-width: $tablet) {
+      height: calc(100vh - 10.9rem);
+    }
+
+    @media screen and (max-width: $mobile) {
+      height: calc(100vh - 8.4rem);
+    }
   }
 }

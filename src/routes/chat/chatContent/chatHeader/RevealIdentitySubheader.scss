@@ -1,0 +1,28 @@
+@import 'assets/scss/variables';
+
+.revealIdentitySubheader {
+  border-top: 1px solid $grey-lighter;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+
+  @media screen and (max-width: $tablet) {
+    padding: 0.2rem;
+  }
+
+  &__button {
+    font-weight: normal;
+    color: $blue;
+    cursor: pointer;
+
+    @media screen and (max-width: $tablet) {
+      font-size: 0.9rem;
+    }
+  }
+
+  &--revealed {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
