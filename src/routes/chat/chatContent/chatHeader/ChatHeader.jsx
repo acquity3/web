@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 
-import { toCurrency } from 'utils/moneyUtils';
+import { useSocket } from 'contexts/socketContext';
+import { useUser } from 'contexts/userContext';
+import { PENDING_OFFER_TYPE } from 'constants/socket';
 import { SELLER, BUYER } from 'constants/user';
+import socketRequestService from 'services/SocketService/socketRequestService';
+import { toCurrency } from 'utils/moneyUtils';
 
 import ChatOfferSubheader from './ChatOfferSubheader';
 import RevealIdentitySubheader from './RevealIdentitySubheader';
 import './ChatHeader.scss';
 import DisbandedSubheader from './DisbandedSubheader';
+import ChatViewSubheader from './ChatViewSubheader';
+import CancelMatchModal from './cancelMatchModel';
 
 const ChatOfferDetails = ({ headerText, quantity, price }) => {
   return (
@@ -28,27 +34,88 @@ const ChatOfferDetails = ({ headerText, quantity, price }) => {
 };
 
 const ChatHeader = ({ chat }) => {
+  const {
+    isDealClosed,
+    buyOrder,
+    sellOrder,
+    disbandInfo,
+    id,
+    isRevealed,
+    latestOffer,
+    identities
+  } = chat;
+  const socket = useSocket();
+  const user = useUser();
   const isUserBuyer = useSelector(state => state.misc.userType === BUYER);
   const [isShowOfferSubheader, setIsShowOfferSubheader] = useState(false);
-  const { isDealClosed, buyOrder, sellOrder, isDisbanded, id } = chat;
+  const [isShowViewOfferSubheader, setIsShowViewOfferSubheader] = useState(
+    false
+  );
+  const [isShowCancelMatchModal, setIsShowCancelMatchModal] = useState(false);
+
+  const hasPendingOffer =
+    latestOffer && latestOffer.offerStatus === PENDING_OFFER_TYPE;
+  const isUserPendingOffer =
+    hasPendingOffer && latestOffer.authorId === user.id;
 
   const handleOpenOfferSubheader = () => {
-    setIsShowOfferSubheader(true);
+    if (hasPendingOffer) {
+      setIsShowViewOfferSubheader(true);
+    } else {
+      setIsShowOfferSubheader(true);
+    }
   };
 
   const handleCloseOfferSubheader = () => {
+    // We set both to false because the states may change due to change in latestOffer
+    setIsShowViewOfferSubheader(false);
     setIsShowOfferSubheader(false);
   };
 
+  const handleOpenCancelMatchModal = () => {
+    setIsShowCancelMatchModal(true);
+  };
+
+  const handleCloseCancelMatchModal = () => {
+    setIsShowCancelMatchModal(false);
+  };
+
+  const handleDisbandClick = () => {
+    socketRequestService.disbandChatRoom({ chatRoomId: id, socket });
+    setIsShowCancelMatchModal(false);
+  };
+
+  const renderOfferButtonText = () => {
+    if (hasPendingOffer) {
+      return 'View Current Offer';
+    }
+    return 'Make Offer';
+  };
+
   const renderSubheader = () => {
-    if (isDisbanded) {
+    if (disbandInfo) {
       return <DisbandedSubheader />;
     }
     if (isDealClosed) {
-      return <RevealIdentitySubheader chatRoomId={id} />;
+      return (
+        <RevealIdentitySubheader
+          chatRoomId={id}
+          isUserRevealed={isRevealed}
+          isBothRevealed={!!identities}
+        />
+      );
     }
     if (isShowOfferSubheader) {
       return <ChatOfferSubheader handleClose={handleCloseOfferSubheader} />;
+    }
+    if (isShowViewOfferSubheader) {
+      return (
+        <ChatViewSubheader
+          handleClose={handleCloseOfferSubheader}
+          latestOffer={latestOffer}
+          isUserPendingOffer={isUserPendingOffer}
+        />
+      );
     }
     return (
       <div className="chat__header__actions columns is-gapless is-mobile">
@@ -57,11 +124,20 @@ const ChatHeader = ({ chat }) => {
           className="column button is-success is-outlined"
           onClick={handleOpenOfferSubheader}
         >
-          Make Offer
+          {renderOfferButtonText()}
         </button>
-        <button type="button" className="column button is-danger is-outlined">
+        <button
+          onClick={handleOpenCancelMatchModal}
+          type="button"
+          className="column button is-danger is-outlined"
+        >
           Cancel Match
         </button>
+        <CancelMatchModal
+          isModalOpen={isShowCancelMatchModal}
+          handleCloseModal={handleCloseCancelMatchModal}
+          handleConfirm={handleDisbandClick}
+        />
       </div>
     );
   };
@@ -76,16 +152,20 @@ const ChatHeader = ({ chat }) => {
 
     return (
       <div className="columns is-mobile is-marginless">
-        <ChatOfferDetails
-          headerText={otherOrderDetailsHeaderText}
-          quantity={otherOrderDetails.numberOfShares}
-          price={toCurrency(otherOrderDetails.price)}
-        />
-        <ChatOfferDetails
-          headerText={userOrderDetailsHeaderText}
-          quantity={userOrderDetails.numberOfShares}
-          price={toCurrency(userOrderDetails.price)}
-        />
+        {otherOrderDetails && (
+          <ChatOfferDetails
+            headerText={otherOrderDetailsHeaderText}
+            quantity={otherOrderDetails.numberOfShares}
+            price={toCurrency(otherOrderDetails.price)}
+          />
+        )}
+        {userOrderDetails && (
+          <ChatOfferDetails
+            headerText={userOrderDetailsHeaderText}
+            quantity={userOrderDetails.numberOfShares}
+            price={toCurrency(userOrderDetails.price)}
+          />
+        )}
       </div>
     );
   };

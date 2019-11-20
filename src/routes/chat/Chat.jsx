@@ -9,11 +9,17 @@ import ChatNav from './ChatNav';
 import ChatList from './chatList';
 import ChatContent from './chatContent';
 import './Chat.scss';
+import ChatGhost from './ChatGhost';
 
 const Chat = () => {
   const { chatRoomId } = useParams();
   const chat = useSelector(state => state.chat.unarchived[chatRoomId]);
+  const isLoading = useSelector(state => !state.loading.isChatLoaded);
   const chatNavHeaderText = chat ? chat.friendlyName : '';
+
+  if (isLoading) {
+    return <ChatGhost />;
+  }
 
   if (chatRoomId && !chat) {
     return <Redirect to={CHAT} />;

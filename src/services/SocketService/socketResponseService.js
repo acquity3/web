@@ -6,14 +6,18 @@ import {
   addNewMessage,
   updateOfferStatus,
   addNewOffer,
-  incrementUnreadCount
+  incrementUnreadCount,
+  updateIdentities,
+  disbandChatRoom
 } from 'reducers/ChatDux';
 import {
   RECEIVE_NEW_EVENT,
   RECEIVE_ERROR,
   CHAT_TYPE,
   OFFER_TYPE,
-  OFFER_RESPONSE_TYPE
+  OFFER_RESPONSE_TYPE,
+  RECEIVE_REVEAL_IDENTITY,
+  RECEIVE_DISBAND_CHATROOM
 } from 'constants/socket';
 
 /**
@@ -39,7 +43,7 @@ const receiveNewMessageListener = socket => {
     const { type, authorId, chatRoomId, id } = data;
     switch (type) {
       case CHAT_TYPE:
-        if (authorId === state.misc.user.id) {
+        if (authorId !== state.misc.user.id) {
           batch(() => {
             store.dispatch(addNewMessage(data));
             store.dispatch(
@@ -64,6 +68,20 @@ const receiveNewMessageListener = socket => {
   });
 };
 
+const receiveRevealIdentitiesListener = socket => {
+  socket.on(RECEIVE_REVEAL_IDENTITY, payload => {
+    const data = humps.camelizeKeys(payload);
+    store.dispatch(updateIdentities(data));
+  });
+};
+
+const receiveDisbandChatRoomListener = socket => {
+  socket.on(RECEIVE_DISBAND_CHATROOM, payload => {
+    const data = humps.camelizeKeys(payload);
+    store.dispatch(disbandChatRoom(data));
+  });
+};
+
 const errorListener = socket => {
   // eslint-disable-next-line no-console
   socket.on(RECEIVE_ERROR, payload => console.error(payload));
@@ -71,6 +89,8 @@ const errorListener = socket => {
 
 const initialize = socket => {
   receiveNewMessageListener(socket);
+  receiveRevealIdentitiesListener(socket);
+  receiveDisbandChatRoomListener(socket);
   errorListener(socket);
 };
 
