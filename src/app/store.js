@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from 'redux-starter-kit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { persistReducer, persistStore, createMigrate } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 

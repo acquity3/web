@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reduxjs/toolkit": "^1.0.4",
     "@sentry/browser": "^5.7.1",
     "@welldone-software/why-did-you-render": "^3.3.9",
     "apexcharts": "^3.10.0",
@@ -38,7 +39,6 @@
     "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "redux-persist": "^6.0.0",
-    "redux-starter-kit": "^0.7.0",
     "socket.io-client": "^2.3.0",
     "zxcvbn": "^4.4.2"
   },

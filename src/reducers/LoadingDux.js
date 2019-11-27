@@ -1,5 +1,5 @@
 // Reducer for manipulating global load state
-import { createSlice } from 'redux-starter-kit';
+import { createSlice } from '@reduxjs/toolkit';
 
 /* eslint-disable no-param-reassign */
 const loading = createSlice({
