@@ -21,6 +21,17 @@ A marketplace to buy and sell stocks from private companies or startups. Acquity
        * [useUser](#useuser)
 
 ## Get started
+### Environment Variables
+This project uses environment variables. Before running the application with `yarn start`, make sure there is a `.env` or `.env.local` file in the root directory containing the following keys:
+
+```
+REACT_APP_BACKEND_API=<Your backend url here>
+```
+
+We do not recommend using our production API backend URL when building locally (since there will be contamination of data), and recommend running our backend server locally on your machine and pointing the environment variable to the local URL.
+
+You can find and build our backend server in our [acquity/api](https://github.com/acquity/api) repository.
+
 In the project directory, you can run:
 
 ### `yarn start`
@@ -58,7 +69,9 @@ acquity
   └─app/
   └─assets/
   └─components/
+  └─constants/
   └─contexts/
+  └─reducers/
   └─routes/
   └─services/
   └─utils/
@@ -81,7 +94,6 @@ component
 │ Component.jsx  # A stateless/function component
 │ Component.scss  # The styles for the component with the same name
 | ComponentContainer.jsx  # The stateful component for the stateless component it contains
-| ComponentDux.js  # The component returned after connecting to redux store
 | index.js  # A single line file that exports the top level component for use.
  ```
  Grouping the components this way allows for easy refactoring of components without having to change all imports for other components that uses the refactored component, since one just needs to update the exported component in `index.js`.
@@ -94,14 +106,23 @@ Contains:
 * `App.js`, the entry point of the application.
 * `rootReducer.js`, for Redux store.
 
-### `routes/` directory
-Contains folders containing components that are wrapped by React Router's `<Route>` in `src/app/AuthenticatedApp` or `src/app/UnauthenticatedApp`.
+### `assets/` directory
+Contains our animations, images, and our general scss folders.  
 
 ### `components/` directory
 Contains components that are used by more than 1 (or 2) components.
 
+### `constants/` directory
+Contains constants that are used throughout the application. Make sure to group constants in their own files according to context.
+
 ### `contexts/` directory
 Contains contexts providing React hooks and providers that can be used by React components. See [React Context](https://reactjs.org/docs/context.html) for more details on how to use them.
+
+### `reducers/` directory
+Contains reducers used in the application. We use [Redux Toolkit](https://redux-toolkit.js.org/) as our redux library of choice.
+
+### `routes/` directory
+Contains folders containing components that are wrapped by React Router's `<Route>` in `src/app/AuthenticatedApp` or `src/app/UnauthenticatedApp`.
 
 ### `services` and `utils` directory
 Self explanatory. 
@@ -109,7 +130,10 @@ Self explanatory.
 
 
 ## React hooks exposed by the app
+These hooks are exported from the various `contexts/*context` files in the `contexts` folder.
 ### useAuth
+Useful authentication functions.
+
 ```
 import { useAuth } from 'contexts/authContext';
 ```
@@ -129,6 +153,8 @@ const { logout } = useAuth()
 
 
 ### useUser
+Retrieve user information.
+
 ```
 import { useUser } from 'contexts/userContext';
 ```
@@ -142,5 +168,23 @@ const App = () => {
   return user 
       ? <AuthenticatedApp /> 
       : <UnauthenticatedApp />
+};
+```
+
+### useSocket
+Retrieve socket used for chat.
+
+```
+import { useSocket } from 'contexts/socketContext';
+```
+
+#### Usage
+```
+const socket = useSocket();
+const sendMessage = () => {
+    SocketRequestService.addNewMessage({
+      ...
+      socket
+    });
 };
 ```
