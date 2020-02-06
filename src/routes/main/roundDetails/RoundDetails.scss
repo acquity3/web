@@ -67,5 +67,11 @@
         }
       }
     }
+
+    .stats {
+      &__header {
+        font-weight: bold;
+      }
+    }
   }
 }

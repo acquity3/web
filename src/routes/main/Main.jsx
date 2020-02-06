@@ -7,6 +7,7 @@ import { SELLER, BUYER } from 'constants/user';
 import OngoingOffers from './ongoingItems/ongoingOffers';
 import OngoingBids from './ongoingItems/ongoingBids';
 import RoundDetails from './roundDetails';
+import SiteInfo from './siteInfo';
 import CurrentMarketPrice from './currentMarketPrice';
 import PrevRoundSummary from './prevRoundSummary/PrevRoundSummary';
 
@@ -19,6 +20,7 @@ const Main = () => {
     <PageContainer>
       <div className="main page">
         <div className="page__content">
+          <SiteInfo />
           {userType === SELLER && <OngoingOffers />}
           {userType === BUYER && <OngoingBids />}
           <div className="details columns is-gapless is-multiline-desktop">

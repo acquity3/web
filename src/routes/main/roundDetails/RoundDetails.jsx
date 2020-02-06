@@ -59,12 +59,17 @@ const RoundDetails = () => {
 
     const fetchData = async () => {
       try {
-        const response = await ApiService.get('round/active');
+        const [activeResponse, statsResponse] = await Promise.all([
+          ApiService.get('round/active'),
+          ApiService.get('round/active/stats')
+        ]);
+
         if (!didCancel) {
           setState({
-            timeForRoundEnd: response.data
-              ? response.data.endTime * 1000
-              : new Date(response.data),
+            timeForRoundEnd: activeResponse.data
+              ? activeResponse.data.endTime * 1000
+              : new Date(activeResponse.data),
+            stats: statsResponse.data,
             isLoading: false
           });
         }
@@ -95,10 +100,36 @@ const RoundDetails = () => {
         {state.isLoading ? (
           <RoundDetailsGhost />
         ) : (
-          <Countdown
-            date={state.timeForRoundEnd}
-            renderer={countdownRenderer}
-          />
+          <div>
+            <Countdown
+              date={state.timeForRoundEnd}
+              renderer={countdownRenderer}
+            />
+            {state.stats && (
+              <div>
+                <div>
+                  <div className="stats__header">Buy Orders:</div>
+                  <div>total shares: {state.stats.buy.totalShares}</div>
+                  {state.stats.buy.minPrice > 0 && (
+                    <div>
+                      price range {state.stats.buy.minPrice} -{' '}
+                      {state.stats.buy.maxPrice}
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <div className="stats__header">Sell Orders:</div>
+                  <div>total shares: {state.stats.sell.totalShares}</div>
+                  {state.stats.sell.minPrice > 0 && (
+                    <div>
+                      price range {state.stats.sell.minPrice} -{' '}
+                      {state.stats.sell.maxPrice}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
